@@ -2,7 +2,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace YAPCG
+namespace YAPCG.Planets
 {
     public struct Planet : IComponentData
     {

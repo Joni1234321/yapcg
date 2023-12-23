@@ -1,7 +1,7 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Core.Components;
+using YAPCG.Engine.Components;
 using YAPCG.Planets.Components;
 
 namespace YAPCG.Planets.Factories

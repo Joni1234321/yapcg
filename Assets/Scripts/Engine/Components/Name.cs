@@ -1,7 +1,7 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 
-namespace YAPCG.Core.Components
+namespace YAPCG.Engine.Components
 {
     public struct Name : IComponentData
     {

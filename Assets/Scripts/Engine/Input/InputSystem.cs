@@ -1,7 +1,7 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
 
-namespace YAPCG.Core.Input
+namespace YAPCG.Engine.Input
 {
     public partial struct InputSystem : ISystem
     {
@@ -29,11 +29,11 @@ namespace YAPCG.Core.Input
 
     public struct MouseInput : IComponentData
     {
-        
+        public bool Left;
     }
 
     public struct KeyInput : IComponentData
     {
-        
+        public bool A;
     }
 }
