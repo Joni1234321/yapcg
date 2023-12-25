@@ -1,9 +1,12 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
 using UnityEngine;
+using YAPCG.Engine.SystemGroups;
+using YAPCG.Planets.Systems;
 
 namespace YAPCG.Engine.Input
 {
+    [UpdateInGroup(typeof(InputSystemGroup))]
     public partial struct InputSystem : ISystem
     {
         [BurstCompile]

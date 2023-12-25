@@ -6,7 +6,7 @@ using YAPCG.Engine.Time.Components;
 namespace YAPCG.Engine.Time.Systems
 {
     // Should not run directly in this group instead if you want every tick, then do TickDailyGroup
-    internal partial class GameTimeSystemGroup : ComponentSystemGroup
+    public partial class GameTimeSystemGroup : ComponentSystemGroup
     {
         protected override void OnCreate()
         {

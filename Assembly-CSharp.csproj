@@ -58,9 +58,12 @@
     <Analyzer Include="C:\P\A\U\yapcg\Library\PackageCache\com.unity.entities@1.2.0-pre.6\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Engine\SystemGroups\InputSystemGroup.cs" />
+    <Compile Include="Assets\Scripts\Engine\SystemGroups\RenderSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Planets\Systems\DiscoverSystem.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\Position.cs" />
     <Compile Include="Assets\Scripts\Planets\Systems\HubSpawner.cs" />
+    <Compile Include="Assets\Scripts\Engine\SystemGroups\SpawningSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Planets\Factories\HubNamingGenerator.cs" />
     <Compile Include="Assets\Scripts\Planets\Planet.cs" />
     <Compile Include="Assets\Scripts\Credit.cs" />
