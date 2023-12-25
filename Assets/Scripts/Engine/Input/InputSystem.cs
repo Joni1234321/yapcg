@@ -1,5 +1,6 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
+using UnityEngine;
 
 namespace YAPCG.Engine.Input
 {
@@ -8,15 +9,30 @@ namespace YAPCG.Engine.Input
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            state.EntityManager.CreateSingleton(new MouseInput());
-            state.EntityManager.CreateSingleton(new KeyInput());
+            state.EntityManager.CreateSingleton<MouseInput>();
+            state.EntityManager.CreateSingleton<KeyInput>();
+            state.EntityManager.CreateSingleton<ActionInput>();
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            SystemAPI.SetSingleton(new MouseInput() {});
+            SystemAPI.SetSingleton(new MouseInput
+            {
+                Left = UnityEngine.Input.GetMouseButton(0)
+            });
             
+            SystemAPI.SetSingleton(new KeyInput
+            {
+                A = UnityEngine.Input.GetKeyDown(KeyCode.A)
+            });
+            
+            SystemAPI.SetSingleton(new ActionInput
+                {
+                    BuildHub = UnityEngine.Input.GetKeyDown(KeyCode.Z)
+                }
+
+            );
         }
 
         [BurstCompile]
@@ -32,8 +48,12 @@ namespace YAPCG.Engine.Input
         public bool Left;
     }
 
+    public struct ActionInput : IComponentData
+    {
+        public bool BuildHub;
+    }
     public struct KeyInput : IComponentData
     {
-        public bool A;
+        public bool A, B, C, D, E, F;
     }
 }

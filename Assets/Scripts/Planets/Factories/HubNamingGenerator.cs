@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using Unity.Collections;
-using Unity.Mathematics;
+﻿using Unity.Collections;
+using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Planets.Factories
 {
     public struct HubNamingGenerator
     {
-        private static Random RANDOM = Random.CreateFromIndex(0);
-        private static readonly List<string> SPACE_NAME = new()
+        private static readonly FixedString32Bytes[] SPACE_NAME = 
         {
             "Celestial",
             "Stellar",
@@ -27,8 +25,7 @@ namespace YAPCG.Planets.Factories
             "Quasar"
         };
 
-        private static readonly List<string> SPACE_ENDINGS = new()
-        {
+        private static readonly FixedString32Bytes[] SPACE_ENDINGS = {
             "Hub",
             "Station",
             "Gateway",
@@ -44,11 +41,18 @@ namespace YAPCG.Planets.Factories
             "Outpost",
             "Hub",
             "Post",
-            "Center"
+            "Center"    
         };
 
-        public static FixedString64Bytes Get() => 
-            SPACE_NAME[RANDOM.NextInt(SPACE_NAME.Count)] + SPACE_ENDINGS[RANDOM.NextInt(SPACE_ENDINGS.Count)];
+        public static FixedString64Bytes Get(ref Random random)
+        {
+            var name = SPACE_NAME[random.NextInt(SPACE_NAME.Length)];
+            var ending = SPACE_ENDINGS[random.NextInt(SPACE_ENDINGS.Length)];
+            FixedString64Bytes re = "";
+            re.Append(name);
+            re.Append(ending);
+            return re;
+        }
         
     }
 }

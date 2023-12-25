@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
-using YAPCG.Time.Components;
+using YAPCG.Engine.Time.Components;
 
-namespace YAPCG.Time.Systems
+namespace YAPCG.Engine.Time.Systems
 {
     [UpdateInGroup(typeof(GameTimeSystemGroup))]
     public partial class TickWeeklyGroup : ComponentSystemGroup

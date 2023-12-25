@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace YAPCG.Time.Components
+namespace YAPCG.Engine.Time.Components
 {
     public struct TimeSpeed : IComponentData
     {

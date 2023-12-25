@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace YAPCG.Time.Systems
+namespace YAPCG.Engine.Time.Systems
 {
     [UpdateInGroup(typeof(GameTimeSystemGroup))]
     public partial class TickDailyGroup : ComponentSystemGroup { }

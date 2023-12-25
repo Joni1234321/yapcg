@@ -10,35 +10,34 @@ namespace YAPCG.Planets.Factories
     {
         public EntityManager _;
 
-        private static Entity CreateSkeleton(EntityManager _, float3 position)
+        private static Entity CreateSkeleton(EntityCommandBuffer _, float3 position)
         {
             Entity e = _.CreateEntity();
-            _.AddComponentData(e, new Position { Value = position });
-            _.AddComponentData(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
-            _.AddComponentData(e, new Name { Value = HubNamingGenerator.Get()});
+            _.AddComponent<Name>(e);
+
+            _.AddComponent(e, new Position { Value = position });
+            _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
             return e;
         } 
 
-        public static Entity CreateBigHub(EntityManager _, float3 position)
+        public static Entity CreateBigHub(EntityCommandBuffer _, float3 position)
         {
             Entity e = CreateSkeleton(_, position);
-            _.AddComponentData(e, new BuildingSlotsLeft { Big = 10, Medium = 5, Small = 5 });
+            _.AddComponent(e, new BuildingSlotsLeft { Big = 10, Medium = 5, Small = 5 });
             return e;
         }
         
-        public static Entity CreateNormalHub(EntityManager _, float3 position)
+        public static Entity CreateNormalHub(EntityCommandBuffer _, float3 position)
         {
             Entity e = CreateSkeleton(_, position);
-            _.AddComponentData(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
-            _.AddComponentData(e, new BuildingSlotsLeft { Big = 5, Medium = 10, Small = 10 });
+            _.AddComponent(e, new BuildingSlotsLeft { Big = 5, Medium = 10, Small = 10 });
             return e;
         }
         
-        public static Entity CreateSmallHub(EntityManager _, float3 position)
+        public static Entity CreateSmallHub(EntityCommandBuffer _, float3 position)
         {
             Entity e = CreateSkeleton(_, position);
-            _.AddComponentData(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
-            _.AddComponentData(e, new BuildingSlotsLeft { Big = 2, Medium = 5, Small = 25 });
+            _.AddComponent(e, new BuildingSlotsLeft { Big = 2, Medium = 5, Small = 25 });
             return e;
         }
     }

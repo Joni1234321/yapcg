@@ -1,8 +1,9 @@
 ﻿// System that covers ticks
-using Unity.Entities;
-using YAPCG.Time.Components;
 
-namespace YAPCG.Time.Systems
+using Unity.Entities;
+using YAPCG.Engine.Time.Components;
+
+namespace YAPCG.Engine.Time.Systems
 {
     // Should not run directly in this group instead if you want every tick, then do TickDailyGroup
     internal partial class GameTimeSystemGroup : ComponentSystemGroup
