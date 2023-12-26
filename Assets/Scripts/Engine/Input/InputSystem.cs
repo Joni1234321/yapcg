@@ -32,7 +32,7 @@ namespace YAPCG.Engine.Input
             
             SystemAPI.SetSingleton(new ActionInput
                 {
-                    BuildHub = UnityEngine.Input.GetKeyDown(KeyCode.Z)
+                    ShouldBuildHub = UnityEngine.Input.GetKeyDown(KeyCode.Z)
                 }
 
             );
@@ -53,7 +53,7 @@ namespace YAPCG.Engine.Input
 
     public struct ActionInput : IComponentData
     {
-        public bool BuildHub;
+        public bool ShouldBuildHub;
     }
     public struct KeyInput : IComponentData
     {
