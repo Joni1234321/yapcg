@@ -14,6 +14,17 @@ namespace YAPCG.UI
         [UxmlAttribute]
         public string Label { get; private set; }
 
+        [UxmlAttribute]
+        public VisualTreeAsset myTemplate { get; set; }
+
+
         
+        public SlotControl()
+        {
+            Value = "42";
+            Label = "Fisk";
+            if (myTemplate != null)
+                Add(myTemplate.Instantiate());
+        }
     }
 }
