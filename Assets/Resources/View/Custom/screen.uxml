@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="hubmenu" src="project://database/Assets/Resources/View/Custom/hubmenu.uxml?fileID=9197481963319205126&amp;guid=b3f8d502d0efb984189432012aac9c3f&amp;type=3#hubmenu" />
+    <ui:Instance template="hubmenu" style="position: absolute; bottom: 0;" />
+</ui:UXML>
