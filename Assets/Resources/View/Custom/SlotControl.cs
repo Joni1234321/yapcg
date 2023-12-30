@@ -42,8 +42,8 @@ namespace YAPCG.Resources.View.Custom
             Add(body);
             _nameLabel = body.Q<Label>("label");
             _valueLabel = body.Q<Label>("value");
-            _valueLabel.text = _value;
-            _nameLabel.text = _label;
+            Label = "S";
+            Value = 12.ToString();
         }
     }
 }

@@ -1,7 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1;">
-        <YAPCG.Resources.View.Custom.SlotControl my-template="project://database/Assets/UI/slots.uxml?fileID=9197481963319205126&amp;guid=16f6caba03e90ce418bda7535e223856&amp;type=3#slots" />
-        <YAPCG.Resources.View.Custom.SlotControl my-template="project://database/Assets/UI/slots.uxml?fileID=9197481963319205126&amp;guid=16f6caba03e90ce418bda7535e223856&amp;type=3#slots" />
-        <YAPCG.Resources.View.Custom.SlotControl my-template="project://database/Assets/UI/slots.uxml?fileID=9197481963319205126&amp;guid=16f6caba03e90ce418bda7535e223856&amp;type=3#slots" />
+    <Style src="project://database/Assets/Resources/View/main.uss?fileID=7433441132597879392&amp;guid=c8c56bc5dabe31f49a1cbc1a34332ed1&amp;type=3#main" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="slots-menu" class="flex-gap" style="flex-grow: 1; flex-direction: row; background-color: rgba(255, 255, 255, 0.48); justify-content: flex-start;">
+            <YAPCG.Resources.View.Custom.SlotControl label="L" value="200" />
+            <YAPCG.Resources.View.Custom.SlotControl label="M" />
+            <YAPCG.Resources.View.Custom.SlotControl />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
