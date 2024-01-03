@@ -2,7 +2,7 @@
 using Unity.Entities;
 using UnityEngine;
 using YAPCG.Engine.SystemGroups;
-using YAPCG.Planets.Systems;
+using static UnityEngine.Input;
 
 namespace YAPCG.Engine.Input
 {
@@ -13,7 +13,6 @@ namespace YAPCG.Engine.Input
         public void OnCreate(ref SystemState state)
         {
             state.EntityManager.CreateSingleton<MouseInput>();
-            state.EntityManager.CreateSingleton<KeyInput>();
             state.EntityManager.CreateSingleton<ActionInput>();
         }
 
@@ -22,19 +21,15 @@ namespace YAPCG.Engine.Input
         {
             SystemAPI.SetSingleton(new MouseInput
             {
-                Left = UnityEngine.Input.GetMouseButton(0)
-            });
-            
-            SystemAPI.SetSingleton(new KeyInput
-            {
-                A = UnityEngine.Input.GetKeyDown(KeyCode.A)
+                Left = GetMouseButton(0)
             });
             
             SystemAPI.SetSingleton(new ActionInput
                 {
-                    ShouldBuildHub = UnityEngine.Input.GetKeyDown(KeyCode.Z)
+                    ShouldBuildHub = GetKeyDown(KeyCode.A),
+                    Next = GetKeyDown(KeyCode.Z),
+                    Previous = GetKeyDown(KeyCode.X),
                 }
-
             );
         }
 
@@ -54,9 +49,6 @@ namespace YAPCG.Engine.Input
     public struct ActionInput : IComponentData
     {
         public bool ShouldBuildHub;
-    }
-    public struct KeyInput : IComponentData
-    {
-        public bool A, B, C, D, E, F;
+        public bool Next, Previous;
     }
 }

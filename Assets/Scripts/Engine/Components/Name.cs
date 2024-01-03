@@ -5,6 +5,6 @@ namespace YAPCG.Engine.Components
 {
     public struct Name : IComponentData
     {
-        public FixedString128Bytes Value;
+        public FixedString64Bytes Value;
     }
 }

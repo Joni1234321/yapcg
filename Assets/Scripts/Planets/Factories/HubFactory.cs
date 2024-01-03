@@ -13,6 +13,7 @@ namespace YAPCG.Planets.Factories
         private static Entity CreateSkeleton(EntityCommandBuffer _, float3 position)
         {
             Entity e = _.CreateEntity();
+            _.AddComponent<HubTag>(e);
             _.AddComponent<Name>(e);
 
             _.AddComponent(e, new Position { Value = position });
@@ -23,21 +24,21 @@ namespace YAPCG.Planets.Factories
         public static Entity CreateBigHub(EntityCommandBuffer _, float3 position)
         {
             Entity e = CreateSkeleton(_, position);
-            _.AddComponent(e, new BuildingSlotsLeft { Big = 10, Medium = 5, Small = 5 });
+            _.AddComponent(e, new BuildingSlotsLeft { Large = 10, Medium = 5, Small = 5 });
             return e;
         }
         
         public static Entity CreateNormalHub(EntityCommandBuffer _, float3 position)
         {
             Entity e = CreateSkeleton(_, position);
-            _.AddComponent(e, new BuildingSlotsLeft { Big = 5, Medium = 10, Small = 10 });
+            _.AddComponent(e, new BuildingSlotsLeft { Large = 5, Medium = 10, Small = 10 });
             return e;
         }
         
         public static Entity CreateSmallHub(EntityCommandBuffer _, float3 position)
         {
             Entity e = CreateSkeleton(_, position);
-            _.AddComponent(e, new BuildingSlotsLeft { Big = 2, Medium = 5, Small = 25 });
+            _.AddComponent(e, new BuildingSlotsLeft { Large = 2, Medium = 5, Small = 25 });
             return e;
         }
     }

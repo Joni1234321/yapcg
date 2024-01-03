@@ -4,7 +4,7 @@ namespace YAPCG.Planets
 {
     public struct BuildingSlotsLeft : IComponentData
     {
-        public int Big;
+        public int Large;
         public int Medium;
         public int Small;
     }
