@@ -1033,6 +1033,10 @@
       <Project>{bea2bc7b-e665-3163-a4ff-1f8ee95ce0fd}</Project>
       <Name>DrawXXL-Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="YAPCG.Resources.View.Custom.csproj">
+      <Project>{2f569eb6-9cbd-7395-1f5d-263c82b42378}</Project>
+      <Name>YAPCG.Resources.View.Custom</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

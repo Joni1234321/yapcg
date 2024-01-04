@@ -124,7 +124,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\ListView\ListViewItem.cs" />
-    <Compile Include="Assets\Resources\View\Custom\SlotControl.cs" />
     <Compile Include="Assets\Scripts\Planets\Systems\HubSpawner.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerDropdown.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerButton.cs" />
@@ -185,7 +184,6 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerEditor.cs" />
     <Compile Include="Assets\Scripts\UI\ActionUISystem.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\SliderManagerEditor.cs" />
-    <Compile Include="Assets\Scripts\Planets\BuildingSlotSpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerPieChart.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
@@ -214,12 +212,9 @@
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Roboto-Bold - AFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
-    <None Include="Assets\Resources\View\Custom\hubmenu.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\Resources\View\Custom\screen.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\Resources\View\Custom\slots.uxml" />
     <None Include="Assets\Modern UI Pack\Read Me.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Packages\com.singularitygroup.hotreload\package.json" />
@@ -1166,6 +1161,10 @@
     <ProjectReference Include="DrawXXL-Editor.csproj">
       <Project>{bea2bc7b-e665-3163-a4ff-1f8ee95ce0fd}</Project>
       <Name>DrawXXL-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="YAPCG.Resources.View.Custom.csproj">
+      <Project>{2f569eb6-9cbd-7395-1f5d-263c82b42378}</Project>
+      <Name>YAPCG.Resources.View.Custom</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

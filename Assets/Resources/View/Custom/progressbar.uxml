@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="progressbar" style="flex-direction: row;">
+        <ui:Label name="title" text="Discovery" />
+        <ui:ProgressBar value="22" title="70 / 90" style="flex-grow: 1;" />
+        <ui:Label name="change" text="+ 1"  style="width: 30px; -unity-text-align: upper-right;" />
+    </ui:VisualElement>
+</ui:UXML>

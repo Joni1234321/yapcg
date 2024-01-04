@@ -15,8 +15,4 @@ namespace YAPCG.Planets
         public float3 Position;
         public float4 Color;
     }
-
-    public struct PlanetName: IComponentData { 
-        public FixedString128Bytes Name;
-    }
 }
