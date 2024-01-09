@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
 using YAPCG.Engine.Components;
-using YAPCG.Engine.Input;
-using YAPCG.Planets;
+using YAPCG.Hub.Components;
 using YAPCG.Planets.Components;
 using YAPCG.Resources.View.Custom;
 using SlotControl = YAPCG.Resources.View.Custom.SlotControl;
@@ -22,6 +23,9 @@ namespace YAPCG.UI
         public Label HubNameLabel;
 
         public ProgressBarControl DiscoveryProgress;
+
+        public UnityEngine.UIElements.ListView HubList;
+        public List<string> HubNames;
         
         public void Start()
         {
@@ -32,6 +36,25 @@ namespace YAPCG.UI
             SlotControlL = UI.Q<SlotControl>("slots-l");
 
             DiscoveryProgress = UI.Q<ProgressBarControl>("discovery");
+
+            HubList = UI.Q<ListView>("hub-list");
+            HubList.itemsSource = HubNames;
+            HubList.makeItem = () => new Label();
+            HubList.bindItem = (element, i) => (element as Label).text = i.ToString();
+
+        }
+
+        private void Update()
+        {
+            NativeArray<Name> names = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntityQuery(typeof(HubTag), typeof(Name))
+                .ToComponentDataArray<Name>(Allocator.Temp);
+            HubNames.Clear();
+            foreach (Name name in names) 
+                HubNames.Add(name.Value.ToString());
+            names.Dispose();
+            
+
+
         }
 
         public void UpdateHubUI(EntityManager _, Entity hub)
@@ -51,6 +74,7 @@ namespace YAPCG.UI
             DiscoveryProgress.Value = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;
         }
+        
         public static HUD Instance { get; private set; }
         
         private void Awake()

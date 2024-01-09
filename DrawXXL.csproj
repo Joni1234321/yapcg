@@ -61,8 +61,8 @@
     <Compile Include="Assets\Draw XXL\scripts\miscellaneous\animated lines as objects\LineAnimationProgress.cs" />
     <Compile Include="Assets\Draw XXL\scripts\DrawScreenspace.cs" />
     <Compile Include="Assets\Draw XXL\scripts\demo scene scripts\MultipleLinesChart.cs" />
-    <Compile Include="Assets\Draw XXL\scripts\internal utilities\InternalDXXL_SubMeshIdentifier.cs" />
     <Compile Include="Assets\Draw XXL\scripts\components\2D\ShapeDrawer2D.cs" />
+    <Compile Include="Assets\Draw XXL\scripts\internal utilities\InternalDXXL_SubMeshIdentifier.cs" />
     <Compile Include="Assets\Draw XXL\scripts\miscellaneous\animated lines as objects\parents\ParentOf_Lines_fadeableAnimSpeed_2D.cs" />
     <Compile Include="Assets\Draw XXL\scripts\internal utilities\ScreenspaceShedulingStrucs.cs" />
     <Compile Include="Assets\Draw XXL\scripts\internal utilities\UtilitiesDXXL_Physics2D.cs" />

@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 namespace YAPCG.Resources.View.Custom
 {
     [UxmlElement]
-    public partial class SlotControl : VisualElement
+    public partial class SlotControl : CustomUI
     {
         
         private string _label, _value;
@@ -63,13 +63,11 @@ namespace YAPCG.Resources.View.Custom
             }
         }
 
-        public SlotControl()
+        public SlotControl() : base("View/Custom/Slots")
         {
-            VisualElement body = UnityEngine.Resources.Load<VisualTreeAsset>($"View/Custom/Slots").CloneTree();
-            Add(body);
-            _labelLabel = body.Q<Label>("label");
-            _valueLabel = body.Q<Label>("value");
-            _splits = body.Query<VisualElement>("split").ToList();
+            _labelLabel = Q<Label>("label");
+            _valueLabel = Q<Label>("value");
+            _splits = Query<VisualElement>("split").ToList();
             
             
             Label = "S";

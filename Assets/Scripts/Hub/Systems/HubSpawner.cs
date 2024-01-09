@@ -2,14 +2,13 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEngine;
 using YAPCG.Engine.Components;
-using YAPCG.Planets.Factories;
+using YAPCG.Hub.Factories;
+using YAPCG.UI;
 using Random = Unity.Mathematics.Random;
 using TickWeeklyGroup = YAPCG.Engine.Time.Systems.TickWeeklyGroup;
 
-namespace YAPCG.Planets.Systems
+namespace YAPCG.Hub.Systems
 {
     [UpdateInGroup(typeof(TickWeeklyGroup))]
     public partial struct HubSpawner : ISystem  
@@ -23,53 +22,53 @@ namespace YAPCG.Planets.Systems
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<SharedRandom>();
-
-            Entity e = state.EntityManager.CreateEntity();
-            state.EntityManager.AddComponentData(e, new HubSpawnConfig
+            state.EntityManager.CreateSingletonBuffer<HubSpawnConfig>();
+            
+            /*
+            SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
                 {
                     Position = float3.zero,  
                     Big = 1, 
                     Medium = 2, 
                     Small = 5
-                });
+                });*/
+            SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
+            {
+                Position = float3.zero,
+                Big = 1
+            });
         }
         
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             Random random = SystemAPI.GetSingleton<SharedRandom>().Random;
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
-            foreach (var (config, entity) in SystemAPI.Query<HubSpawnConfig>().WithEntityAccess())
+            var spawnConfigs = SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false);
+            
+            foreach (var config in spawnConfigs)
             {
                 for (int i = 0; i < config.Small; i++)
-                {
-                    Entity e = HubFactory.CreateSmallHub(ecb, config.Position + GetPositionInCircle(ref random, 5));
-                    ecb.AddComponent(e, new Name { Value = HubNamingGenerator.Get(ref random)});
-                }
+                    HubFactory.CreateSmallHub(ecb, config.Position + GetPositionInCircle(ref random, 5), HubNamingGenerator.Get(ref random));
 
                 for (int i = 0; i < config.Medium; i++)
-                {
-                    float3 position = config.Position + GetPositionInCircle(ref random, 2);
-                    Entity e = HubFactory.CreateNormalHub(ecb, position);
-                    ecb.SetComponent(e, new Name { Value = HubNamingGenerator.Get(ref random)});
-                }
+                    HubFactory.CreateNormalHub(ecb, config.Position + GetPositionInCircle(ref random, 2), HubNamingGenerator.Get(ref random));
 
-                for (int i = 0; i < config.Big; i++)
-                {
-                    Entity e = HubFactory.CreateBigHub(ecb, config.Position + float3.zero);
-                    ecb.SetComponent(e, new Name { Value = HubNamingGenerator.Get(ref random)});
-                }
-                ecb.DestroyEntity(entity);
+                for (int i = 0; i < config.Big; i++)    
+                    HubFactory.CreateBigHub(ecb, config.Position + float3.zero, HubNamingGenerator.Get(ref random));
             }
+            spawnConfigs.Clear();
             
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
+            
             SystemAPI.SetSingleton(new SharedRandom { Random = random });
         }
     }
 
-    public struct HubSpawnConfig : IComponentData
+    [InternalBufferCapacity(0)]
+    public struct HubSpawnConfig : IBufferElementData
     {
         public float3 Position;
         public int Big, Medium, Small;

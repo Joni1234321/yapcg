@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace YAPCG.Planets
+namespace YAPCG.Hub.Components
 {
     public struct BuildingSlotsLeft : IComponentData
     {

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 namespace YAPCG.Resources.View.Custom
 {
     [UxmlElement]
-    public partial class ProgressBarControl : VisualElement
+    public partial class ProgressBarControl : CustomUI
     {
 
         private readonly Label _changeLabel, _titleLabel;
@@ -71,14 +71,11 @@ namespace YAPCG.Resources.View.Custom
 
         void UpdateProgressBarTitle(float value, float max) => _progressBar.title = $"{value} / {max}";
         
-        public ProgressBarControl()
+        public ProgressBarControl() : base("View/Custom/progressbar")
         {
-            VisualElement body = UnityEngine.Resources.Load<VisualTreeAsset>($"View/Custom/progressbar").CloneTree();
-            Add(body);
-            
-            _changeLabel = body.Q<Label>("change");
-            _titleLabel = body.Q<Label>("title");
-            _progressBar = body.Q<ProgressBar>();
+            _changeLabel = Q<Label>("change");
+            _titleLabel = Q<Label>("title");
+            _progressBar = Q<ProgressBar>();
 
             Title = "Progress";
             Max = 100;

@@ -891,17 +891,14 @@
     <Reference Include="Unity.Serialization.Editor">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Serialization.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Collections.Editor">
-      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Entities.Hybrid">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Hybrid.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections.Editor">
+      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Profiling.Core">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Shared.Editor">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
@@ -917,6 +914,9 @@
     </Reference>
     <Reference Include="Unity.Entities.Graphics.Editor">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Graphics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Entities.Build">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Build.dll</HintPath>
@@ -969,11 +969,11 @@
     <Reference Include="Unity.Entities.Graphics">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Graphics.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Entities.Hybrid.HybridComponents">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Hybrid.HybridComponents.dll</HintPath>
@@ -990,11 +990,11 @@
     <Reference Include="Unity.Scenes.Editor">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Scenes.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Entities.UI">
-      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Entities.Editor.Properties">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Editor.Properties.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Entities.UI">
+      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
