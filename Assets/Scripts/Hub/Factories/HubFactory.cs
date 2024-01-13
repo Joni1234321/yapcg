@@ -9,8 +9,6 @@ namespace YAPCG.Hub.Factories
 {
     public struct HubFactory
     {
-        public EntityManager _;
-
         private static Entity CreateSkeleton(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
@@ -21,6 +19,7 @@ namespace YAPCG.Hub.Factories
             
             _.AddComponent(e, new Position { Value = position });
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
+            
             return e;
         } 
 

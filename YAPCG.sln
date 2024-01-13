@@ -1,47 +1,47 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingularityGroup.HotReload.Editor", "SingularityGroup.HotReload.Editor.csproj", "{2bb306e5-da21-8357-d5b0-83c8c6ab4790}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingularityGroup.HotReload.Editor", "SingularityGroup.HotReload.Editor.csproj", "{f8508212-4e02-c9a7-8e79-2f27087311a3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawXXL", "DrawXXL.csproj", "{29922bb7-3e65-2929-3ded-e40eaf712272}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawXXL", "DrawXXL.csproj", "{0ebb4029-b3d2-fc9f-2311-6ef57a1bdedc}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{7ee25d2e-da0c-9ea5-dd24-dcfdd937270b}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawXXL-Editor", "DrawXXL-Editor.csproj", "{bea2bc7b-e665-3163-a4ff-1f8ee95ce0fd}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawXXL-Editor", "DrawXXL-Editor.csproj", "{bebd7a62-248c-4f3f-c93c-d4f5015600aa}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingularityGroup.HotReload.Runtime.Public", "SingularityGroup.HotReload.Runtime.Public.csproj", "{deb358b8-7d92-a05d-4318-8b0d5768b26f}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingularityGroup.HotReload.Runtime.Public", "SingularityGroup.HotReload.Runtime.Public.csproj", "{1a9167b4-042b-c841-d291-4724756833ee}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingularityGroup.HotReload.Runtime", "SingularityGroup.HotReload.Runtime.csproj", "{e99a78fb-244e-7345-86e3-a3752b6779fa}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingularityGroup.HotReload.Runtime", "SingularityGroup.HotReload.Runtime.csproj", "{a3feac69-28fd-ecdf-b09d-e3189eb5bca1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Time", "YAPCG.Time.csproj", "{1828b3a9-e22f-642e-b1ae-b0834650866e}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Time", "YAPCG.Time.csproj", "{57c07163-2547-7a43-4a8c-c8a08f01f4db}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{54d619e0-54f0-3e70-c3b9-dd1bdaa13b3f}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{8761b5ad-ebbf-aa83-aa92-2131c811077d}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Resources.View.Custom", "YAPCG.Resources.View.Custom.csproj", "{2f569eb6-9cbd-7395-1f5d-263c82b42378}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Resources.View.Custom", "YAPCG.Resources.View.Custom.csproj", "{e8665ab6-1d01-4faf-2d80-6f97fca1a952}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2bb306e5-da21-8357-d5b0-83c8c6ab4790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2bb306e5-da21-8357-d5b0-83c8c6ab4790}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29922bb7-3e65-2929-3ded-e40eaf712272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29922bb7-3e65-2929-3ded-e40eaf712272}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{bea2bc7b-e665-3163-a4ff-1f8ee95ce0fd}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{bea2bc7b-e665-3163-a4ff-1f8ee95ce0fd}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{deb358b8-7d92-a05d-4318-8b0d5768b26f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{deb358b8-7d92-a05d-4318-8b0d5768b26f}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{e99a78fb-244e-7345-86e3-a3752b6779fa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{e99a78fb-244e-7345-86e3-a3752b6779fa}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1828b3a9-e22f-642e-b1ae-b0834650866e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1828b3a9-e22f-642e-b1ae-b0834650866e}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54d619e0-54f0-3e70-c3b9-dd1bdaa13b3f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54d619e0-54f0-3e70-c3b9-dd1bdaa13b3f}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2f569eb6-9cbd-7395-1f5d-263c82b42378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2f569eb6-9cbd-7395-1f5d-263c82b42378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{f8508212-4e02-c9a7-8e79-2f27087311a3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{f8508212-4e02-c9a7-8e79-2f27087311a3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ebb4029-b3d2-fc9f-2311-6ef57a1bdedc}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ebb4029-b3d2-fc9f-2311-6ef57a1bdedc}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ee25d2e-da0c-9ea5-dd24-dcfdd937270b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ee25d2e-da0c-9ea5-dd24-dcfdd937270b}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{bebd7a62-248c-4f3f-c93c-d4f5015600aa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{bebd7a62-248c-4f3f-c93c-d4f5015600aa}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1a9167b4-042b-c841-d291-4724756833ee}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1a9167b4-042b-c841-d291-4724756833ee}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{a3feac69-28fd-ecdf-b09d-e3189eb5bca1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{a3feac69-28fd-ecdf-b09d-e3189eb5bca1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57c07163-2547-7a43-4a8c-c8a08f01f4db}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57c07163-2547-7a43-4a8c-c8a08f01f4db}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8761b5ad-ebbf-aa83-aa92-2131c811077d}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8761b5ad-ebbf-aa83-aa92-2131c811077d}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{e8665ab6-1d01-4faf-2d80-6f97fca1a952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{e8665ab6-1d01-4faf-2d80-6f97fca1a952}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

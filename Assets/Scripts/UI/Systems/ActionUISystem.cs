@@ -15,7 +15,6 @@ namespace YAPCG.UI.Systems
     public partial struct ActionUISystem : ISystem
     {
         private EntityQuery _hubsQuery;
-        private ComponentLookup<HubTag> _hubLookup;
         public void OnCreate(ref SystemState state)
         {
             _hubsQuery = SystemAPI.QueryBuilder().WithAll<HubTag>().Build();
@@ -48,7 +47,6 @@ namespace YAPCG.UI.Systems
         }
         public void OnUpdate(ref SystemState state)
         {
-            _hubLookup = SystemAPI.GetComponentLookup<HubTag>(true);
             ActionInput action = SystemAPI.GetSingleton<ActionInput>();
             if (action.ShouldBuildHub)
             {
