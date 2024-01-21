@@ -3,10 +3,12 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.Time.Systems;
 using YAPCG.Hub.Factories;
 
 namespace YAPCG.Hub.Systems
 {
+    [UpdateInGroup(typeof(TickWeeklyGroup))]
     public partial struct DepositSpawner : ISystem
     {
         [BurstCompile]

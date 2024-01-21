@@ -2,6 +2,9 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
+using UnityEngine;
+using UnityEngine.Rendering;
 using YAPCG.Engine.Components;
 using YAPCG.Hub.Factories;
 using YAPCG.UI;
@@ -47,8 +50,9 @@ namespace YAPCG.Hub.Systems
                 for (int i = 0; i < config.Medium; i++)
                     HubFactory.CreateNormalHub(ecb, config.Position + GetPositionInCircle(ref random, 2), HubNamingGenerator.Get(ref random));
 
-                for (int i = 0; i < config.Big; i++)    
-                    HubFactory.CreateBigHub(ecb, config.Position + float3.zero, HubNamingGenerator.Get(ref random));
+                for (int i = 0; i < config.Big; i++)
+                    HubFactory.CreateBigHub(ecb, config.Position + float3.zero, HubNamingGenerator.Get(ref random)); 
+                
             }
             spawnConfigs.Clear();
             

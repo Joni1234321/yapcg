@@ -1,26 +1,25 @@
 ﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using YAPCG.Engine.Time.Systems;
 using YAPCG.Hub.Components;
 
 namespace YAPCG.Hub.Systems
 {
+    [UpdateInGroup(typeof(TickWeeklyGroup))]
     public partial struct DepositIncomeSystem : ISystem
     {
-        private BufferLookup<Deposit.Sizes> _depositSizesLookup;
 
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            _depositSizesLookup = SystemAPI.GetBufferLookup<Deposit.Sizes>(true);
 
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {  
-            _depositSizesLookup.Update(ref state);
-            var incomeJob = new IncomeJob() { DepositSizesLookup = _depositSizesLookup };
+            var incomeJob = new IncomeJob() {  };
             incomeJob.Run();
         }
 
@@ -28,13 +27,12 @@ namespace YAPCG.Hub.Systems
         [BurstCompile]
         partial struct IncomeJob : IJobEntity
         {
-            [ReadOnly] public BufferLookup<Deposit.Sizes> DepositSizesLookup;
-
-            void Execute( in Entity entity, ref Deposit.Reserves reserves)
+            void Execute( in Entity entity, ref Deposit.Reserves reserves, in Deposit.Sizes sizes)
             {
-                DynamicBuffer<Deposit.Sizes> sizesBuffer = DepositSizesLookup[entity];
-                for (int i = 0; i < sizesBuffer.Length; i++)
-                    reserves.Value += (i + 1) * sizesBuffer[i].Size;
+                reserves.Value += sizes.Open * 1;
+                reserves.Value += sizes.S * 2;
+                reserves.Value += sizes.M * 4;
+                reserves.Value += sizes.L * 8;
             }
         }
     }

@@ -407,7 +407,7 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 758bd2d416d1afc438262985cf4f4e69,
     type: 3}
   m_SortingOrder: 0
---- !u!1 &1119058870
+--- !u!1 &1969036912
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -415,43 +415,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1119058871}
-  - component: {fileID: 1119058872}
+  - component: {fileID: 1969036913}
+  - component: {fileID: 1969036914}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: UIController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &1119058871
+--- !u!4 &1969036913
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119058870}
+  m_GameObject: {fileID: 1969036912}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.7369394, y: 0.48713493, z: -4.79871}
+  m_LocalPosition: {x: 10.1820345, y: -1.3479705, z: -4.472995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1119058872
+--- !u!114 &1969036914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119058870}
+  m_GameObject: {fileID: 1969036912}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac68698f65d147968cfad2e32d9de9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UIDocument: {fileID: 490386932}
+  HubNames: []
 --- !u!1 &1983968072
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,4 +646,4 @@ SceneRoots:
   - {fileID: 2143834239}
   - {fileID: 33980554}
   - {fileID: 1983968075}
-  - {fileID: 1119058871}
+  - {fileID: 1969036913}

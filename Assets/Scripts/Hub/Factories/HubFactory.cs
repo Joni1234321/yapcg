@@ -1,6 +1,7 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 using YAPCG.Engine.Components;
 using YAPCG.Hub.Components;
 using YAPCG.Planets.Components;

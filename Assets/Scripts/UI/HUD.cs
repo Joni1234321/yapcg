@@ -52,9 +52,6 @@ namespace YAPCG.UI
             foreach (Name name in names) 
                 HubNames.Add(name.Value.ToString());
             names.Dispose();
-            
-
-
         }
 
         public void UpdateHubUI(EntityManager _, Entity hub)
