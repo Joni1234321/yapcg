@@ -151,10 +151,10 @@
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerProgressBar.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Dropdown\DropdownMultiSelectEditor.cs" />
-    <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerSlider.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
-    <Compile Include="Assets\Scripts\Credit.cs" />
+    <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerSlider.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\ListView\ListViewRow.cs" />
+    <Compile Include="Assets\Scripts\Credit.cs" />
     <Compile Include="Assets\Scripts\Hub\Systems\HubSpawner.cs" />
     <Compile Include="Assets\Scripts\Hub\Factories\HubFactory.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
