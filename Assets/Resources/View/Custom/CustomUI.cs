@@ -12,7 +12,7 @@ namespace YAPCG.Resources.View.Custom
         }
 
         protected T Q<T>(string name = null, string className = null) where T : VisualElement => _body.Q<T>(name, className);
-        protected UQueryBuilder<T> Query<T>(string name = null, string className = null) where T : VisualElement => _body.Query<T>();
+        protected UQueryBuilder<T> Query<T>(string name = null, string className = null) where T : VisualElement => _body.Query<T>(name, className);
 
     }
 }
