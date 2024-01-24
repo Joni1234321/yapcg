@@ -94,6 +94,7 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Icon\IconManagerEditor.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Modal Window\ModalWindowManager.cs" />
+    <Compile Include="Assets\Scripts\Hub\Systems\RenderSystem.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerDropdownItem.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Hub\Components\BuildingSlotsLeft.cs" />

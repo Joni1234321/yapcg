@@ -31,7 +31,7 @@ namespace YAPCG.UI
                 new[] { Deposit.Mesh }
             );
             float4x4 basic = float4x4.TRS(float3.zero, quaternion.identity, new float3(1, 1, 1));
-            RenderMeshUtility.AddComponents(e, _, description, array, MaterialMeshInfo.FromRenderMeshArrayIndices(0, 0));
+            //RenderMeshUtility.AddComponents(e, _, description, array, MaterialMeshInfo.FromRenderMeshArrayIndices(0, 0));
             _.AddComponentData(e, new LocalToWorld { Value = basic });
             _.SetName(e, "RenderMeshUtiltiy");
         }
