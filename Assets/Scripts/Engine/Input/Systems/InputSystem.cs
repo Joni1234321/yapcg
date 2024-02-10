@@ -7,7 +7,7 @@ using static UnityEngine.Input;
 namespace YAPCG.Engine.Input
 {
     [UpdateInGroup(typeof(InputSystemGroup))]
-    public partial struct InputSystem : ISystem
+    internal partial struct InputSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
@@ -38,17 +38,5 @@ namespace YAPCG.Engine.Input
         {
 
         }
-    }
-
-
-    public struct MouseInput : IComponentData
-    {
-        public bool Left;
-    }
-
-    public struct ActionInput : IComponentData
-    {
-        public bool ShouldBuildHub;
-        public bool Next, Previous;
     }
 }

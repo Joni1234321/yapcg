@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using YAPCG.Engine.Components;
@@ -30,15 +31,18 @@ namespace YAPCG.Hub.Systems
             SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
             {
                 Position = float3.zero,
-                Big = 1
+                Big = 1,
+                Medium = 10,
+                //Small = 1000
             });
         }
+        
+
         
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             Random random = SystemAPI.GetSingleton<SharedRandom>().Random;
-
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             var spawnConfigs = SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false);
             
@@ -51,14 +55,17 @@ namespace YAPCG.Hub.Systems
                     HubFactory.CreateNormalHub(ecb, config.Position + GetPositionInCircle(ref random, 2), HubNamingGenerator.Get(ref random));
 
                 for (int i = 0; i < config.Big; i++)
+                {
                     HubFactory.CreateBigHub(ecb, config.Position + float3.zero, HubNamingGenerator.Get(ref random)); 
+                }
                 
             }
             spawnConfigs.Clear();
             
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
-            
+
+
             SystemAPI.SetSingleton(new SharedRandom { Random = random });
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Rendering;
 using UnityEngine;
 using YAPCG.Engine.Time.Systems;
 using YAPCG.Hub.Components;

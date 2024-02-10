@@ -5,6 +5,8 @@ using YAPCG.Engine.Time.Components;
 
 namespace YAPCG.Engine.Time.Systems
 {
+    
+    [UpdateInGroup(typeof(Common.SystemGroup))]
     // Should not run directly in this group instead if you want every tick, then do TickDailyGroup
     public partial class GameTimeSystemGroup : ComponentSystemGroup
     {

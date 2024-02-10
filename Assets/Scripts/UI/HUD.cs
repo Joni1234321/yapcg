@@ -46,12 +46,13 @@ namespace YAPCG.UI
 
         private void Update()
         {
+            /*
             NativeArray<Name> names = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntityQuery(typeof(HubTag), typeof(Name))
                 .ToComponentDataArray<Name>(Allocator.Temp);
             HubNames.Clear();
             foreach (Name name in names) 
                 HubNames.Add(name.Value.ToString());
-            names.Dispose();
+            names.Dispose();*/
         }
 
         public void UpdateHubUI(EntityManager _, Entity hub)

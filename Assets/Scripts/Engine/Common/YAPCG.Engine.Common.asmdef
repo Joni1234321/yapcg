@@ -1,0 +1,18 @@
+﻿{
+  "name": "YAPCG.Engine.Common",
+  "rootNamespace": "YAPCG",
+  "references": [
+    "Unity.Entities",
+    "Unity.Collections",
+    "Unity.Burst"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

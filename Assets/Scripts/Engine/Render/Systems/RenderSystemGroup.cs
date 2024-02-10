@@ -1,11 +1,11 @@
 ﻿using Unity.Entities;
+using YAPCG.Engine.Common;
 
 namespace YAPCG.Engine.SystemGroups
 {
-    [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
+    [UpdateInGroup(typeof(SystemGroup), OrderLast = true)]
     [UpdateAfter(typeof(InputSystemGroup))]
     public partial class RenderSystemGroup : ComponentSystemGroup
     {
-        
     }
 }

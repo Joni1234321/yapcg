@@ -164,11 +164,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Deposit:
-    Material: {fileID: 2100000, guid: 8b945aa5b001844478332ad6438a73d5, type: 2}
-    Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    material: {fileID: 2100000, guid: a876307b471e4644786b21958112e3bd, type: 2}
+    mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   Hub:
-    Material: {fileID: 2100000, guid: a876307b471e4644786b21958112e3bd, type: 2}
-    Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    material: {fileID: 2100000, guid: 5329c279cf98d2c4982c988548099e55, type: 2}
+    mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

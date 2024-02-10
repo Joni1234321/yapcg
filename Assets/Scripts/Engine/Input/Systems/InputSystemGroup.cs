@@ -1,8 +1,9 @@
 ﻿using Unity.Entities;
+using YAPCG.Engine.Common;
 
 namespace YAPCG.Engine.SystemGroups
 {
-    [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
+    [UpdateInGroup(typeof(SystemGroup), OrderFirst = true)]
     public partial class InputSystemGroup : ComponentSystemGroup
     {
         
