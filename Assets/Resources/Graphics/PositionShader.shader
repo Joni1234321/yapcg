@@ -52,7 +52,7 @@ Shader "Primitives/Lit"
             {
 
                 varyings o;
-                    const float3 pos = _Positions[instance_id];
+                const float3 pos = _Positions[instance_id];
                 o.vertex = TransformObjectToHClip(v.vertex.xyz + pos);
                 o.uv = v.uv;
                 o.diffuse = saturate(dot(v.normal, _MainLightPosition.xyz));

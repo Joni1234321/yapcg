@@ -29,10 +29,7 @@ namespace YAPCG.Hub.Factories
             // Components
             _.AddComponent(e, new Position { Value = position });
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
-            
-            // Rendering
-            AddRenders(_, e);
-            
+
             return e;
         }
         

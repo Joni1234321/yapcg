@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.Time.Systems;
 using YAPCG.Hub.Factories;
 using YAPCG.UI;
 using Random = Unity.Mathematics.Random;
@@ -14,7 +15,7 @@ using TickWeeklyGroup = YAPCG.Engine.Time.Systems.TickWeeklyGroup;
 
 namespace YAPCG.Hub.Systems
 {
-    [UpdateInGroup(typeof(TickWeeklyGroup))]
+    [UpdateInGroup(typeof(TickDailyGroup))]
     public partial struct HubSpawner : ISystem  
     {
         float3 GetPositionInCircle(ref Random random, float radius)
@@ -33,7 +34,7 @@ namespace YAPCG.Hub.Systems
                 Position = float3.zero,
                 Big = 1,
                 Medium = 10,
-                //Small = 1000
+                Small = 100000
             });
         }
         
@@ -49,10 +50,10 @@ namespace YAPCG.Hub.Systems
             foreach (var config in spawnConfigs)
             {
                 for (int i = 0; i < config.Small; i++)
-                    HubFactory.CreateSmallHub(ecb, config.Position + GetPositionInCircle(ref random, 5), HubNamingGenerator.Get(ref random));
+                    HubFactory.CreateSmallHub(ecb, config.Position + GetPositionInCircle(ref random, 200), HubNamingGenerator.Get(ref random));
 
                 for (int i = 0; i < config.Medium; i++)
-                    HubFactory.CreateNormalHub(ecb, config.Position + GetPositionInCircle(ref random, 2), HubNamingGenerator.Get(ref random));
+                    HubFactory.CreateNormalHub(ecb, config.Position + GetPositionInCircle(ref random, 50), HubNamingGenerator.Get(ref random));
 
                 for (int i = 0; i < config.Big; i++)
                 {

@@ -11,8 +11,8 @@ namespace YAPCG.Engine.Render
 
         public static void AddComponents(EntityCommandBuffer _, Entity e, RenderMeshArray renderArray)
         {
-            _.AddComponent<RenderPositionOnlyTag>(e);
-            _.AddSharedComponentManaged(e, renderArray);
+            // _.AddComponent<RenderPositionOnlyTag>(e);
+            //_.AddSharedComponentManaged(e, renderArray);
 
             // For the future
             //_.AddComponent(e, INFO);

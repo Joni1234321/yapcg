@@ -1,52 +1,73 @@
-﻿using Unity.Burst;
+﻿using System;
+using Unity.Burst;
 using Unity.Burst.Intrinsics;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Rendering;
 using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
+using YAPCG.Planets.Components;
+using YAPCG.UI;
 
 namespace YAPCG.Engine.Render.Systems
 {
     [UpdateInGroup(typeof(RenderSystemGroup))]
-    internal partial struct CustomRenderSystem : ISystem
+    [BurstCompile]
+    internal partial class CustomRenderSystem : SystemBase
     {
-        private EntityQuery query;
+        private EntityQuery _query;
+        private GraphicsBuffer _buffer;
+        private static readonly int POSITION = Shader.PropertyToID("_Positions");
+        private RenderParams _rp;
+
+        private Material _material;
+        private Mesh _mesh;
+        
         [BurstCompile]
-        public void OnCreate(ref SystemState state)
+        protected override void OnCreate()
         {
-            query = new EntityQueryBuilder(state.WorldUpdateAllocator).WithAll<Position, RenderPositionOnlyTag>().Build(ref state);
+            _material = Meshes.Instance.Deposit.RenderMeshArray.Materials[0];
+            _material = UnityEngine.Resources.Load<Material>($"Graphics/Deposit/Hub.mat");
+            _mesh = UnityEngine.Resources.Load<Mesh>($"Graphics/Deposit/Hub.mesh");
+
+            _query = new EntityQueryBuilder(WorldUpdateAllocator).WithAll<Position, HubTag>().Build(this);
+
         }
 
         [BurstCompile]
-        public void OnUpdate(ref SystemState state)
+        protected override void OnUpdate()
         {
-            NativeArray<Position> data = query.ToComponentDataArray<Position>(Allocator.Temp);
-            //Debug.Log(data.Length);
-            data.Dispose();
+            // OPTIMIZATION: SET COMPONENT FLAG THAT WHENEVER ANOTHER OBJECT SPAWNS, THEN CHANGE COMMAND, OTHERWISE DONT
+            RenderHubs();
         }
 
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
+        [BurstDiscard]
+        void RenderHubs()
         {
+            const int POSITION_SIZE = sizeof(float) * 3;
+            
+            Mesh mesh = Meshes.Instance.Deposit.RenderMeshArray.Meshes[0];
+            Material material = Meshes.Instance.Deposit.RenderMeshArray.Materials[0];
 
+            _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1) * 1000)};
+
+            NativeArray<Position> positions = _query.ToComponentDataArray<Position>(WorldUpdateAllocator);
+            int n = positions.Length;
+
+            if (n != 0)
+            {
+                //if (_buffer.count != n)
+                {
+                    _buffer?.Release();
+                    _buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, POSITION_SIZE);
+                    _buffer.SetData(positions);
+                } 
+                _rp.matProps.SetBuffer(POSITION, _buffer);
+                Graphics.RenderMeshPrimitives(_rp, mesh, 0, n);
+            }
         }
     }
     
-    [BurstCompile]
-    internal struct RenderPositionOnlyChunkJob : IJobChunk
-    {
-        [ReadOnly] public ComponentTypeHandle<Position> PositionTypeHandle;
-        [ReadOnly] public ComponentTypeHandle<RenderMeshArray> RenderMeshArrayHandle;
-        
-        [BurstCompile]
-        public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
-        {
-            NativeArray<Position> positions = chunk.GetNativeArray(ref PositionTypeHandle);
-            
-            
-        }
-    }
-     
 }

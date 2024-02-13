@@ -38,6 +38,8 @@ namespace YAPCG.UI
             Deposit.Load();
             Hub.Load();
         }
+        
+        
     }
 
     [System.Serializable]
