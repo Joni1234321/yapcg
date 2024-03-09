@@ -4,6 +4,7 @@ Shader "Primitives/Lit"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
+        _AnimationColor ("AnimationColor", Color) = (1, 0.5, 0.5, 1)
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
     }
@@ -25,9 +26,10 @@ Shader "Primitives/Lit"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             StructuredBuffer<float3> _Positions;
+            StructuredBuffer<uint> _Animation;
 
             CBUFFER_START(UnityPerMaterial)
-            uniform float4 _Color;
+            uniform float4 _Color, _AnimationColor;
             uniform float _Intensity;
             uniform float _Ambient;
             uniform sampler2D _MainTex;
@@ -48,7 +50,7 @@ Shader "Primitives/Lit"
                 float2 uv : TEXCOORD0;
             };
 
-            varyings vert(attributes v, const uint instance_id : SV_InstanceID)
+            varyings vert(const attributes v, const uint instance_id : SV_InstanceID)
             {
 
                 varyings o;
@@ -59,11 +61,17 @@ Shader "Primitives/Lit"
                 return o;
             }
 
-            half4 frag(const varyings i) : SV_Target
+            half4 frag(const varyings i, const uint instance_id : SV_InstanceID) : SV_Target
             {
                 const float3 albedo = tex2D(_MainTex, i.uv);
                 const float3 light =  i.diffuse * _Intensity + _Ambient;
-                return half4(albedo * _Color * light, 1);
+
+                const uint animations = _Animation[instance_id / 4];
+                const uint offset = instance_id % 4;
+                
+                const uint ani = _Animation[instance_id]; //(animations >> (offset * 16)) & 0xFF;
+                const half4 color = lerp(_Color, _AnimationColor, ani);
+                return half4(albedo * color * light, 1);
             }
             ENDHLSL
         }

@@ -1,22 +1,29 @@
 ﻿using System.ComponentModel;
 using JetBrains.Annotations;
+using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
+using Unity.Entities.Content;
+using Unity.Entities.Serialization;
 using Unity.Rendering;
-using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Serialization;
-using YAPCG.Engine.Input;
-using YAPCG.Engine.SystemGroups;
-using YAPCG.Hub.Systems;
 
 namespace YAPCG.UI
 {
+    public struct MeshesReference : IComponentData
+    {
+        public bool LoadStarted;
+        public WeakObjectReference<Mesh> DepositMesh;
+        public WeakObjectReference<Material> DepositMaterial;
+    }
+    public class MeshesSingleton : IComponentData
+    {
+        public MeshMaterial Deposit, Hub;
+    }
     public class Meshes : MonoBehaviour
     {
         public MeshMaterial Deposit, Hub;
 
+        private EntityQuery _query;
         // Can be null, but assume it isnt
         [NotNull] public static Meshes Instance { private set; get; }
 
@@ -30,6 +37,15 @@ namespace YAPCG.UI
 
             Instance = this;
             Load();
+            EntityManager _ = World.DefaultGameObjectInjectionWorld.EntityManager;
+            EntityQuery query = new EntityQueryBuilder(Allocator.Temp).WithAll<MeshesSingleton>().Build(_);
+            _.CreateSingleton<MeshesSingleton>();
+            query.SetSingleton(new MeshesSingleton {  Deposit =  Deposit, Hub = Hub });
+
+            Mesh dmesh = Deposit.RenderMeshArray.Meshes[0];
+            Material dmat = Deposit.RenderMeshArray.Materials[0];
+            _.CreateSingleton<MeshesReference>();
+            _.CreateEntityQuery(ComponentType.ReadWrite<MeshesReference>()).SetSingleton(new MeshesReference() { DepositMesh = new WeakObjectReference<Mesh>(dmesh), DepositMaterial = new WeakObjectReference<Material>(dmat)} );
         }
 
         private void Load()
@@ -38,8 +54,6 @@ namespace YAPCG.UI
             Deposit.Load();
             Hub.Load();
         }
-        
-        
     }
 
     [System.Serializable]
@@ -55,6 +69,5 @@ namespace YAPCG.UI
             RenderMeshArray = new RenderMeshArray(new[] { material }, new[] { mesh });
         }            
     }
-    
-
 }
+
