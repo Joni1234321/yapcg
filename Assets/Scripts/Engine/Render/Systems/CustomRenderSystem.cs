@@ -29,19 +29,12 @@ namespace YAPCG.Engine.Render.Systems
         private Material _material;
         private Mesh _mesh;
         
-        struct METHOD  : IComponentData
-        {
-            public int Value;
-        }
-        
         [BurstCompile]
         protected override void OnCreate()
         {
             _query = SystemAPI.QueryBuilder().WithAll<Anim, Position, HubTag>().Build();
             _meshQuery = SystemAPI.QueryBuilder().WithAll<MeshesSingleton>().Build();
 
-            EntityManager.CreateSingleton<METHOD>();
-                
             RequireForUpdate<MeshesSingleton>();
             RequireForUpdate<MeshesReference>();
         }
@@ -56,34 +49,22 @@ namespace YAPCG.Engine.Render.Systems
         [BurstDiscard]
         void RenderHubs()
         {
-            switch (SystemAPI.GetSingleton<METHOD>().Value)
+            var meshes = SystemAPI.GetSingleton<MeshesReference>();
+    
+            if (!meshes.LoadStarted)
             {
-                case 1:
-                    Render(Meshes.Instance.Deposit.RenderMeshArray.Meshes[0],
-                        Meshes.Instance.Deposit.RenderMeshArray.Materials[0]);
-                    break;
-                case 2:
-                    Render(_meshQuery.GetSingleton<MeshesSingleton>().Deposit.RenderMeshArray.Meshes[0], _meshQuery.GetSingleton<MeshesSingleton>().Deposit.RenderMeshArray.Materials[0]);
-                    break;
-                case 3:
-                    var meshes = SystemAPI.GetSingleton<MeshesReference>();
-            
-                    if (!meshes.LoadStarted)
-                    {
-                        var meshesRW = SystemAPI.GetSingletonRW<MeshesReference>();
-                        meshesRW.ValueRW.DepositMaterial.LoadAsync();
-                        meshesRW.ValueRW.DepositMesh.LoadAsync();
-                        meshesRW.ValueRW.LoadStarted = true;
-                        return;
-                    }
-
-                    if (meshes.DepositMaterial.LoadingStatus != ObjectLoadingStatus.Completed ||
-                        meshes.DepositMesh.LoadingStatus != ObjectLoadingStatus.Completed)
-                        return;
-
-                    Render(meshes.DepositMesh.Result, meshes.DepositMaterial.Result);
-                    break;
+                var meshesRW = SystemAPI.GetSingletonRW<MeshesReference>();
+                meshesRW.ValueRW.DepositMaterial.LoadAsync();
+                meshesRW.ValueRW.DepositMesh.LoadAsync();
+                meshesRW.ValueRW.LoadStarted = true;
+                return;
             }
+
+            if (meshes.DepositMaterial.LoadingStatus != ObjectLoadingStatus.Completed ||
+                meshes.DepositMesh.LoadingStatus != ObjectLoadingStatus.Completed)
+                return;
+
+            Render(meshes.DepositMesh.Result, meshes.DepositMaterial.Result);
         }
 
 
