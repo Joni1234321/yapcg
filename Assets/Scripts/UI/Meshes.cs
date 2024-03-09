@@ -25,7 +25,7 @@ namespace YAPCG.UI
         {
             if (Instance != null)
             {
-                CLogger.Warning("Second instance of Meshes created");
+                CLogger.WarningDuplication(this, "Second instance of Meshes created");
                 return;
             }
 
@@ -40,19 +40,17 @@ namespace YAPCG.UI
 
         private void Load()
         {
-            CLogger.Loading(this, "Deposits and meshes");
-            Debug.Log("1", this);
-            Debug.Log("2");
             Deposit.Load();
             Hub.Load();
+            CLogger.LogLoaded(this, "Deposits and meshes");
         }
     }
 
     [System.Serializable]
     public struct MeshMaterial
     {
-        [SerializeField] private Material material;
-        [SerializeField] private Mesh mesh;
+        [SerializeField] public Material material;
+        [SerializeField] public Mesh mesh;
 
         public RenderMeshArray RenderMeshArray;
 

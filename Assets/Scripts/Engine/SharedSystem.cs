@@ -14,10 +14,9 @@ namespace YAPCG.Engine
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+
             state.EntityManager.CreateSingleton(new SharedRandom { Random = Random.CreateFromIndex(29) });
-
-            CLogger.Log("Shared");
-
+            CLogger.LogLoaded(null, "SharedSystem");
             state.Enabled = false;
         }
     }

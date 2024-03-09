@@ -6,6 +6,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Hub.Components;
 using YAPCG.Planets.Components;
@@ -78,7 +79,7 @@ namespace YAPCG.UI
         private void Awake()
         {
             if (Instance != null)
-                Debug.LogError("Second instance of HUD created");
+                CLogger.WarningDuplication(this, "Second instance of HUD created");
 
             Instance = this;
             UI = UIDocument.rootVisualElement;
