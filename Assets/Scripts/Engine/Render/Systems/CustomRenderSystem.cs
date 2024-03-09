@@ -33,9 +33,7 @@ namespace YAPCG.Engine.Render.Systems
         protected override void OnCreate()
         {
             _query = SystemAPI.QueryBuilder().WithAll<Anim, Position, HubTag>().Build();
-            _meshQuery = SystemAPI.QueryBuilder().WithAll<MeshesSingleton>().Build();
 
-            RequireForUpdate<MeshesSingleton>();
             RequireForUpdate<MeshesReference>();
         }
 

@@ -15,10 +15,6 @@ namespace YAPCG.UI
         public WeakObjectReference<Mesh> DepositMesh;
         public WeakObjectReference<Material> DepositMaterial;
     }
-    public class MeshesSingleton : IComponentData
-    {
-        public MeshMaterial Deposit, Hub;
-    }
     public class Meshes : MonoBehaviour
     {
         public MeshMaterial Deposit, Hub;
@@ -38,10 +34,6 @@ namespace YAPCG.UI
             Instance = this;
             Load();
             EntityManager _ = World.DefaultGameObjectInjectionWorld.EntityManager;
-            EntityQuery query = new EntityQueryBuilder(Allocator.Temp).WithAll<MeshesSingleton>().Build(_);
-            _.CreateSingleton<MeshesSingleton>();
-            query.SetSingleton(new MeshesSingleton {  Deposit =  Deposit, Hub = Hub });
-
             Mesh dmesh = Deposit.RenderMeshArray.Meshes[0];
             Material dmat = Deposit.RenderMeshArray.Materials[0];
             _.CreateSingleton<MeshesReference>();
