@@ -1,11 +1,9 @@
-﻿using System.ComponentModel;
-using JetBrains.Annotations;
-using Unity.Collections;
+﻿using JetBrains.Annotations;
 using Unity.Entities;
 using Unity.Entities.Content;
-using Unity.Entities.Serialization;
 using Unity.Rendering;
 using UnityEngine;
+using YAPCG.Engine.Common;
 
 namespace YAPCG.UI
 {
@@ -27,7 +25,7 @@ namespace YAPCG.UI
         {
             if (Instance != null)
             {
-                Debug.LogWarning("Second instance of Meshes created");
+                CLogger.Warning("Second instance of Meshes created");
                 return;
             }
 
@@ -42,7 +40,9 @@ namespace YAPCG.UI
 
         private void Load()
         {
-            Debug.Log("Loading Assets");
+            CLogger.Loading(this, "Deposits and meshes");
+            Debug.Log("1", this);
+            Debug.Log("2");
             Deposit.Load();
             Hub.Load();
         }

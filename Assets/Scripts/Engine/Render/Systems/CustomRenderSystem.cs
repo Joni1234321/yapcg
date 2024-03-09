@@ -6,7 +6,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Entities.Content;
 using Unity.Mathematics;
-using Unity.Rendering;
 using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
@@ -20,15 +19,12 @@ namespace YAPCG.Engine.Render.Systems
     [BurstCompile]
     internal partial class CustomRenderSystem : SystemBase
     {
-        private EntityQuery _query, _meshQuery;
+        private EntityQuery _query;
         private GraphicsBuffer _positionBuffer, _animationBuffer;
         private static readonly int POSITION = Shader.PropertyToID("_Positions");
         private static readonly int ANIMATION = Shader.PropertyToID("_Animation");
         private RenderParams _rp;
 
-        private Material _material;
-        private Mesh _mesh;
-        
         [BurstCompile]
         protected override void OnCreate()
         {
@@ -45,7 +41,7 @@ namespace YAPCG.Engine.Render.Systems
         }
 
         [BurstDiscard]
-        void RenderHubs()
+        private void RenderHubs()
         {
             var meshes = SystemAPI.GetSingleton<MeshesReference>();
     
@@ -66,7 +62,7 @@ namespace YAPCG.Engine.Render.Systems
         }
 
 
-        void Render(Mesh mesh, Material material) 
+        private void Render(Mesh mesh, Material material) 
         {
             const int POSITION_SIZE = sizeof(float) * 3;
             const int ANIMATION_SIZE = sizeof(uint);
@@ -97,7 +93,8 @@ namespace YAPCG.Engine.Render.Systems
             }
 
         }
-        Mesh GetMeshTemp ()
+
+        private Mesh GetMeshTemp ()
         { 
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Mesh mesh = temp.GetComponent<MeshFilter>().mesh;

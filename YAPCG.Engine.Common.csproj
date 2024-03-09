@@ -58,6 +58,7 @@
     <Analyzer Include="C:\Active\Unity\YAPCG\Library\PackageCache\com.unity.entities\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Engine\Common\CLogger.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\SystemGroup.cs" />
     <None Include="Assets\Scripts\Engine\Common\YAPCG.Engine.Common.asmdef" />
     <Reference Include="UnityEngine">
