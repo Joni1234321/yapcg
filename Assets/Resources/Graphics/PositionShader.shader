@@ -8,7 +8,6 @@ Shader "Primitives/Lit"
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
         _AnimationTime ("Animation Time", Range(0, 10)) = 2
-        _AnimationSinStrength ("Animation Sine Strength", Range(0, 1)) = 1
     }
     SubShader
     {
@@ -23,6 +22,7 @@ Shader "Primitives/Lit"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #define PI2 PI * 2
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -34,7 +34,7 @@ Shader "Primitives/Lit"
             uniform float4 _Color;
 
             uniform float4 _AnimationColor;
-            uniform float _AnimationTime, _AnimationSinStrength;
+            uniform float _AnimationTime;
             
             uniform float _Intensity, _Ambient;
             uniform sampler2D _MainTex;
@@ -78,7 +78,7 @@ Shader "Primitives/Lit"
 
                 const float diff = _Time.y - _Animations[i.instance_id];
 
-                float t = (diff <= _AnimationTime) * saturate(1 + _AnimationSinStrength * (cos(PI * diff / _AnimationTime) - 1));
+                const float t = (diff <= _AnimationTime) * saturate(sin(PI * diff / _AnimationTime));
                 const half4 color = lerp(_Color, _AnimationColor, t);
                 return half4(albedo * color * light, 1);
             }
