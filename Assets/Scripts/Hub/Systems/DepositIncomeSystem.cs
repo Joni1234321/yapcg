@@ -7,7 +7,7 @@ using YAPCG.Hub.Components;
 namespace YAPCG.Hub.Systems
 {
     [UpdateInGroup(typeof(TickWeeklyGroup))]
-    public partial struct DepositIncomeSystem : ISystem
+    internal partial struct DepositIncomeSystem : ISystem
     {
 
         [BurstCompile]

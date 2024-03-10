@@ -12,7 +12,7 @@ using YAPCG.Planets.Components;
 namespace YAPCG.Planets.Systems
 {
     [UpdateInGroup(typeof(TickDailyGroup))]
-    public partial struct DiscoverSystem : ISystem
+    internal partial struct DiscoverSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
@@ -30,18 +30,19 @@ namespace YAPCG.Planets.Systems
         [BurstCompile]
         partial struct HubJob : IJobEntity
         {
-            private const int DISCOVER_COST_INCREMENT = 30;
+            const int DISCOVER_COST_INCREMENT = 30;
+            private const int ANIMATION_REDUCTION = 0b1 << 5;
             void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref Anim anim)
             {
                 discoverProgress.Value += discoverProgress.Progress;
-                anim.Value = (anim.Value == 0) ? 0 : anim.Value - 1;
+                anim.Value = anim.Value <= ANIMATION_REDUCTION ? 0 : anim.Value - ANIMATION_REDUCTION;
                 if (Unity.Burst.CompilerServices.Hint.Unlikely(discoverProgress.Value >= discoverProgress.MaxValue))
                 {
                     discoverProgress.Value -= discoverProgress.MaxValue;
                     discoverProgress.MaxValue += DISCOVER_COST_INCREMENT;
 
                     buildingSlotsLeft.Medium++;
-                    anim.Value = 10;
+                    anim.Value = Anim.MAX_VALUE;
                 }
             }
         }

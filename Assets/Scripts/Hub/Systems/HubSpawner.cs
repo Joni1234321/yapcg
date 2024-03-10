@@ -1,17 +1,14 @@
 ﻿using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Rendering;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.Rendering;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
 using YAPCG.Hub.Factories;
-using YAPCG.UI;
+using YAPCG.Planets.Components;
 using Random = Unity.Mathematics.Random;
-using TickWeeklyGroup = YAPCG.Engine.Time.Systems.TickWeeklyGroup;
 
 namespace YAPCG.Hub.Systems
 {
@@ -36,6 +33,7 @@ namespace YAPCG.Hub.Systems
                 Medium = 10,
                 Small = 100000
             });
+            
         }
         
 
@@ -46,26 +44,49 @@ namespace YAPCG.Hub.Systems
             Random random = SystemAPI.GetSingleton<SharedRandom>().Random;
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             var spawnConfigs = SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false);
-            
-            foreach (var config in spawnConfigs)
+            foreach (HubSpawnConfig config in spawnConfigs)
             {
+                NativeList<Entity> spawnedEntities = new NativeList<Entity>(config.Total, Allocator.Temp);
+
                 for (int i = 0; i < config.Small; i++)
-                    HubFactory.CreateSmallHub(ecb, config.Position + GetPositionInCircle(ref random, 200), HubNamingGenerator.Get(ref random));
+                    spawnedEntities.Add(
+                        HubFactory.CreateSmallHub(
+                            ecb, 
+                            config.Position + GetPositionInCircle(ref random, 200), 
+                            HubNamingGenerator.Get(ref random)
+                            )
+                        );
 
                 for (int i = 0; i < config.Medium; i++)
-                    HubFactory.CreateNormalHub(ecb, config.Position + GetPositionInCircle(ref random, 50), HubNamingGenerator.Get(ref random));
-
-                for (int i = 0; i < config.Big; i++)
-                {
-                    HubFactory.CreateBigHub(ecb, config.Position + float3.zero, HubNamingGenerator.Get(ref random)); 
-                }
+                    spawnedEntities.Add(
+                        HubFactory.CreateNormalHub(
+                            ecb, 
+                            config.Position + GetPositionInCircle(ref random, 50), 
+                            HubNamingGenerator.Get(ref random)
+                        )
+                    );
                 
+                for (int i = 0; i < config.Big; i++)
+                    spawnedEntities.Add(
+                        HubFactory.CreateBigHub(
+                            ecb, 
+                            config.Position, 
+                            HubNamingGenerator.Get(ref random)
+                        )
+                    );
+
+                foreach (Entity e in spawnedEntities)
+                {
+                    ecb.SetComponent<DiscoverProgress>(e, new DiscoverProgress { Value = random.NextInt(0, 40), Progress = 1, MaxValue = 40} );
+                }
             }
+            
+            
+            
             spawnConfigs.Clear();
             
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
-
 
             SystemAPI.SetSingleton(new SharedRandom { Random = random });
         }
@@ -76,6 +97,8 @@ namespace YAPCG.Hub.Systems
     {
         public float3 Position;
         public int Big, Medium, Small;
+
+        public int Total => Big + Medium + Small;
     }
     
 }

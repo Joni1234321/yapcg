@@ -12,5 +12,7 @@ namespace YAPCG.Engine.Components
     public struct Anim : IComponentData
     {
         public uint Value;
+
+        public const uint MAX_VALUE = 0xFF;
     }
 }
