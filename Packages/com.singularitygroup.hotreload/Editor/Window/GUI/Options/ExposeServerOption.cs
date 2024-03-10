@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SingularityGroup.HotReload.Editor.Cli;
 using UnityEditor;
 
 namespace SingularityGroup.HotReload.Editor {

@@ -4,10 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using SingularityGroup.HotReload.Editor.Cli;
 using SingularityGroup.HotReload.RuntimeDependencies;
-using UnityEditor;
 #if UNITY_EDITOR_WIN
-using System.Diagnostics;
-using Debug = UnityEngine.Debug;
 #endif
 
 namespace SingularityGroup.HotReload.Editor {

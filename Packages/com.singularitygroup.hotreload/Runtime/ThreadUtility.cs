@@ -2,7 +2,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using UnityEngine;
 
 namespace SingularityGroup.HotReload {
 #if UNITY_EDITOR

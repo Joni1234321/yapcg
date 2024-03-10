@@ -1,7 +1,6 @@
 ﻿#if ENABLE_MONO && (DEVELOPMENT_BUILD || UNITY_EDITOR)
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;

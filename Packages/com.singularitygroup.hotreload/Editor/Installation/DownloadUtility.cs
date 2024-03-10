@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using SingularityGroup.HotReload.Editor.Cli;
 
 namespace SingularityGroup.HotReload.Editor {
     static class DownloadUtility {

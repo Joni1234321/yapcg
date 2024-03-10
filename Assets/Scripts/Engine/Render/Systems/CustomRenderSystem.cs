@@ -1,14 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using Unity.Burst;
-using Unity.Burst.Intrinsics;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Entities.Content;
 using Unity.Mathematics;
 using UnityEngine;
 using YAPCG.Engine.Components;
-using YAPCG.Engine.SystemGroups;
 using YAPCG.Planets.Components;
 using YAPCG.UI;
 using Object = UnityEngine.Object;
@@ -28,7 +24,7 @@ namespace YAPCG.Engine.Render.Systems
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<Animations, Position, HubTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, Position, HubTag>().Build();
 
             RequireForUpdate<MeshesReference>();
         }
@@ -84,7 +80,7 @@ namespace YAPCG.Engine.Render.Systems
                 {
                     _animationsBuffer?.Release();
                     _animationsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, ANIMATION_SIZE);
-                    _animationsBuffer.SetData(_query.ToComponentDataArray<Animations>(WorldUpdateAllocator));
+                    _animationsBuffer.SetData(_query.ToComponentDataArray<AnimationComponent>(WorldUpdateAllocator));
                 }
                 
                 _rp.matProps.SetBuffer(SHADER_POSITIONS, _positionBuffer);

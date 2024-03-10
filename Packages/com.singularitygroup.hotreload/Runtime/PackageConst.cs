@@ -1,6 +1,4 @@
 #if ENABLE_MONO && (DEVELOPMENT_BUILD || UNITY_EDITOR)
-using UnityEngine;
-
 namespace SingularityGroup.HotReload {
     internal static class PackageConst {
         //CI changes this property to 'true' for asset store builds.

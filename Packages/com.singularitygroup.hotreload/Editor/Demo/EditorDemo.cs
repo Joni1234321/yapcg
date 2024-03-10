@@ -1,4 +1,3 @@
-using System.Collections;
 using System.IO;
 using SingularityGroup.HotReload.Demo;
 using UnityEditor;

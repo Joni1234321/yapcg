@@ -3,7 +3,6 @@ using System.Globalization;
 using SingularityGroup.HotReload.DTO;
 using UnityEditor;
 using UnityEditor.VSAttribution.HotReload;
-using UnityEngine;
 using UnityEngine.Analytics;
 
 namespace SingularityGroup.HotReload.Editor {

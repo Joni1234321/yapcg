@@ -1,6 +1,5 @@
 ﻿namespace DrawXXL
 {
-    using DrawXXL;
     using UnityEngine;
     using System.Collections.Generic;
 

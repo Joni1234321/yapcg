@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using System.Threading.Tasks;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;

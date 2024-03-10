@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SingularityGroup.HotReload.Editor {
     internal class OpenURLButton : IGUIComponent {

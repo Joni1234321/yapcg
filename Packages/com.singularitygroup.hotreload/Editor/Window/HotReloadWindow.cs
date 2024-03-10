@@ -10,7 +10,6 @@ using SingularityGroup.HotReload.DTO;
 using SingularityGroup.HotReload.Editor.Cli;
 using SingularityGroup.HotReload.Editor.Semver;
 using UnityEditor;
-using UnityEditor.Compilation;
 using UnityEngine;
 
 [assembly: InternalsVisibleTo("SingularityGroup.HotReload.EditorSamples")]

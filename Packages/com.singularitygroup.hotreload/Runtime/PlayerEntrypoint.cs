@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 #endif
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 using System.IO;
 
 namespace SingularityGroup.HotReload {

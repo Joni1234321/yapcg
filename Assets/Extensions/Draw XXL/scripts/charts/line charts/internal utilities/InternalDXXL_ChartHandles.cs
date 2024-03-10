@@ -4,7 +4,6 @@
 
 #if UNITY_EDITOR
     using UnityEditor;
-    using DrawXXL;
 
     public class InternalDXXL_ChartHandles
     {

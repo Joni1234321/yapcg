@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEditor;

@@ -1,5 +1,4 @@
 using System.Globalization;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace YAPCG.Resources.View.Custom

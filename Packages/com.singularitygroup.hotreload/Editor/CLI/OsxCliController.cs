@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using SingularityGroup.HotReload.Editor.Semver;
-using Debug = UnityEngine.Debug;
 
 namespace SingularityGroup.HotReload.Editor.Cli {
     class OsxCliController : ICliController {

@@ -2,14 +2,11 @@
 #pragma warning disable CS0618 // obsolete warnings (stay warning-free also in newer unity versions) 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace SingularityGroup.HotReload {

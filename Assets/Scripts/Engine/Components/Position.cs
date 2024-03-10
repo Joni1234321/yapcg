@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 
 namespace YAPCG.Engine.Components
@@ -10,7 +8,7 @@ namespace YAPCG.Engine.Components
         public float3 Value;
     }
 
-    public struct Animations : IComponentData
+    public struct AnimationComponent : IComponentData
     {
         public float Time;
     }

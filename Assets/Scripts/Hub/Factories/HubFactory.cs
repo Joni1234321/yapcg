@@ -28,7 +28,7 @@ namespace YAPCG.Hub.Factories
             
             // Components
             _.AddComponent(e, new Position { Value = position });
-            _.AddComponent(e, new Animations { Time = float.MinValue } );
+            _.AddComponent(e, new AnimationComponent { Time = float.MinValue } );
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
 
             return e;

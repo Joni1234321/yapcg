@@ -2,7 +2,6 @@
 
 using System;
 using System.Reflection;
-using SingularityGroup.HotReload.MonoMod.Utils;
 
 namespace SingularityGroup.HotReload {
     static class MethodCompatiblity {

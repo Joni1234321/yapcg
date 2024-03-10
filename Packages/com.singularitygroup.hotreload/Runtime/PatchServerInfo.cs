@@ -1,7 +1,6 @@
 ﻿#if ENABLE_MONO && (DEVELOPMENT_BUILD || UNITY_EDITOR)
 using System;
 using SingularityGroup.HotReload.Newtonsoft.Json;
-using UnityEngine;
 
 namespace SingularityGroup.HotReload {
     [Serializable]

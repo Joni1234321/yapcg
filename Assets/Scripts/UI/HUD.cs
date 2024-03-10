@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
+﻿using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;

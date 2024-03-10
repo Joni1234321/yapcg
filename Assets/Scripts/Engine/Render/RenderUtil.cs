@@ -1,7 +1,5 @@
-﻿using Unity.Burst;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Rendering;
-using YAPCG.UI;
 
 namespace YAPCG.Engine.Render
 {

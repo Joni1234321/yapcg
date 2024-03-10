@@ -8,8 +8,6 @@ using SingularityGroup.HotReload.Editor.Semver;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using SingularityGroup.HotReload.Newtonsoft.Json.Linq;
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.Networking;
 
 namespace SingularityGroup.HotReload.Editor {
     internal class PackageUpdateChecker {

@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Compilation;
-using UnityEngine;
 
 namespace SingularityGroup.HotReload.Editor {
     class DefaultCompileChecker : ICompileChecker {

@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using Unity.Collections;
-using Unity.Entities;
+﻿using Unity.Entities;
 
 namespace YAPCG.Hub.Components
 {

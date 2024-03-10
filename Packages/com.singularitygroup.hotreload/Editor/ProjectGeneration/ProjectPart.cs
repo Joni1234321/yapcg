@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Compilation;
-using UnityEngine;
 
 namespace SingularityGroup.HotReload.Editor.ProjectGeneration
 {

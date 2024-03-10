@@ -1,10 +1,8 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using Random = Unity.Mathematics.Random;
-using TickWeeklyGroup = YAPCG.Engine.Time.Systems.TickWeeklyGroup;
 
 namespace YAPCG.Engine
 {
