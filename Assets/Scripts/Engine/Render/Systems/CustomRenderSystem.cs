@@ -20,15 +20,16 @@ namespace YAPCG.Engine.Render.Systems
     internal partial class CustomRenderSystem : SystemBase
     {
         private EntityQuery _query;
-        private GraphicsBuffer _positionBuffer, _animationBuffer;
+        private GraphicsBuffer _positionBuffer, _animationBuffer, _animationStartBuffer;
         private static readonly int POSITION = Shader.PropertyToID("_Positions");
         private static readonly int ANIMATION = Shader.PropertyToID("_Animation");
+        private static readonly int ANIMATION_START = Shader.PropertyToID("_AnimationStart");
         private RenderParams _rp;
 
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<Anim, Position, HubTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<Anim, AnimStart, Position, HubTag>().Build();
 
             RequireForUpdate<MeshesReference>();
         }
@@ -66,11 +67,11 @@ namespace YAPCG.Engine.Render.Systems
         {
             const int POSITION_SIZE = sizeof(float) * 3;
             const int ANIMATION_SIZE = sizeof(uint);
+            const int ANIMATION_START_SIZE = sizeof(float);
 
             _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1) * 1000)};
 
             NativeArray<Position> positions = _query.ToComponentDataArray<Position>(WorldUpdateAllocator);
-            NativeArray<Anim> animations = _query.ToComponentDataArray<Anim>(WorldUpdateAllocator);
 
             int n = positions.Length;
 
@@ -85,10 +86,18 @@ namespace YAPCG.Engine.Render.Systems
                 {
                     _animationBuffer?.Release();
                     _animationBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, ANIMATION_SIZE);
-                    _animationBuffer.SetData(animations);
+                    _animationBuffer.SetData(_query.ToComponentDataArray<Anim>(WorldUpdateAllocator));
                 }
+                {
+                    _animationStartBuffer?.Release();
+                    _animationStartBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, ANIMATION_START_SIZE);
+                    _animationStartBuffer.SetData(_query.ToComponentDataArray<AnimStart>(WorldUpdateAllocator));
+                }
+                
                 _rp.matProps.SetBuffer(POSITION, _positionBuffer);
                 _rp.matProps.SetBuffer(ANIMATION, _animationBuffer);
+                _rp.matProps.SetBuffer(ANIMATION_START, _animationStartBuffer);
+                
                 Graphics.RenderMeshPrimitives(_rp, mesh, 0, n);
             }
 

@@ -27,6 +27,7 @@ Shader "Primitives/Lit"
 
             StructuredBuffer<float3> _Positions;
             StructuredBuffer<uint> _Animation;
+            StructuredBuffer<float> _AnimationStart;
 
             CBUFFER_START(UnityPerMaterial)
             uniform float4 _Color, _AnimationColor;
@@ -74,7 +75,11 @@ Shader "Primitives/Lit"
                 //    return (value + 1) / 2;
                 const float sinSat = (1.0 + sin(_Time.y * 4.0)) / 2.0;
                 const float animStrength = .25 * sinSat + .25 * (_Animation[i.instance_id] / 255.0);
-                const float t = (_Animation[i.instance_id] > 0) * saturate(0.75 + animStrength);
+
+
+                float t = (_Animation[i.instance_id] > 0) * saturate(0.75 + animStrength);
+                const float diff = _Time.y - _AnimationStart[i.instance_id];
+                t = (diff < 5) * saturate(0.75 + animStrength);
                 
                 const half4 color = lerp(_Color, _AnimationColor, t);
                 return half4(albedo * color * light, 1);

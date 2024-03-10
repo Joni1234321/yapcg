@@ -1,15 +1,12 @@
 ﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Rendering;
-using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
 using YAPCG.Hub.Components;
 using YAPCG.Planets.Components;
 
-namespace YAPCG.Planets.Systems
+namespace YAPCG.Hub.Systems
 {
     [UpdateInGroup(typeof(TickDailyGroup))]
     internal partial struct DiscoverSystem : ISystem
@@ -22,7 +19,7 @@ namespace YAPCG.Planets.Systems
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            new HubJob().Run();
+            new HubJob { Time = (float)SystemAPI.Time.ElapsedTime }.Run();
         }
 
 
@@ -30,9 +27,13 @@ namespace YAPCG.Planets.Systems
         [BurstCompile]
         partial struct HubJob : IJobEntity
         {
+            [ReadOnly] 
+            public float Time;
+            
             const int DISCOVER_COST_INCREMENT = 30;
-            private const int ANIMATION_REDUCTION = 0b1 << 5;
-            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref Anim anim)
+            const int ANIMATION_REDUCTION = 0b1 << 5;
+            
+            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref Anim anim, ref AnimStart animStart)
             {
                 discoverProgress.Value += discoverProgress.Progress;
                 anim.Value = anim.Value <= ANIMATION_REDUCTION ? 0 : anim.Value - ANIMATION_REDUCTION;
@@ -43,6 +44,7 @@ namespace YAPCG.Planets.Systems
 
                     buildingSlotsLeft.Medium++;
                     anim.Value = Anim.MAX_VALUE;
+                    animStart.Time = Time;
                 }
             }
         }

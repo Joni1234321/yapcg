@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Input;
+using YAPCG.Engine.Render.Systems;
 using YAPCG.Engine.SystemGroups;
 using YAPCG.Hub.Systems;
 using YAPCG.Planets.Components;
