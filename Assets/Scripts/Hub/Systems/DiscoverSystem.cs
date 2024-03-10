@@ -33,18 +33,16 @@ namespace YAPCG.Hub.Systems
             const int DISCOVER_COST_INCREMENT = 30;
             const int ANIMATION_REDUCTION = 0b1 << 5;
             
-            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref Anim anim, ref AnimStart animStart)
+            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref Animations animations)
             {
                 discoverProgress.Value += discoverProgress.Progress;
-                anim.Value = anim.Value <= ANIMATION_REDUCTION ? 0 : anim.Value - ANIMATION_REDUCTION;
                 if (Unity.Burst.CompilerServices.Hint.Unlikely(discoverProgress.Value >= discoverProgress.MaxValue))
                 {
                     discoverProgress.Value -= discoverProgress.MaxValue;
                     discoverProgress.MaxValue += DISCOVER_COST_INCREMENT;
 
                     buildingSlotsLeft.Medium++;
-                    anim.Value = Anim.MAX_VALUE;
-                    animStart.Time = Time;
+                    animations.Time = Time;
                 }
             }
         }

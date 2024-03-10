@@ -10,14 +10,7 @@ namespace YAPCG.Engine.Components
         public float3 Value;
     }
 
-    public struct Anim : IComponentData
-    {
-        public uint Value;
-
-        public const uint MAX_VALUE = 0xFF;
-    }
-
-    public struct AnimStart : IComponentData
+    public struct Animations : IComponentData
     {
         public float Time;
     }

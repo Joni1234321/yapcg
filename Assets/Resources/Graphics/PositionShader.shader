@@ -7,6 +7,8 @@ Shader "Primitives/Lit"
         _AnimationColor ("AnimationColor", Color) = (1, 0.5, 0.5, 1)
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
+        _AnimationTime ("Animation Time", Range(0, 10)) = 2
+        _AnimationSinStrength ("Animation Sine Strength", Range(0, 1)) = 1
     }
     SubShader
     {
@@ -26,13 +28,15 @@ Shader "Primitives/Lit"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             StructuredBuffer<float3> _Positions;
-            StructuredBuffer<uint> _Animation;
-            StructuredBuffer<float> _AnimationStart;
+            StructuredBuffer<float> _Animations;
 
             CBUFFER_START(UnityPerMaterial)
-            uniform float4 _Color, _AnimationColor;
-            uniform float _Intensity;
-            uniform float _Ambient;
+            uniform float4 _Color;
+
+            uniform float4 _AnimationColor;
+            uniform float _AnimationTime, _AnimationSinStrength;
+            
+            uniform float _Intensity, _Ambient;
             uniform sampler2D _MainTex;
             CBUFFER_END
 
@@ -72,15 +76,9 @@ Shader "Primitives/Lit"
                 const float3 light =  i.diffuse * _Intensity + _Ambient;
 
 
-                //    return (value + 1) / 2;
-                const float sinSat = (1.0 + sin(_Time.y * 4.0)) / 2.0;
-                const float animStrength = .25 * sinSat + .25 * (_Animation[i.instance_id] / 255.0);
+                const float diff = _Time.y - _Animations[i.instance_id];
 
-
-                float t = (_Animation[i.instance_id] > 0) * saturate(0.75 + animStrength);
-                const float diff = _Time.y - _AnimationStart[i.instance_id];
-                t = (diff < 5) * saturate(0.75 + animStrength);
-                
+                float t = (diff <= _AnimationTime) * saturate(1 + _AnimationSinStrength * (cos(PI * diff / _AnimationTime) - 1));
                 const half4 color = lerp(_Color, _AnimationColor, t);
                 return half4(albedo * color * light, 1);
             }
