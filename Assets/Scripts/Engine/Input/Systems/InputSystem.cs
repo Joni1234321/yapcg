@@ -1,10 +1,11 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
 using UnityEngine;
+using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
 using static UnityEngine.Input;
 
-namespace YAPCG.Engine.Input
+namespace YAPCG.Engine.Input.Systems
 {
     [UpdateInGroup(typeof(InputSystemGroup))]
     internal partial struct InputSystem : ISystem
@@ -14,6 +15,7 @@ namespace YAPCG.Engine.Input
         {
             state.EntityManager.CreateSingleton<MouseInput>();
             state.EntityManager.CreateSingleton<ActionInput>();
+            state.EntityManager.CreateSingleton<SharedRays>();
         }
 
         [BurstCompile]
@@ -29,14 +31,19 @@ namespace YAPCG.Engine.Input
                     ShouldBuildHub = GetKeyDown(KeyCode.A),
                     Next = GetKeyDown(KeyCode.Z),
                     Previous = GetKeyDown(KeyCode.X),
+                    LeftClickSelectHub = GetMouseButtonDown(0) // for now should change to detect if ui
                 }
             );
+            
+            SystemAPI.SetSingleton(new SharedRays
+            {
+                CameraMouseRay = GetCameraRay()
+            });
          }
 
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
+        [BurstDiscard]
+        Ray GetCameraRay() =>
+            SystemAPI.ManagedAPI.GetSingleton<SharedCameraManaged>().MainCamera.ScreenPointToRay(mousePosition);
 
-        }
     }
 }

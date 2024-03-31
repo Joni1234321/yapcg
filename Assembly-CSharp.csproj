@@ -62,10 +62,9 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerToggle.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Slider\RangeMinSlider.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Button\ButtonManagerEditor.cs" />
-    <Compile Include="Assets\Scripts\Engine\Physics\Ray\Raycast.cs" />
-    <Compile Include="Assets\Scripts\Engine\Physics\SphereCollection.cs" />
     <Compile Include="Assets\Scripts\Hub\Factories\HubNamingGenerator.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerNotification.cs" />
+    <Compile Include="Assets\Scripts\UI\DebugScript.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Notification\NotificationManager.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Demo\InputSystemChecker.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Layout Group\RadialLayoutGroup.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Rendering\UIGradient.cs" />
+    <Compile Include="Assets\Scripts\Engine\Physics\Ray\Raycast.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Modal Window\ModalWindowManagerEditor.cs" />
     <Compile Include="Assets\Scripts\Hub\Components\Deposit.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Progress Bar\ProgressBar.cs" />
@@ -96,10 +96,12 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Icon\IconManagerEditor.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Modal Window\ModalWindowManager.cs" />
+    <Compile Include="Assets\Scripts\Engine\Physics\SphereCollection.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerDropdownItem.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Hub\Components\BuildingSlotsLeft.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Slider\SliderInput.cs" />
+    <Compile Include="Assets\Scripts\Engine\SharedInitSystem.cs" />
     <Compile Include="Assets\Scripts\UI\HUD.cs" />
     <Compile Include="Assets\Scripts\Engine\Render\RenderPositionOnlyTag.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerWindowManager.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Icon\IconLibrary.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Window\WindowDragger.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Switch\SwitchManagerEditor.cs" />
+    <Compile Include="Assets\Scripts\Engine\Components\UnityComponents.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerEditor.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerScrollbar.cs" />
@@ -200,7 +203,6 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Progress Bar\PBFilled.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Slider\RangeMaxSlider.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\ListView\ListViewItem.cs" />
-    <Compile Include="Assets\Scripts\Engine\Components\SharedRandom.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\ActionInput.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -211,10 +213,10 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerPieChart.cs" />
     <Compile Include="Assets\Scripts\Hub\Systems\DepositIncomeSystem.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-    <Compile Include="Assets\Scripts\Engine\SharedSystem.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\Systems\InputSystem.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Tooltip\TooltipManagerEditor.cs" />
+    <Compile Include="Assets\Scripts\UI\Systems\UserInterfaceSystem.cs" />
     <None Include="Assets\Extensions\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Extensions\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Fonts\Roboto-Bold - License.txt" />

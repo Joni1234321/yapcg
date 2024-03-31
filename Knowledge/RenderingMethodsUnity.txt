@@ -1,0 +1,11 @@
+Mesh       ======================
+RenderMesh				Renders a mesh with given rendering parameters.
+RenderMeshIndirect			Renders multiple instances of a mesh using GPU instancing and rendering command arguments from commandBuffer.
+RenderMeshInstanced			Renders multiple instances of a mesh using GPU instancing.
+RenderMeshPrimitives			Renders multiple instances of a Mesh using GPU instancing and a custom shader.
+
+Primitives ======================
+RenderPrimitives			Renders non-indexed primitives with GPU instancing and a custom shader.
+RenderPrimitivesIndexed			Renders indexed primitives with GPU instancing and a custom shader.
+RenderPrimitivesIndexedIndirect		Renders indexed primitives with GPU instancing and a custom shader with rendering command arguments from commandBuffer.
+RenderPrimitivesIndirect		Renders primitives with GPU instancing and a custom shader using rendering command arguments from commandBuffer.

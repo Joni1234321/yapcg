@@ -1,9 +1,14 @@
 ﻿using JetBrains.Annotations;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Entities.Content;
+using Unity.Mathematics;
 using Unity.Rendering;
 using UnityEngine;
 using YAPCG.Engine.Common;
+using YAPCG.Engine.Components;
+using YAPCG.Engine.Physics;
+using YAPCG.Engine.Physics.Ray;
 
 namespace YAPCG.UI
 {
@@ -17,10 +22,13 @@ namespace YAPCG.UI
     {
         public MeshMaterial Deposit, Hub;
 
+        private EntityManager _;
         private EntityQuery _query;
+
         // Can be null, but assume it isnt
         [NotNull] public static Meshes Instance { private set; get; }
 
+        
         private void Awake()
         {
             if (Instance != null)
@@ -31,30 +39,13 @@ namespace YAPCG.UI
 
             Instance = this;
             Load();
-            EntityManager _ = World.DefaultGameObjectInjectionWorld.EntityManager;
+            _ = World.DefaultGameObjectInjectionWorld.EntityManager;
             Mesh dmesh = Deposit.RenderMeshArray.Meshes[0];
             Material dmat = Deposit.RenderMeshArray.Materials[0];
             _.CreateSingleton<MeshesReference>();
             _.CreateEntityQuery(ComponentType.ReadWrite<MeshesReference>()).SetSingleton(new MeshesReference() { DepositMesh = new WeakObjectReference<Mesh>(dmesh), DepositMaterial = new WeakObjectReference<Material>(dmat)} );
         }
 
-        void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Vector3 mousePosition = Input.mousePosition;
-
-            Camera camera = Camera.main;
-            Vector3 position = camera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, camera.nearClipPlane));
-            Gizmos.DrawSphere(position, 10);
-            position.z = 0;
-            Gizmos.DrawSphere(position, 10);
-            Gizmos.DrawWireCube(transform.position, new Vector3(10, 10, 10));
-            Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 2000, Color.white);
-            
-
-
-        }
         private void Load()
         {
             Deposit.Load();

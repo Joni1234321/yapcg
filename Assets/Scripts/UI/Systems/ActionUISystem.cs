@@ -1,4 +1,5 @@
-﻿using Unity.Collections;
+﻿using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Engine.Input;
@@ -47,24 +48,22 @@ namespace YAPCG.UI.Systems
         public void OnUpdate(ref SystemState state)
         {
             ActionInput action = SystemAPI.GetSingleton<ActionInput>();
+            
             if (action.ShouldBuildHub)
-            {
-                SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
-                {
-                    Position = new float3(1,1,1),  
-                    Big = 0, 
-                    Medium = 1, 
-                    Small = 0
-                });
-            }
+                BuildHub();
 
             Entity focusedEntity = SystemAPI.GetSingleton<FocusedHub>().Entity;
+            Entity hoveringHub = GetHoverHub();
 
             if (action.Next)
                 focusedEntity = GetAdjacentHub(focusedEntity, 1);
 
             if (action.Previous)
                 focusedEntity = GetAdjacentHub(focusedEntity, -1);
+            
+            if (action.LeftClickSelectHub)
+                if (hoveringHub != Entity.Null)
+                    focusedEntity = hoveringHub;
             
             if (focusedEntity != Entity.Null)
             {
@@ -73,5 +72,25 @@ namespace YAPCG.UI.Systems
             }
 
         }
+
+        [BurstCompile]
+        void BuildHub()
+        {
+            SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
+            {
+                Position = new float3(1,1,1),  
+                Big = 0, 
+                Medium = 1, 
+                Small = 0
+            });
+        }
+
+        [BurstCompile]
+        Entity GetHoverHub()
+        {
+            return Entity.Null;
+        }
+        
+        
     }
 }

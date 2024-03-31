@@ -5,6 +5,7 @@ namespace YAPCG.Engine.Physics.Ray
 {
     public static class Raycast
     {
+        
         // https://gfxcourses.stanford.edu/cs348b/spring22content/media/intersection/rt1_ZWjhy3k.pdf
         // Stanford ray tracing basics pdf
         
@@ -16,6 +17,24 @@ namespace YAPCG.Engine.Physics.Ray
         
         // sphere as 
         // (p - c)(p - c) - r^2 = 0
+
+        public struct Hit
+        {
+            /// <summary>
+            /// index of hit object
+            /// </summary>
+            public int hit;
+            
+            /// <summary>
+            /// t from ray 
+            /// </summary>
+            public float t;
+
+            /// <summary>
+            /// Returns true when nothing is hit
+            /// </summary>
+            public bool Nothing() => hit == -1;
+        }
         
         /// <summary>
         /// Returns the sphere that collides with first
@@ -23,11 +42,10 @@ namespace YAPCG.Engine.Physics.Ray
         /// <param name="origin">ray origin</param>
         /// <param name="direction">ray direction normalized</param>
         /// <param name="spheres">the collection of spheres</param>
-        public static int CollisionSphere(float3 origin, float3 direction, SphereCollection spheres)
+        public static Hit CollisionSphere(float3 origin, float3 direction, SphereCollection spheres)
         {
-            int hit = -1;
-            float t = -1;
-            
+            Hit hit = new Hit { hit = -1, t = float.MaxValue};
+
             // solving 2degree equation 
             // a = dot(d, d) = 1 (since d is normalized)
             // b = dot(2 (o - c), d)
@@ -40,34 +58,38 @@ namespace YAPCG.Engine.Physics.Ray
                 
                 float3 oc = origin - center;
                 //   a = 1
-                float b = 2 * math.dot(direction, oc);
+                float bhalf = math.dot(direction, oc);
                 float c = math.dot(oc, oc) - radius;
 
-                float discriminant = b * b - 4 * c; // b * b - 4 * a * c
+                // b * b - 4 * a * c = bhalf * bhalf * 4 - 4 * c
+                // quarter = bhalf * bhalf - c
+                float discriminantQuarter = bhalf * bhalf - c; 
 
-                if (Hint.Likely(discriminant < 0)) // no intersection
+                // used when iterating through all in collection
+                if (Hint.Likely(discriminantQuarter < 0)) // no intersection
                     continue;
                 
-                // t = (sqrt(d) - b) / 2a
-                float intersection = (math.sqrt(discriminant) - b) / 2; 
-                if (intersection > 0 && intersection < t)
-                {
-                    t = intersection;
-                    hit = i;
-                    continue;
-                }
+                // t = (sqrt(d) - b) / 2a = sqrt(d) * 0.5 - bhalf = sqrt(dq) * sqrt(4) * 0.5 - bhalf = sqrt(dq) - bhalf
+                float dqsqrt = math.sqrt(discriminantQuarter);
                 
-                // t = (sqrt(d) + b) / 2a = (sqrt(d) + b) / 2 = (sqrt(d) - b) / 2 + b
-                intersection += b; 
-                if (intersection > 0 && intersection < t)
+                // solution 1
+                float intersection = dqsqrt - bhalf;
+                if (intersection > 0)
                 {
-                    t = intersection;
-                    hit = i;
-                    continue;
+                    if (intersection > hit.t)
+                        continue;
                 }
+                else
+                {
+                    // solution 2
+                    intersection = dqsqrt + bhalf; 
+                    if (intersection < 0 || intersection > hit.t) 
+                        continue;
+                }
+
+                hit = new Hit { hit = i, t = intersection };
             }
-
-
+            
             return hit;
         }
 
