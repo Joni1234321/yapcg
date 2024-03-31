@@ -13,9 +13,9 @@ namespace YAPCG.Hub.Systems
     [UpdateInGroup(typeof(TickDailyGroup))]
     public partial struct HubSpawner : ISystem  
     {
-        float3 GetPositionInCircle(ref Random random, float radius)
+        float3 GetPositionOnSquare(ref Random random, float radius)
         {
-            return random.NextFloat3(new float3(-radius, -radius, 0), new float3(radius, radius, 0));
+            return random.NextFloat3(new float3(-radius, 0, -radius), new float3(radius, 0, radius));
         }
 
         [BurstCompile]
@@ -28,8 +28,8 @@ namespace YAPCG.Hub.Systems
             {
                 Position = float3.zero,
                 Big = 1,
-                Medium = 10,
-                Small = 100000
+                Medium = 100,
+                Small = 1000
             });
             
         }
@@ -50,7 +50,7 @@ namespace YAPCG.Hub.Systems
                     spawnedEntities.Add(
                         HubFactory.CreateSmallHub(
                             ecb, 
-                            config.Position + GetPositionInCircle(ref random, 200), 
+                            config.Position + GetPositionOnSquare(ref random, 100), 
                             HubNamingGenerator.Get(ref random)
                             )
                         );
@@ -59,7 +59,7 @@ namespace YAPCG.Hub.Systems
                     spawnedEntities.Add(
                         HubFactory.CreateNormalHub(
                             ecb, 
-                            config.Position + GetPositionInCircle(ref random, 50), 
+                            config.Position + GetPositionOnSquare(ref random, 25), 
                             HubNamingGenerator.Get(ref random)
                         )
                     );
@@ -75,7 +75,7 @@ namespace YAPCG.Hub.Systems
 
                 foreach (Entity e in spawnedEntities)
                 {
-                    ecb.SetComponent<DiscoverProgress>(e, new DiscoverProgress { Value = random.NextInt(0, 40), Progress = 1, MaxValue = 40} );
+                    ecb.SetComponent(e, new DiscoverProgress { Value = random.NextInt(0, 40), Progress = 1, MaxValue = 40} );
                 }
             }
             

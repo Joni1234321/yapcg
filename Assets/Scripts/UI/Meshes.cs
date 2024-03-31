@@ -38,6 +38,23 @@ namespace YAPCG.UI
             _.CreateEntityQuery(ComponentType.ReadWrite<MeshesReference>()).SetSingleton(new MeshesReference() { DepositMesh = new WeakObjectReference<Mesh>(dmesh), DepositMaterial = new WeakObjectReference<Material>(dmat)} );
         }
 
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Vector3 mousePosition = Input.mousePosition;
+
+            Camera camera = Camera.main;
+            Vector3 position = camera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, camera.nearClipPlane));
+            Gizmos.DrawSphere(position, 10);
+            position.z = 0;
+            Gizmos.DrawSphere(position, 10);
+            Gizmos.DrawWireCube(transform.position, new Vector3(10, 10, 10));
+            Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+            Debug.DrawRay(ray.origin, ray.direction * 2000, Color.white);
+            
+
+
+        }
         private void Load()
         {
             Deposit.Load();

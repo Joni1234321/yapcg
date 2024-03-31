@@ -4,10 +4,14 @@ Shader "Primitives/Lit"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
-        _AnimationColor ("AnimationColor", Color) = (1, 0.5, 0.5, 1)
+        
+        _AnimationTime ("Animation Time", Range(0, 10)) = 2
+        _AnimationColor ("Animation Color", Color) = (1, 0.5, 0.5, 1)
+
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
-        _AnimationTime ("Animation Time", Range(0, 10)) = 2
+        
+        _Scale ("Scale", Range(0.01, 10)) = 1
     }
     SubShader
     {
@@ -38,6 +42,8 @@ Shader "Primitives/Lit"
             
             uniform float _Intensity, _Ambient;
             uniform sampler2D _MainTex;
+
+            uniform float _Scale;
             CBUFFER_END
 
             struct attributes
@@ -62,7 +68,7 @@ Shader "Primitives/Lit"
                 varyings o;
                 const float3 pos = _Positions[instance_id];
 
-                o.vertex = TransformObjectToHClip(v.vertex.xyz  + pos);
+                o.vertex = TransformObjectToHClip(v.vertex.xyz * _Scale + pos);
                 o.uv = v.uv;
                 o.diffuse = saturate(dot(v.normal, _MainLightPosition.xyz));
                 o.instance_id = instance_id;

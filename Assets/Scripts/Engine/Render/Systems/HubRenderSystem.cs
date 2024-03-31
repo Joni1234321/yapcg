@@ -13,7 +13,7 @@ namespace YAPCG.Engine.Render.Systems
 {
     [UpdateInGroup(typeof(RenderSystemGroup))]
     [BurstCompile]
-    internal partial class CustomRenderSystem : SystemBase
+    internal partial class HubRenderSystem : SystemBase
     {
         private EntityQuery _query;
         private GraphicsBuffer _positionBuffer, _animationBuffer, _animationsBuffer;
@@ -60,8 +60,6 @@ namespace YAPCG.Engine.Render.Systems
 
         private void Render(Mesh mesh, Material material) 
         {
-            const int POSITION_SIZE = sizeof(float) * 3;
-            const int ANIMATION_SIZE = sizeof(float);
 
             _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1) * 1000)};
 
@@ -73,11 +71,13 @@ namespace YAPCG.Engine.Render.Systems
             {
                 //if (_buffer.count != n)
                 {
+                    const int POSITION_SIZE = sizeof(float) * 3;
                     _positionBuffer?.Release();
                     _positionBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, POSITION_SIZE);
                     _positionBuffer.SetData(positions);
                 }
                 {
+                    const int ANIMATION_SIZE = sizeof(float);
                     _animationsBuffer?.Release();
                     _animationsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, ANIMATION_SIZE);
                     _animationsBuffer.SetData(_query.ToComponentDataArray<AnimationComponent>(WorldUpdateAllocator));

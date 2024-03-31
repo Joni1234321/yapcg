@@ -31,7 +31,7 @@ namespace YAPCG.Engine.Input
                     Previous = GetKeyDown(KeyCode.X),
                 }
             );
-        }
+         }
 
         [BurstCompile]
         public void OnDestroy(ref SystemState state)
