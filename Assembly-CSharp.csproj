@@ -79,7 +79,6 @@
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Layout Group\RadialLayoutGroup.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Rendering\UIGradient.cs" />
-    <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Modal Window\ModalWindowManagerEditor.cs" />
     <Compile Include="Assets\Scripts\Hub\Components\Deposit.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Progress Bar\ProgressBar.cs" />
@@ -211,6 +210,7 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Button\ButtonManager.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\ListView\ListViewEditor.cs" />
     <Compile Include="Assets\Scripts\Hub\Components\DiscoverProgress.cs" />
+    <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerPieChart.cs" />
     <Compile Include="Assets\Scripts\Hub\Systems\DepositIncomeSystem.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />

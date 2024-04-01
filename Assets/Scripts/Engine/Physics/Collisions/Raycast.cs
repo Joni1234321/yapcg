@@ -55,24 +55,32 @@ namespace YAPCG.Engine.Physics.Collisions
         /// <param name="hit"></param>
         public static bool CollisionSphere(ray ray, SphereCollection spheres, out hit hit)
         {
-            float t = float.MaxValue;
+            float closest = float.MaxValue;
             hit = new hit { index = -1, point = ray.origin };
-            
-            for (int i = 0; i < spheres.Positions.Length; i++)
-                if (RayCollidesWithCloserSphere(ray, spheres.Positions[i], spheres.Radius, ref t))
-                    hit.index = i;
 
-            hit.point = ray.origin + ray.direction * t;
+            for (int i = 0; i < spheres.Positions.Length; i++)
+            {
+                if (!RayCollideWithSphere(ray, spheres.Positions[i], spheres.Radius, out float t))
+                    continue;
+                if (t > closest) // t is farther away than closest
+                    continue;
+
+                closest = t;
+                hit.index = i;
+            }
+            
+            hit.point = ray.origin + ray.direction * closest;
             return hit.index != -1;
         }
 
-        static bool RayCollidesWithCloserSphere(ray ray, float3 center, float radius, ref float t)
+        static bool RayCollideWithSphere(ray ray, float3 center, float radius, out float t)
         {
+            t = 0;
+
             // solving 2degree equation 
             // a = dot(d, d) = 1 (since d is normalized)
             // b = dot(2 (o - c), d)
             // c = dot 
-            
             float3 oc = ray.origin - center;
             //   a = 1
             float bhalf = math.dot(ray.direction, oc);
@@ -89,23 +97,14 @@ namespace YAPCG.Engine.Physics.Collisions
             // t = (sqrt(d) - b) / 2a = sqrt(d) * 0.5 - bhalf = sqrt(dq) * sqrt(4) * 0.5 - bhalf = sqrt(dq) - bhalf
             float dqsqrt = math.sqrt(discriminantQuarter);
                 
-            // solution 1
-            float intersection = dqsqrt - bhalf;
-            if (intersection > 0)
-            {
-                if (intersection > t)
-                    return false;
-            }
-            else
-            {
-                // solution 2
-                intersection = dqsqrt + bhalf; 
-                if (intersection < 0 || intersection > t) 
-                    return false;
-            }
-
-            t = intersection;
-            return true;
+            // solve quadratic
+            t = dqsqrt - bhalf;
+            
+            float t2 = dqsqrt + bhalf;
+            if (t2 >= 0)
+                t = math.min(t, t2);
+            
+            return t >= 0;
         }
 
         public static void CollidingAxisAlignedPlane()
@@ -116,16 +115,15 @@ namespace YAPCG.Engine.Physics.Collisions
         
         
         // https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
-        static bool MollerTromboneIntersection(ray ray, float3 v0, float3 v1, float3 v2, ref float t)
+        static bool MollerTromboneIntersection(ray ray, float3 v0, float3 v1, float3 v2, out float t)
         {
+            t = 0;
+            
             // three equations
             // u, v, t for the boyocentric coordinates
-            // 
-            
+
             // this uses the carmers rule to solve the linear algebra
             // |Ai| / |A| where Ai is the ith row replaced by the constant of the equations
-            
-            const float EPSILON = float.Epsilon;
             float3 e1 = v1 - v0;
             float3 e2 = v2 - v0;
             float3 o  = ray.origin;
@@ -138,27 +136,29 @@ namespace YAPCG.Engine.Physics.Collisions
             float det = math.dot(p, e1);
             
             // test if parallel
-            if (det is > -EPSILON and < EPSILON)
+            if (det is > -float.Epsilon and < float.Epsilon)
                 return false;
 
             float invDet = 1.0f / det;
             float3 s = o - v0;
             
             // calculate u and test bounds
+            // u = P . T / det = p . s / det
             float u = invDet * math.dot(s, p);
             if (u is < 0 or > 1)
                 return false;
             
             // calculate v and test bounds
+            // v = q . d / det
             float3 q = math.cross(s, e1);
             float v = invDet * math.dot(q, q);
             if (v < 0 || u + v > 1)
                 return false;
             
             // calculate intersection
-            float intersection = invDet * math.dot(q, e2);
-            return true;
-
+            // t = q . e2 / det
+            t = invDet * math.dot(q, e2);
+            return t > float.Epsilon;
         }
     }
 }

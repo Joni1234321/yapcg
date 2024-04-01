@@ -117,7 +117,7 @@ namespace YAPCG.UI.Systems
             SphereCollection spheres = new SphereCollection
             {
                 Positions = _hubsQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>(), 
-                Radius = 1
+                Radius = 3
             };
             
             if (!Raycast.CollisionSphere(ray, spheres, out Raycast.hit hit))
