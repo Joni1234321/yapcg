@@ -120,6 +120,9 @@ namespace YAPCG.UI.Systems
                 Radius = 3
             };
             
+            // NativeArray<float3> positions = new NativeArray<float3>(Temp, )
+            // TriangleCollection collection = new TriangleCollection() { Positions = }
+            
             if (!Raycast.CollisionSphere(ray, spheres, out Raycast.hit hit))
                 return Entity.Null;
 

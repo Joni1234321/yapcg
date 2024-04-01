@@ -57,8 +57,9 @@ namespace YAPCG.Engine.Physics.Collisions
         {
             float closest = float.MaxValue;
             hit = new hit { index = -1, point = ray.origin };
-
-            for (int i = 0; i < spheres.Positions.Length; i++)
+            
+            int n = spheres.Positions.Length;
+            for (int i = 0; i < n; i++)
             {
                 if (!RayCollideWithSphere(ray, spheres.Positions[i], spheres.Radius, out float t))
                     continue;
@@ -73,6 +74,32 @@ namespace YAPCG.Engine.Physics.Collisions
             return hit.index != -1;
         }
 
+
+        public static bool CollisionTriangle(ray ray, TriangleCollection triangles, out hit hit)
+        {
+            float closest = float.MaxValue;
+            hit = new hit { index = -1, point = ray.origin };
+            
+            int n = triangles.Positions.Length / 3;
+            for (int i = 0; i < n; i++)
+            {
+                float3 v0 = triangles.Positions[i];
+                float3 v1 = triangles.Positions[i + 1];
+                float3 v2 = triangles.Positions[i + 2];
+                
+                if (!MollerTromboneIntersection(ray, v0, v1, v2, out float t))
+                    continue;
+                if (t > closest) // t is farther away than closest
+                    continue;
+                
+                closest = t;
+                hit.index = i;
+            }
+            
+            hit.point = ray.origin + ray.direction * closest;
+            return hit.index != -1;
+        }
+        
         static bool RayCollideWithSphere(ray ray, float3 center, float radius, out float t)
         {
             t = 0;
