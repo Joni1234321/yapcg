@@ -2,20 +2,15 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
-using YAPCG.Engine.Physics.Ray;
 using YAPCG.Engine.Render.Systems;
 using YAPCG.Hub.Systems;
 using YAPCG.Planets.Components;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
-using Unity.Burst;
-using Unity.Collections;
-using Unity.Entities;
-using Unity.Entities.Content;
+using YAPCG.Engine.Physics.Collisions;
 
 namespace YAPCG.UI.Systems
 {
@@ -73,7 +68,7 @@ namespace YAPCG.UI.Systems
                 selected = GetAdjacentHub(selected, -1);
             
             if (action.LeftClickSelectHub)
-                if (hovered != Entity.Null)
+                // if (hovered != Entity.Null)
                     selected = hovered;
 
             // Hovering and select effects
@@ -95,10 +90,9 @@ namespace YAPCG.UI.Systems
                 if (selected != Entity.Null)
                    SystemAPI.SetComponent(selected, StateComponent.Selected);
 
+                HUD.Instance.UpdateHubUI(state.EntityManager, selected);
                 focusedHub.ValueRW.Selected = selected;
-                
-                if (selected != focusedHub.ValueRO.Selected)
-                    HUD.Instance.UpdateHubUI(state.EntityManager, selected);
+
             }
 
         }
@@ -119,18 +113,17 @@ namespace YAPCG.UI.Systems
         [BurstCompile]
         Entity GetHoverHub()
         {
-            Ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
+            Raycast.ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
             SphereCollection spheres = new SphereCollection
             {
                 Positions = _hubsQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>(), 
-                Radius = 2
+                Radius = 1
             };
-            Raycast.Hit hit = Raycast.CollisionSphere(ray.origin, ray.direction, spheres);
             
-            if (hit.hit == -1) 
+            if (!Raycast.CollisionSphere(ray, spheres, out Raycast.hit hit))
                 return Entity.Null;
 
-            return _hubsQuery.ToEntityArray(Temp)[hit.hit];
+            return _hubsQuery.ToEntityArray(Temp)[hit.index];
         }
     }
 }

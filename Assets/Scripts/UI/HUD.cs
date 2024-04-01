@@ -22,7 +22,7 @@ namespace YAPCG.UI
 
         public ProgressBarControl DiscoveryProgress;
 
-        public UnityEngine.UIElements.ListView HubList;
+        public ListView HubList;
         public List<string> HubNames;
         
         public void Start()
@@ -55,6 +55,11 @@ namespace YAPCG.UI
 
         public void UpdateHubUI(EntityManager _, Entity hub)
         {
+            UI.visible = hub != Entity.Null;
+            
+            if (hub == Entity.Null)
+                return;
+            
             FixedString64Bytes hubName = _.GetComponentData<Name>(hub).Value;
             BuildingSlotsLeft slotsLeft = _.GetComponentData<BuildingSlotsLeft>(hub);
             DiscoverProgress discovery = _.GetComponentData<DiscoverProgress>(hub);
@@ -70,7 +75,7 @@ namespace YAPCG.UI
             DiscoveryProgress.Value = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;
         }
-        
+
         public static HUD Instance { get; private set; }
         
         private void Awake()

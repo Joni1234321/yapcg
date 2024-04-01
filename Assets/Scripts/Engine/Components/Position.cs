@@ -10,7 +10,7 @@ namespace YAPCG.Engine.Components
 
     public struct AnimationComponent : IComponentData
     {
-        public float Time;
+        public float AnimationStart;
     }
 
     public struct StateComponent : IComponentData

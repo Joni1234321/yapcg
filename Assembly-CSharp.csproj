@@ -79,7 +79,7 @@
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Layout Group\RadialLayoutGroup.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Rendering\UIGradient.cs" />
-    <Compile Include="Assets\Scripts\Engine\Physics\Ray\Raycast.cs" />
+    <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Modal Window\ModalWindowManagerEditor.cs" />
     <Compile Include="Assets\Scripts\Hub\Components\Deposit.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Progress Bar\ProgressBar.cs" />

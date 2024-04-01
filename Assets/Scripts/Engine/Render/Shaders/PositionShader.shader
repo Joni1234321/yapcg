@@ -7,7 +7,7 @@ Shader "Primitives/Lit"
         
         _StateColor ("State Color", Color) = (0.5, .8, .8, 1)
         
-        _AnimationTime ("Animation Time", Range(0, 10)) = 2
+        _AnimationDuration ("Animation Duration", Range(0, 10)) = 2
         _AnimationColor ("Animation Color", Color) = (1, 0.5, 0.5, 1)
 
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
@@ -34,7 +34,7 @@ Shader "Primitives/Lit"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             StructuredBuffer<float3> _Positions;
-            StructuredBuffer<float> _Animations;
+            StructuredBuffer<float> _AnimationsStartTime;
             StructuredBuffer<float> _State;
 
             CBUFFER_START(UnityPerMaterial)
@@ -44,7 +44,7 @@ Shader "Primitives/Lit"
 
             // Animation
             uniform float4 _AnimationColor;
-            uniform float _AnimationTime;
+            uniform float _AnimationDuration;
 
             // Light
             uniform float _Intensity, _Ambient;
@@ -69,6 +69,9 @@ Shader "Primitives/Lit"
                 uint instance_id : SV_InstanceID;
             };
 
+            float cos_norm (float x) { return cos(x) * 0.5 + 0.5; }
+            float sin_norm (float x) { return cos(x + PI) * 0.5 + 0.5; }
+            
             varyings vert(const attributes v, const uint instance_id : SV_InstanceID)
             {
 
@@ -83,21 +86,27 @@ Shader "Primitives/Lit"
                 return o;
             }
 
+
             half4 frag(const varyings i) : SV_Target
             {
                 // light
                 const float3 light =  i.diffuse * _Intensity + _Ambient;
 
                 // animation
-                const float diff = _Time.y - _Animations[i.instance_id];
-                const float t = (diff <= _AnimationTime) * saturate(sin(PI * diff / _AnimationTime));
+                const float time_since_start = _Time.y - _AnimationsStartTime[i.instance_id];
+                const float animation_t = time_since_start / _AnimationDuration;
+                const float t = (time_since_start <= _AnimationDuration) * sin_norm(TWO_PI * animation_t);
                 const float state = _State[i.instance_id];
-                
+                 
                 // color
-                const float3 albedo = lerp(tex2D(_MainTex, i.uv), _StateColor, state);
+                const half4 state_color = _StateColor * sin_norm(TWO_PI * _Time.x);
+                const float3 albedo = lerp(tex2D(_MainTex, i.uv), state_color * 0.5 + 0.5, state);
                 const half4 color = lerp(_Color, _AnimationColor, t);
                 return half4(albedo * color * light, 1);
             }
+
+
+
             ENDHLSL
         }
     }

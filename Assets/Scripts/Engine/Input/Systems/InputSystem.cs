@@ -2,6 +2,7 @@
 using Unity.Entities;
 using UnityEngine;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.Physics.Collisions;
 using YAPCG.Engine.SystemGroups;
 using static UnityEngine.Input;
 
@@ -25,7 +26,6 @@ namespace YAPCG.Engine.Input.Systems
             {
                 Left = GetMouseButton(0)
             });
-            
             SystemAPI.SetSingleton(new ActionInput
                 {
                     ShouldBuildHub = GetKeyDown(KeyCode.A),
@@ -34,10 +34,12 @@ namespace YAPCG.Engine.Input.Systems
                     LeftClickSelectHub = GetMouseButtonDown(0) // for now should change to detect if ui
                 }
             );
+
+            Ray ray = GetCameraRay();
             
             SystemAPI.SetSingleton(new SharedRays
             {
-                CameraMouseRay = GetCameraRay()
+                CameraMouseRay = new Raycast.ray() {origin = ray.origin, direction = ray.direction }
             });
          }
 

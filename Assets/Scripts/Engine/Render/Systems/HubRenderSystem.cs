@@ -7,7 +7,6 @@ using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Planets.Components;
 using YAPCG.UI;
-using YAPCG.UI.Components;
 
 namespace YAPCG.Engine.Render.Systems
 {
@@ -18,7 +17,7 @@ namespace YAPCG.Engine.Render.Systems
         private EntityQuery _query;
         private GraphicsBuffer _positionBuffer, _animationsBuffer, _stateBuffer;
         private static readonly int SHADER_POSITIONS = Shader.PropertyToID("_Positions");
-        private static readonly int SHADER_ANIMATIONS = Shader.PropertyToID("_Animations");
+        private static readonly int SHADER_ANIMATIONS = Shader.PropertyToID("_AnimationsStartTime");
         private static readonly int SHADER_STATE = Shader.PropertyToID("_State");
         private RenderParams _rp;
 

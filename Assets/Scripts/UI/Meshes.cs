@@ -1,14 +1,9 @@
 ﻿using JetBrains.Annotations;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Entities.Content;
-using Unity.Mathematics;
 using Unity.Rendering;
 using UnityEngine;
 using YAPCG.Engine.Common;
-using YAPCG.Engine.Components;
-using YAPCG.Engine.Physics;
-using YAPCG.Engine.Physics.Ray;
 
 namespace YAPCG.UI
 {

@@ -1,6 +1,4 @@
-﻿using Unity.Burst;
-using Unity.Entities;
-using Unity.Entities.Content;
+﻿using Unity.Entities;
 using UnityEngine;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;

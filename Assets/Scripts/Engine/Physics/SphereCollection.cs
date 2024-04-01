@@ -8,4 +8,9 @@ namespace YAPCG.Engine.Physics
         public float Radius;
         public NativeArray<float3> Positions;
     }
+    
+    public struct TriangleCollection
+    {
+        public NativeArray<float3> Positions;
+    }
 }

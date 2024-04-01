@@ -31,7 +31,7 @@ namespace YAPCG.Hub.Factories
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
 
             // Anim
-            _.AddComponent(e, new AnimationComponent { Time = float.MinValue } );
+            _.AddComponent(e, new AnimationComponent { AnimationStart = float.MinValue } );
             _.AddComponent(e, new StateComponent { State = 0 } );
 
             return e;

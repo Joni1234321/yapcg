@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Physics;
-using YAPCG.Engine.Physics.Ray;
+using YAPCG.Engine.Physics.Collisions;
 
 namespace YAPCG.UI
 {
@@ -29,20 +29,20 @@ namespace YAPCG.UI
 
         private void DrawSelectedSphere()
         {
-            Ray ray = _rayQuery.GetSingleton<SharedRays>().CameraMouseRay; 
+            Raycast.ray ray = _rayQuery.GetSingleton<SharedRays>().CameraMouseRay; 
 
             Debug.DrawRay(ray.origin, ray.direction * 1000, Color.white, 0.1f);
             
             var positions = _positionsQuery.ToComponentDataArray<Position>(Allocator.Temp);
             SphereCollection spheres = new SphereCollection { Positions = positions.Reinterpret<Position, float3>(), Radius = Radius };
-            Raycast.Hit hit = Raycast.CollisionSphere(ray.origin, ray.direction, spheres);
             
-            if (hit.hit == -1) return;
+            if (!Raycast.CollisionSphere(ray, spheres, out Raycast.hit hit))
+                return;
             
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(ray.origin, ray.GetPoint(hit.t));
+            Gizmos.DrawLine(ray.origin, hit.point);
             Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(positions[hit.hit].Value, Radius + 1);
+            Gizmos.DrawSphere(positions[hit.index].Value, Radius + 1);
 
         }
     }

@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
-using Unity.Entities.Content;
 using UnityEngine;
+using YAPCG.Engine.Physics.Collisions;
 
 namespace YAPCG.Engine.Components
 {
@@ -10,7 +10,7 @@ namespace YAPCG.Engine.Components
     }
     public struct SharedRays : IComponentData
     {
-        public Ray CameraMouseRay;
+        public Raycast.ray CameraMouseRay;
     }
     
     public struct SharedRandom : IComponentData

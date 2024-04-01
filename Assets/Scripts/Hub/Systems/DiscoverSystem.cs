@@ -41,7 +41,7 @@ namespace YAPCG.Hub.Systems
                     discoverProgress.MaxValue += DISCOVER_COST_INCREMENT;
 
                     buildingSlotsLeft.Medium++;
-                    animationComponent.Time = Time;
+                    animationComponent.AnimationStart = Time;
                 }
             }
         }
