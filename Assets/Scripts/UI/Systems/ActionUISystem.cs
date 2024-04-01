@@ -2,12 +2,20 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
+using YAPCG.Engine.Components;
 using YAPCG.Engine.Input;
+using YAPCG.Engine.Physics;
+using YAPCG.Engine.Physics.Ray;
 using YAPCG.Engine.Render.Systems;
 using YAPCG.Hub.Systems;
 using YAPCG.Planets.Components;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Entities.Content;
 
 namespace YAPCG.UI.Systems
 {
@@ -17,9 +25,10 @@ namespace YAPCG.UI.Systems
         private EntityQuery _hubsQuery;
         public void OnCreate(ref SystemState state)
         {
-            _hubsQuery = SystemAPI.QueryBuilder().WithAll<HubTag>().Build();
+            state.RequireForUpdate<SharedRays>();
+            _hubsQuery = SystemAPI.QueryBuilder().WithAll<HubTag, Position>().Build();
             
-            state.EntityManager.CreateSingleton(new FocusedHub { Entity = Entity.Null });
+            state.EntityManager.CreateSingleton(new FocusedHub { Selected = Entity.Null });
 
             state.RequireForUpdate<ActionInput>(); 
             state.RequireForUpdate<FocusedHub>();
@@ -52,23 +61,44 @@ namespace YAPCG.UI.Systems
             if (action.ShouldBuildHub)
                 BuildHub();
 
-            Entity focusedEntity = SystemAPI.GetSingleton<FocusedHub>().Entity;
-            Entity hoveringHub = GetHoverHub();
+            RefRW<FocusedHub> focusedHub = SystemAPI.GetSingletonRW<FocusedHub>();
+            Entity selected = focusedHub.ValueRO.Selected;
+            Entity hovered = GetHoverHub();
 
+            
             if (action.Next)
-                focusedEntity = GetAdjacentHub(focusedEntity, 1);
+                selected = GetAdjacentHub(selected, 1);
 
             if (action.Previous)
-                focusedEntity = GetAdjacentHub(focusedEntity, -1);
+                selected = GetAdjacentHub(selected, -1);
             
             if (action.LeftClickSelectHub)
-                if (hoveringHub != Entity.Null)
-                    focusedEntity = hoveringHub;
-            
-            if (focusedEntity != Entity.Null)
+                if (hovered != Entity.Null)
+                    selected = hovered;
+
+            // Hovering and select effects
+            // if (hovered != focusedHub.ValueRO.Hovered)
             {
-                HUD.Instance.UpdateHubUI(state.EntityManager, focusedEntity);
-                SystemAPI.SetSingleton(new FocusedHub {Entity = focusedEntity});
+                if (focusedHub.ValueRO.Hovered != Entity.Null) 
+                    SystemAPI.SetComponent(focusedHub.ValueRO.Hovered, StateComponent.Nothing);
+                
+                if (hovered != Entity.Null)
+                    SystemAPI.SetComponent(hovered, StateComponent.Hovered);
+                
+                focusedHub.ValueRW.Hovered = hovered;
+            }
+            // if (selected != focusedHub.ValueRO.Selected)
+            {
+                if (focusedHub.ValueRO.Selected != Entity.Null) 
+                    SystemAPI.SetComponent(focusedHub.ValueRO.Selected, StateComponent.Nothing);
+
+                if (selected != Entity.Null)
+                   SystemAPI.SetComponent(selected, StateComponent.Selected);
+
+                focusedHub.ValueRW.Selected = selected;
+                
+                if (selected != focusedHub.ValueRO.Selected)
+                    HUD.Instance.UpdateHubUI(state.EntityManager, selected);
             }
 
         }
@@ -85,12 +115,22 @@ namespace YAPCG.UI.Systems
             });
         }
 
+        
         [BurstCompile]
         Entity GetHoverHub()
         {
-            return Entity.Null;
+            Ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
+            SphereCollection spheres = new SphereCollection
+            {
+                Positions = _hubsQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>(), 
+                Radius = 2
+            };
+            Raycast.Hit hit = Raycast.CollisionSphere(ray.origin, ray.direction, spheres);
+            
+            if (hit.hit == -1) 
+                return Entity.Null;
+
+            return _hubsQuery.ToEntityArray(Temp)[hit.hit];
         }
-        
-        
     }
 }

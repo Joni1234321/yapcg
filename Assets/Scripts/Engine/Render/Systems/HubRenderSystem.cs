@@ -7,7 +7,7 @@ using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Planets.Components;
 using YAPCG.UI;
-using Object = UnityEngine.Object;
+using YAPCG.UI.Components;
 
 namespace YAPCG.Engine.Render.Systems
 {
@@ -16,15 +16,16 @@ namespace YAPCG.Engine.Render.Systems
     internal partial class HubRenderSystem : SystemBase
     {
         private EntityQuery _query;
-        private GraphicsBuffer _positionBuffer, _animationBuffer, _animationsBuffer;
+        private GraphicsBuffer _positionBuffer, _animationsBuffer, _stateBuffer;
         private static readonly int SHADER_POSITIONS = Shader.PropertyToID("_Positions");
         private static readonly int SHADER_ANIMATIONS = Shader.PropertyToID("_Animations");
+        private static readonly int SHADER_STATE = Shader.PropertyToID("_State");
         private RenderParams _rp;
 
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, Position, HubTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, StateComponent, Position, HubTag>().Build();
 
             RequireForUpdate<MeshesReference>();
         }
@@ -64,9 +65,7 @@ namespace YAPCG.Engine.Render.Systems
             _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1) * 1000)};
 
             NativeArray<Position> positions = _query.ToComponentDataArray<Position>(WorldUpdateAllocator);
-
             int n = positions.Length;
-
             if (n != 0)
             {
                 //if (_buffer.count != n)
@@ -82,9 +81,16 @@ namespace YAPCG.Engine.Render.Systems
                     _animationsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, ANIMATION_SIZE);
                     _animationsBuffer.SetData(_query.ToComponentDataArray<AnimationComponent>(WorldUpdateAllocator));
                 }
+                {
+                    const int STATE_SIZE = sizeof(float);
+                    _stateBuffer?.Release();
+                    _stateBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, STATE_SIZE);
+                    _stateBuffer.SetData(_query.ToComponentDataArray<StateComponent>(WorldUpdateAllocator));
+                }
                 
                 _rp.matProps.SetBuffer(SHADER_POSITIONS, _positionBuffer);
                 _rp.matProps.SetBuffer(SHADER_ANIMATIONS, _animationsBuffer);
+                _rp.matProps.SetBuffer(SHADER_STATE, _stateBuffer);
                 
                 Graphics.RenderMeshPrimitives(_rp, mesh, 0, n);
             }
@@ -95,7 +101,7 @@ namespace YAPCG.Engine.Render.Systems
         { 
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Mesh mesh = temp.GetComponent<MeshFilter>().mesh;
-            Object.Destroy(temp);
+            UnityEngine.Object.Destroy(temp);
             return mesh;
         }
     }

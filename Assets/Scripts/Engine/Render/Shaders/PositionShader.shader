@@ -5,6 +5,8 @@ Shader "Primitives/Lit"
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
         
+        _StateColor ("State Color", Color) = (0.5, .8, .8, 1)
+        
         _AnimationTime ("Animation Time", Range(0, 10)) = 2
         _AnimationColor ("Animation Color", Color) = (1, 0.5, 0.5, 1)
 
@@ -33,13 +35,18 @@ Shader "Primitives/Lit"
 
             StructuredBuffer<float3> _Positions;
             StructuredBuffer<float> _Animations;
+            StructuredBuffer<float> _State;
 
             CBUFFER_START(UnityPerMaterial)
+            // Coloring
             uniform float4 _Color;
+            uniform float4 _StateColor;
 
+            // Animation
             uniform float4 _AnimationColor;
             uniform float _AnimationTime;
-            
+
+            // Light
             uniform float _Intensity, _Ambient;
             uniform sampler2D _MainTex;
 
@@ -78,13 +85,16 @@ Shader "Primitives/Lit"
 
             half4 frag(const varyings i) : SV_Target
             {
-                const float3 albedo = tex2D(_MainTex, i.uv);
+                // light
                 const float3 light =  i.diffuse * _Intensity + _Ambient;
 
-
+                // animation
                 const float diff = _Time.y - _Animations[i.instance_id];
-
                 const float t = (diff <= _AnimationTime) * saturate(sin(PI * diff / _AnimationTime));
+                const float state = _State[i.instance_id];
+                
+                // color
+                const float3 albedo = lerp(tex2D(_MainTex, i.uv), _StateColor, state);
                 const half4 color = lerp(_Color, _AnimationColor, t);
                 return half4(albedo * color * light, 1);
             }

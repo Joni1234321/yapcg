@@ -154,6 +154,7 @@
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Tooltip\TooltipManager.cs" />
     <Compile Include="Assets\Scripts\Hub\Systems\DiscoverSystem.cs" />
+    <Compile Include="Assets\Scripts\UI\Systems\UserInterfaceSystem.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerProgressBar.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Dropdown\DropdownMultiSelectEditor.cs" />
@@ -216,7 +217,6 @@
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\Systems\InputSystem.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Tooltip\TooltipManagerEditor.cs" />
-    <Compile Include="Assets\Scripts\UI\Systems\UserInterfaceSystem.cs" />
     <None Include="Assets\Extensions\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Extensions\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Fonts\Roboto-Bold - License.txt" />

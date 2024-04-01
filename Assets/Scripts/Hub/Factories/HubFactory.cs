@@ -32,6 +32,7 @@ namespace YAPCG.Hub.Factories
 
             // Anim
             _.AddComponent(e, new AnimationComponent { Time = float.MinValue } );
+            _.AddComponent(e, new StateComponent { State = 0 } );
 
             return e;
         }

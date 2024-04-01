@@ -98,5 +98,12 @@ namespace YAPCG.Engine.Physics.Ray
             // Solving 1 degree equation see pdf
             
         }
+        
+        
+        // https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
+        static void MollerTromboneIntersection()
+        {
+            
+        }
     }
 }
