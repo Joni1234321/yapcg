@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
 using YAPCG.Hub.Factories;
+using YAPCG.Planet;
 using YAPCG.Planets.Components;
 using Random = Unity.Mathematics.Random;
 
@@ -31,7 +32,9 @@ namespace YAPCG.Hub.Systems
                 Medium = 100,
                 Small = 1000
             });
-            
+            Entity entity = state.EntityManager.CreateEntity();
+            state.EntityManager.AddComponentData(entity, new LevelQuad {Size = new float2(200, 200) });
+
         }
         
 
@@ -45,7 +48,6 @@ namespace YAPCG.Hub.Systems
             foreach (HubSpawnConfig config in spawnConfigs)
             {
                 NativeList<Entity> spawnedEntities = new NativeList<Entity>(config.Total, Allocator.Temp);
-
                 for (int i = 0; i < config.Small; i++)
                     spawnedEntities.Add(
                         HubFactory.CreateSmallHub(

@@ -1,9 +1,12 @@
 ﻿using JetBrains.Annotations;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Entities.Content;
 using Unity.Rendering;
 using UnityEngine;
 using YAPCG.Engine.Common;
+using YAPCG.Engine.Components;
+using YAPCG.Engine.DOTSExtension;
 
 namespace YAPCG.UI
 {
@@ -16,9 +19,11 @@ namespace YAPCG.UI
     public class Meshes : MonoBehaviour
     {
         public MeshMaterial Deposit, Hub;
-
+        public SharedSizes SharedSizes;
+        
         private EntityManager _;
         private EntityQuery _query;
+        private static readonly int HUB_RADIUS = Shader.PropertyToID("_Scale");
 
         // Can be null, but assume it isnt
         [NotNull] public static Meshes Instance { private set; get; }
@@ -35,10 +40,9 @@ namespace YAPCG.UI
             Instance = this;
             Load();
             _ = World.DefaultGameObjectInjectionWorld.EntityManager;
-            Mesh dmesh = Deposit.RenderMeshArray.Meshes[0];
-            Material dmat = Deposit.RenderMeshArray.Materials[0];
-            _.CreateSingleton<MeshesReference>();
-            _.CreateEntityQuery(ComponentType.ReadWrite<MeshesReference>()).SetSingleton(new MeshesReference() { DepositMesh = new WeakObjectReference<Mesh>(dmesh), DepositMaterial = new WeakObjectReference<Material>(dmat)} );
+            
+            AddMeshesReferenceSingleton(_);
+            _.AddSingleton(SharedSizes);
         }
 
         private void Load()
@@ -47,6 +51,23 @@ namespace YAPCG.UI
             Hub.Load();
             CLogger.LogLoaded(this, "Deposits and meshes");
         }
+
+        void AddMeshesReferenceSingleton(EntityManager _)
+        {
+            Mesh dmesh = Deposit.RenderMeshArray.Meshes[0];
+            Material dmat = Deposit.RenderMeshArray.Materials[0];
+            MeshesReference meshRef = new MeshesReference
+            {
+                DepositMesh = new WeakObjectReference<Mesh>(dmesh),
+                DepositMaterial = new WeakObjectReference<Material>(dmat)
+            };
+            
+            dmat.SetFloat(HUB_RADIUS, SharedSizes.HubRadius);
+            
+            _.AddSingleton(meshRef);
+        }
+
+
     }
 
     [System.Serializable]

@@ -17,4 +17,10 @@ namespace YAPCG.Engine.Components
     {
         public Unity.Mathematics.Random Random;
     }
+
+    [System.Serializable]
+    public struct SharedSizes : IComponentData
+    {
+        public float HubRadius;
+    }
 }

@@ -89,7 +89,7 @@ namespace YAPCG.Engine.Physics.Collisions
                 
                 if (!MollerTromboneIntersection(ray, v0, v1, v2, out float t))
                     continue;
-                if (t > closest) // t is farther away than closest
+                if (t > closest)
                     continue;
                 
                 closest = t;

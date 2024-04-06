@@ -19,7 +19,6 @@ namespace YAPCG.Engine.Input.Systems
             state.EntityManager.CreateSingleton<SharedRays>();
         }
 
-        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             SystemAPI.SetSingleton(new MouseInput
@@ -35,17 +34,17 @@ namespace YAPCG.Engine.Input.Systems
                 }
             );
 
-            Ray ray = GetCameraRay();
-            
-            SystemAPI.SetSingleton(new SharedRays
-            {
-                CameraMouseRay = new Raycast.ray() {origin = ray.origin, direction = ray.direction }
-            });
-         }
+            SetCameraRay();
+        }
 
         [BurstDiscard]
-        Ray GetCameraRay() =>
-            SystemAPI.ManagedAPI.GetSingleton<SharedCameraManaged>().MainCamera.ScreenPointToRay(mousePosition);
-
+        void SetCameraRay()
+        {
+            Ray ray = SystemAPI.ManagedAPI.GetSingleton<SharedCameraManaged>().MainCamera.ScreenPointToRay(mousePosition);
+            SystemAPI.SetSingleton(new SharedRays
+            {
+                CameraMouseRay = new Raycast.ray {origin = ray.origin, direction = ray.direction }
+            });
+        }
     }
 }

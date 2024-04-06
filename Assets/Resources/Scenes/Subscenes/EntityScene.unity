@@ -169,6 +169,8 @@ MonoBehaviour:
   Hub:
     material: {fileID: 2100000, guid: 04ad5ed2d9111624e823ee2f3f69f2d2, type: 2}
     mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  SharedSizes:
+    HubRadius: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

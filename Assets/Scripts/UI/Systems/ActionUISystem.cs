@@ -1,7 +1,9 @@
-﻿using Unity.Burst;
+﻿using System;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
@@ -11,17 +13,20 @@ using YAPCG.Planets.Components;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
 using YAPCG.Engine.Physics.Collisions;
+using YAPCG.Planet;
 
 namespace YAPCG.UI.Systems
 {
     [UpdateInGroup(typeof(RenderSystemGroup))]
     public partial struct ActionUISystem : ISystem
     {
-        private EntityQuery _hubsQuery;
+        private EntityQuery _hubsQuery, _levelQuery;
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
             _hubsQuery = SystemAPI.QueryBuilder().WithAll<HubTag, Position>().Build();
+            _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
             
             state.EntityManager.CreateSingleton(new FocusedHub { Selected = Entity.Null });
 
@@ -111,22 +116,82 @@ namespace YAPCG.UI.Systems
 
         
         [BurstCompile]
+        NativeArray<float3> GetHubPositions () => _hubsQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
+
+        [BurstCompile]
+        NativeArray<float3> GetQuadTriangles()
+        {
+            NativeArray<LevelQuad> quads = _levelQuery.ToComponentDataArray<LevelQuad>(Temp);
+            NativeArray<float3> positions = new NativeArray<float3>(6, Temp);
+            for(int i = 0; i < quads.Length; i++)
+            {
+                LevelQuad quad = quads[i];
+                int o = i * 6;
+                
+                float x0 = quad.Position.x - quad.Size.x;
+                float x1 = quad.Position.x + quad.Size.x;
+                float y0 = quad.Position.y - quad.Size.y;
+                float y1 = quad.Position.y + quad.Size.y;
+                
+                float3 v00 = new float3(x0, 0, y0);
+                float3 v01 = new float3(x0, 0, y1);
+                float3 v11 = new float3(x1, 0, y1);
+                float3 v10 = new float3(x1, 0, y0);
+
+                positions[o + 0] = v11;
+                positions[o + 1] = v10;
+                positions[o + 2] = v00;
+                
+                positions[o + 3] = v00;
+                positions[o + 4] = v11;
+                positions[o + 5] = v01;
+            }
+
+            return positions;
+        }
+
+        [BurstCompile]
         Entity GetHoverHub()
         {
             Raycast.ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
+            Raycast.hit hit;
+            NativeArray<float3> positions = GetHubPositions();
+            SharedSizes sizes = SystemAPI.GetSingleton<SharedSizes>();
             SphereCollection spheres = new SphereCollection
             {
-                Positions = _hubsQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>(), 
-                Radius = 3
+                Positions = positions, 
+                Radius = sizes.HubRadius
             };
             
-            // NativeArray<float3> positions = new NativeArray<float3>(Temp, )
-            // TriangleCollection collection = new TriangleCollection() { Positions = }
+            TriangleCollection triangles = new TriangleCollection { Positions = GetQuadTriangles() };
+            DrawTrianglesDebug(triangles);
             
-            if (!Raycast.CollisionSphere(ray, spheres, out Raycast.hit hit))
+            if (!Raycast.CollisionTriangle(ray, triangles, out hit))
+                Debug.Log("no hit");
+            else 
+                Debug.Log("hit a triangle");
+            
+            
+            if (!Raycast.CollisionSphere(ray, spheres, out hit))
                 return Entity.Null;
 
             return _hubsQuery.ToEntityArray(Temp)[hit.index];
+        }
+
+        [BurstDiscard]
+        void DrawTrianglesDebug(TriangleCollection triangles)
+        {
+            int f = 2;
+            int n = triangles.Positions.Length / 3;
+            for (int i = 0; i < n; i++)
+            {
+                float3 v1 = triangles.Positions[i * 3 + 0];
+                float3 v2 = triangles.Positions[i * 3 + 1];
+                float3 v3 = triangles.Positions[i * 3 + 2];
+                Debug.DrawLine(v1, v2, Color.green, 1);
+                Debug.DrawLine(v2, v3, Color.yellow, 1);
+                Debug.DrawLine(v3, v1, Color.red, 1);
+            }
         }
     }
 }
