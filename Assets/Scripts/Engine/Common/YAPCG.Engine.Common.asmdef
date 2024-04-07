@@ -2,6 +2,7 @@
   "name": "YAPCG.Engine.Common",
   "rootNamespace": "YAPCG",
   "references": [
+    "Unity.Mathematics",
     "Unity.Entities",
     "Unity.Collections",
     "Unity.Burst"

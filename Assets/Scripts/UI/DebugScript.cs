@@ -31,7 +31,7 @@ namespace YAPCG.UI
         {
             Raycast.ray ray = _rayQuery.GetSingleton<SharedRays>().CameraMouseRay; 
 
-            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.white, 0.1f);
+            //Debug.DrawRay(ray.origin, ray.direction * 1000, Color.white, 0.1f);
             
             var positions = _positionsQuery.ToComponentDataArray<Position>(Allocator.Temp);
             SphereCollection spheres = new SphereCollection { Positions = positions.Reinterpret<Position, float3>(), Radius = Radius };
@@ -45,5 +45,8 @@ namespace YAPCG.UI
             Gizmos.DrawSphere(positions[hit.index].Value, Radius + 1);
 
         }
+        
     }
+    
+    
 }

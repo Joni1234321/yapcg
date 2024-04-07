@@ -4,7 +4,9 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Render.Systems;
@@ -57,13 +59,15 @@ namespace YAPCG.UI.Systems
         public void OnUpdate(ref SystemState state)
         {
             ActionInput action = SystemAPI.GetSingleton<ActionInput>();
+
+            Raycast.ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
             
             if (action.ShouldBuildHub)
-                BuildHub();
+                BuildHubOnMouse(ray);
 
             RefRW<FocusedHub> focusedHub = SystemAPI.GetSingletonRW<FocusedHub>();
             Entity selected = focusedHub.ValueRO.Selected;
-            Entity hovered = GetHoverHub();
+            Entity hovered = GetHoverHub(ray);
 
             
             if (action.Next)
@@ -74,7 +78,7 @@ namespace YAPCG.UI.Systems
             
             if (action.LeftClickSelectHub)
                 // if (hovered != Entity.Null)
-                    selected = hovered;
+                selected = hovered;
 
             // Hovering and select effects
             // if (hovered != focusedHub.ValueRO.Hovered)
@@ -102,16 +106,45 @@ namespace YAPCG.UI.Systems
 
         }
 
+        
         [BurstCompile]
-        void BuildHub()
+        Entity GetHoverHub(Raycast.ray ray)
         {
+            NativeArray<float3> positions = GetHubPositions();
+            SharedSizes sizes = SystemAPI.GetSingleton<SharedSizes>();
+            SphereCollection spheres = new SphereCollection
+            {
+                Positions = positions, 
+                Radius = sizes.HubRadius
+            };
+            
+            if (!Raycast.CollisionSphere(ray, spheres, out Raycast.hit hit))
+                return Entity.Null;
+
+            return _hubsQuery.ToEntityArray(Temp)[hit.index];
+        }
+
+        
+        [BurstCompile]
+        bool BuildHubOnMouse(Raycast.ray ray)
+        {
+            TriangleCollection triangles = new TriangleCollection { Positions = GetLevelTriangles() };
+
+            if (!Raycast.CollisionTriangle(ray, triangles, out Raycast.hit hit))
+                return false;
+            
+            DebugDrawer.DrawTriangles(triangles);
+            DebugDrawer.DrawRaycastHit(ray, hit);
+ 
             SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
             {
-                Position = new float3(1,1,1),  
-                Big = 0, 
-                Medium = 1, 
+                Position = hit.point,  
+                Big = 1, 
+                Medium = 0, 
                 Small = 0
             });
+            
+            return true;
         }
 
         
@@ -119,7 +152,7 @@ namespace YAPCG.UI.Systems
         NativeArray<float3> GetHubPositions () => _hubsQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
 
         [BurstCompile]
-        NativeArray<float3> GetQuadTriangles()
+        NativeArray<float3> GetLevelTriangles()
         {
             NativeArray<LevelQuad> quads = _levelQuery.ToComponentDataArray<LevelQuad>(Temp);
             NativeArray<float3> positions = new NativeArray<float3>(6, Temp);
@@ -138,60 +171,20 @@ namespace YAPCG.UI.Systems
                 float3 v11 = new float3(x1, 0, y1);
                 float3 v10 = new float3(x1, 0, y0);
 
-                positions[o + 0] = v11;
-                positions[o + 1] = v10;
-                positions[o + 2] = v00;
+                positions[o + 0] = v00;
+                positions[o + 1] = v11;
+                positions[o + 2] = v10;
                 
                 positions[o + 3] = v00;
-                positions[o + 4] = v11;
-                positions[o + 5] = v01;
+                positions[o + 4] = v01;
+                positions[o + 5] = v11;
             }
 
             return positions;
         }
 
-        [BurstCompile]
-        Entity GetHoverHub()
-        {
-            Raycast.ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
-            Raycast.hit hit;
-            NativeArray<float3> positions = GetHubPositions();
-            SharedSizes sizes = SystemAPI.GetSingleton<SharedSizes>();
-            SphereCollection spheres = new SphereCollection
-            {
-                Positions = positions, 
-                Radius = sizes.HubRadius
-            };
-            
-            TriangleCollection triangles = new TriangleCollection { Positions = GetQuadTriangles() };
-            DrawTrianglesDebug(triangles);
-            
-            if (!Raycast.CollisionTriangle(ray, triangles, out hit))
-                Debug.Log("no hit");
-            else 
-                Debug.Log("hit a triangle");
-            
-            
-            if (!Raycast.CollisionSphere(ray, spheres, out hit))
-                return Entity.Null;
+        
 
-            return _hubsQuery.ToEntityArray(Temp)[hit.index];
-        }
 
-        [BurstDiscard]
-        void DrawTrianglesDebug(TriangleCollection triangles)
-        {
-            int f = 2;
-            int n = triangles.Positions.Length / 3;
-            for (int i = 0; i < n; i++)
-            {
-                float3 v1 = triangles.Positions[i * 3 + 0];
-                float3 v2 = triangles.Positions[i * 3 + 1];
-                float3 v3 = triangles.Positions[i * 3 + 2];
-                Debug.DrawLine(v1, v2, Color.green, 1);
-                Debug.DrawLine(v2, v3, Color.yellow, 1);
-                Debug.DrawLine(v3, v1, Color.red, 1);
-            }
-        }
     }
 }

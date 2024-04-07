@@ -83,9 +83,9 @@ namespace YAPCG.Engine.Physics.Collisions
             int n = triangles.Positions.Length / 3;
             for (int i = 0; i < n; i++)
             {
-                float3 v0 = triangles.Positions[i];
-                float3 v1 = triangles.Positions[i + 1];
-                float3 v2 = triangles.Positions[i + 2];
+                float3 v0 = triangles.Positions[i * 3];
+                float3 v1 = triangles.Positions[i * 3 + 1];
+                float3 v2 = triangles.Positions[i * 3 + 2];
                 
                 if (!MollerTromboneIntersection(ray, v0, v1, v2, out float t))
                     continue;
@@ -178,7 +178,7 @@ namespace YAPCG.Engine.Physics.Collisions
             // calculate v and test bounds
             // v = q . d / det
             float3 q = math.cross(s, e1);
-            float v = invDet * math.dot(q, q);
+            float v = invDet * math.dot(d, q);
             if (v < 0 || u + v > 1)
                 return false;
             

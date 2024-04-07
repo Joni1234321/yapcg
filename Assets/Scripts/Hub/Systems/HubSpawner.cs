@@ -33,7 +33,7 @@ namespace YAPCG.Hub.Systems
                 Small = 1000
             });
             Entity entity = state.EntityManager.CreateEntity();
-            state.EntityManager.AddComponentData(entity, new LevelQuad {Size = new float2(200, 200) });
+            state.EntityManager.AddComponentData(entity, new LevelQuad {Size = new float2(100, 100)});
 
         }
         
