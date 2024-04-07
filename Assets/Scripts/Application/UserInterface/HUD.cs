@@ -4,7 +4,6 @@ using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
 using YAPCG.Domain.Common.Components;
-using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Resources.View.Custom;

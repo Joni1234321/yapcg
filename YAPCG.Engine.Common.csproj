@@ -61,7 +61,6 @@
     <Compile Include="Assets\Scripts\Engine\Common\CLogger.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\SystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\NamingGenerator.cs" />
-    <None Include="Assets\Scripts\Engine\Common\YAPCG.Engine.Common.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2023.3.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

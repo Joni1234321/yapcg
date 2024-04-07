@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Entities.Content;
 using Unity.Rendering;
@@ -8,7 +7,7 @@ using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DOTSExtension;
 
-namespace YAPCG.UI
+namespace YAPCG.Application.UserInterface
 {
     public struct MeshesReference : IComponentData
     {

@@ -1,0 +1,23 @@
+﻿{
+  "name": "YAPCG.Application",
+  "rootNamespace": "YAPCG",
+  "references": [
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Mathematics",
+    "Unity.Entities",
+    "Unity.Entities.Graphics",
+    "YAPCG.Domain",
+    "YAPCG.Engine",
+    "YAPCG.Resources.View.Custom"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1041,17 +1041,21 @@
       <Project>{deb358b8-7d92-a05d-4318-8b0d5768b26f}</Project>
       <Name>SingularityGroup.HotReload.Runtime.Public</Name>
     </ProjectReference>
-    <ProjectReference Include="YAPCG.Time.csproj">
-      <Project>{1828b3a9-e22f-642e-b1ae-b0834650866e}</Project>
-      <Name>YAPCG.Time</Name>
+    <ProjectReference Include="YAPCG.Application.csproj">
+      <Project>{e16b433d-4bc2-6a74-eee4-45b6d05d17f2}</Project>
+      <Name>YAPCG.Application</Name>
     </ProjectReference>
     <ProjectReference Include="DrawXXL-Editor.csproj">
       <Project>{bea2bc7b-e665-3163-a4ff-1f8ee95ce0fd}</Project>
       <Name>DrawXXL-Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="YAPCG.Engine.Common.csproj">
-      <Project>{ac30f2bc-27b2-dba3-1c74-c37bf1b18b0d}</Project>
-      <Name>YAPCG.Engine.Common</Name>
+    <ProjectReference Include="YAPCG.Domain.csproj">
+      <Project>{e0f14b3b-c98a-3e96-d43b-49ae6bb1f71d}</Project>
+      <Name>YAPCG.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="YAPCG.Engine.csproj">
+      <Project>{fe6cd211-2083-f15b-4a1e-cd93d3d5ddc6}</Project>
+      <Name>YAPCG.Engine</Name>
     </ProjectReference>
     <ProjectReference Include="YAPCG.Resources.View.Custom.csproj">
       <Project>{2f569eb6-9cbd-7395-1f5d-263c82b42378}</Project>

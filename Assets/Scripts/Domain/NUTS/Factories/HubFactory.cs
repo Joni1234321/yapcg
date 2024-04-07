@@ -1,13 +1,8 @@
-﻿using Unity.Burst;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Rendering;
-using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Components;
-using YAPCG.Engine.Render;
-using YAPCG.UI;
 
 namespace YAPCG.Domain.NUTS.Factories
 {

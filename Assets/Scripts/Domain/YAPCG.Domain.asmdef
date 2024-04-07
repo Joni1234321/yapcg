@@ -1,11 +1,12 @@
 ﻿{
-  "name": "YAPCG.Engine.Common",
+  "name": "YAPCG.Domain",
   "rootNamespace": "YAPCG",
   "references": [
     "Unity.Mathematics",
     "Unity.Entities",
     "Unity.Collections",
-    "Unity.Burst"
+    "Unity.Burst",
+    "YAPCG.Engine"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
