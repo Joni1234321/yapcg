@@ -1,7 +1,7 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Domain.Hub.Components;
+using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Components;
 
 namespace YAPCG.Domain.NUTS.Factories

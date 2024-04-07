@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace YAPCG.Domain.Hub.Components
+namespace YAPCG.Domain.Common.Components
 {
     
     public struct Housing : IComponentData

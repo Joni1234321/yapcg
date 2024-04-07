@@ -1,10 +1,9 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
-using YAPCG.Domain.Hub.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Time.Systems;
 
-namespace YAPCG.Hub.Systems
+namespace YAPCG.Domain.Common.Systems
 {
     [UpdateInGroup(typeof(TickWeeklyGroup))]
     internal partial struct DepositIncomeSystem : ISystem

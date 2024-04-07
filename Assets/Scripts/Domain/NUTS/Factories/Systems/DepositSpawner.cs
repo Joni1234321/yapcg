@@ -2,11 +2,11 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Domain.NUTS.Factories;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
 
-namespace YAPCG.Domain.Hub.Systems
+namespace YAPCG.Domain.NUTS.Factories.Systems
 {
     [UpdateInGroup(typeof(TickWeeklyGroup))]
     public partial struct DepositSpawner : ISystem
@@ -15,9 +15,9 @@ namespace YAPCG.Domain.Hub.Systems
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<SharedRandom>();
-            state.EntityManager.CreateSingletonBuffer<DepositSpawnConfig>();
+            state.EntityManager.CreateSingletonBuffer<Deposit.DepositSpawnConfig>();
 
-            SystemAPI.GetSingletonBuffer<DepositSpawnConfig>(false).Add(new DepositSpawnConfig
+            SystemAPI.GetSingletonBuffer<Deposit.DepositSpawnConfig>(false).Add(new Deposit.DepositSpawnConfig
             {
                 Position = float3.zero,
                 Big = 2,
@@ -32,18 +32,18 @@ namespace YAPCG.Domain.Hub.Systems
             Random random = SystemAPI.GetSingleton<SharedRandom>().Random;
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
-            var spawnConfigs = SystemAPI.GetSingletonBuffer<DepositSpawnConfig>(false);
+            var spawnConfigs = SystemAPI.GetSingletonBuffer<Deposit.DepositSpawnConfig>(false);
             
             foreach (var config in spawnConfigs)
             {
                 for (int i = 0; i < config.Small; i++)
-                    DepositFactory.CreateBigDeposit(ecb, config.Position, HubNamingGenerator.Get(ref random));
+                    DepositFactory.CreateBigDeposit(ecb, config.Position, NamingGenerator.Get(ref random));
 
                 for (int i = 0; i < config.Medium; i++)
-                    DepositFactory.CreateMediumDeposit(ecb, config.Position, HubNamingGenerator.Get(ref random));
+                    DepositFactory.CreateMediumDeposit(ecb, config.Position, NamingGenerator.Get(ref random));
 
                 for (int i = 0; i < config.Big; i++)    
-                    DepositFactory.CreateSmallDeposit(ecb, config.Position + float3.zero, HubNamingGenerator.Get(ref random));
+                    DepositFactory.CreateSmallDeposit(ecb, config.Position + float3.zero, NamingGenerator.Get(ref random));
             }
             spawnConfigs.Clear();
             
@@ -54,10 +54,5 @@ namespace YAPCG.Domain.Hub.Systems
         }
     }
 
-    [InternalBufferCapacity(0)]
-    public struct DepositSpawnConfig : IBufferElementData
-    {
-        public float3 Position;
-        public int Big, Medium, Small;
-    }
+
 }

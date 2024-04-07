@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Entities.Content;
 using Unity.Mathematics;
 using UnityEngine;
-using YAPCG.Domain.Hub.Components;
+using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Render.Systems;
 using YAPCG.UI;

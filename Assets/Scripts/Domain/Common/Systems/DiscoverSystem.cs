@@ -1,12 +1,12 @@
 ﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using YAPCG.Domain.Hub.Components;
+using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
 
-namespace YAPCG.Domain.Hub.Systems
+namespace YAPCG.Domain.Common.Systems
 {
     [UpdateInGroup(typeof(TickDailyGroup))]
     internal partial struct DiscoverSystem : ISystem

@@ -3,7 +3,8 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
-using YAPCG.Domain.Hub.Components;
+using YAPCG.Domain.Common.Components;
+using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Render;
 using YAPCG.UI;
@@ -12,14 +13,10 @@ namespace YAPCG.Domain.NUTS.Factories
 {
     public struct HubFactory
     {
-        
-        private static RenderMeshArray GetRenderMeshArray() => Meshes.Instance.Deposit.RenderMeshArray;
-        [BurstDiscard] private static void AddRenders (EntityCommandBuffer _, Entity e) =>  RenderUtil.AddComponents(_, e, GetRenderMeshArray()); 
-        
         private static Entity CreateSkeleton(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
-            _.AddComponent<NUTS.Hub.HubTag>(e);
+            _.AddComponent<Hub.HubTag>(e);
 
             // Name
             _.AddComponent(e, new Name { Value = name});

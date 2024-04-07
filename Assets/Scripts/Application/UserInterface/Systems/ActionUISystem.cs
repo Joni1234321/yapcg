@@ -2,16 +2,13 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Domain.Hub.Components;
-using YAPCG.Domain.Hub.Systems;
+using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
 using YAPCG.Engine.Render.Systems;
-using YAPCG.Planet;
-using YAPCG.UI;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
 
@@ -134,7 +131,7 @@ namespace YAPCG.Application.UserInterface.Systems
             DebugDrawer.DrawTriangles(triangles);
             DebugDrawer.DrawRaycastHit(ray, hit);
  
-            SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
+            SystemAPI.GetSingletonBuffer<Hub.HubSpawnConfig>(false).Add(new Hub.HubSpawnConfig
             {
                 Position = hit.point,  
                 Big = 1, 

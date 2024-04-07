@@ -2,14 +2,13 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Domain.Hub.Components;
+using YAPCG.Domain.Common.Components;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
-using YAPCG.Domain.NUTS.Factories;
-using YAPCG.Planet;
 using Random = Unity.Mathematics.Random;
 
-namespace YAPCG.Domain.Hub.Systems
+namespace YAPCG.Domain.NUTS.Factories.Systems
 {
     [UpdateInGroup(typeof(TickDailyGroup))]
     public partial struct HubSpawner : ISystem  
@@ -23,9 +22,9 @@ namespace YAPCG.Domain.Hub.Systems
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<SharedRandom>();
-            state.EntityManager.CreateSingletonBuffer<HubSpawnConfig>();
+            state.EntityManager.CreateSingletonBuffer<Hub.HubSpawnConfig>();
 
-            SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false).Add(new HubSpawnConfig
+            SystemAPI.GetSingletonBuffer<Hub.HubSpawnConfig>(false).Add(new Hub.HubSpawnConfig
             {
                 Position = float3.zero,
                 Big = 1,
@@ -44,8 +43,8 @@ namespace YAPCG.Domain.Hub.Systems
         {
             Random random = SystemAPI.GetSingleton<SharedRandom>().Random;
             var ecb = new EntityCommandBuffer(Allocator.Temp);
-            var spawnConfigs = SystemAPI.GetSingletonBuffer<HubSpawnConfig>(false);
-            foreach (HubSpawnConfig config in spawnConfigs)
+            var spawnConfigs = SystemAPI.GetSingletonBuffer<Hub.HubSpawnConfig>(false);
+            foreach (Hub.HubSpawnConfig config in spawnConfigs)
             {
                 NativeList<Entity> spawnedEntities = new NativeList<Entity>(config.Total, Allocator.Temp);
                 for (int i = 0; i < config.Small; i++)
@@ -53,7 +52,7 @@ namespace YAPCG.Domain.Hub.Systems
                         HubFactory.CreateSmallHub(
                             ecb, 
                             config.Position + GetPositionOnSquare(ref random, 100), 
-                            HubNamingGenerator.Get(ref random)
+                            NamingGenerator.Get(ref random)
                             )
                         );
 
@@ -62,7 +61,7 @@ namespace YAPCG.Domain.Hub.Systems
                         HubFactory.CreateNormalHub(
                             ecb, 
                             config.Position + GetPositionOnSquare(ref random, 25), 
-                            HubNamingGenerator.Get(ref random)
+                            NamingGenerator.Get(ref random)
                         )
                     );
                 
@@ -71,7 +70,7 @@ namespace YAPCG.Domain.Hub.Systems
                         HubFactory.CreateBigHub(
                             ecb, 
                             config.Position, 
-                            HubNamingGenerator.Get(ref random)
+                            NamingGenerator.Get(ref random)
                         )
                     );
 
@@ -91,14 +90,4 @@ namespace YAPCG.Domain.Hub.Systems
             SystemAPI.SetSingleton(new SharedRandom { Random = random });
         }
     }
-
-    [InternalBufferCapacity(0)]
-    public struct HubSpawnConfig : IBufferElementData
-    {
-        public float3 Position;
-        public int Big, Medium, Small;
-
-        public int Total => Big + Medium + Small;
-    }
-    
 }

@@ -1,9 +1,9 @@
 ﻿using Unity.Collections;
 using Random = Unity.Mathematics.Random;
 
-namespace YAPCG.Domain.NUTS.Factories
+namespace YAPCG.Engine.Common
 {
-    public struct HubNamingGenerator
+    public struct NamingGenerator
     {
         private static readonly FixedString32Bytes[] SPACE_NAME = 
         {

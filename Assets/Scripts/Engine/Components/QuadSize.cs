@@ -1,7 +1,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace YAPCG.Planet
+namespace YAPCG.Engine.Components
 {
     public struct LevelQuad : IComponentData
     {
