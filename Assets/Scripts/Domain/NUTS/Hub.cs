@@ -6,7 +6,7 @@ namespace YAPCG.Domain.NUTS
     public struct Hub
     {
         [InternalBufferCapacity(0)]
-        public struct HubSpawnConfig : IBufferElementData
+        public struct HubSpawnConfig : IBufferElementData, ISpawnConfig
         {
             public float3 Position;
             public int Big, Medium, Small;

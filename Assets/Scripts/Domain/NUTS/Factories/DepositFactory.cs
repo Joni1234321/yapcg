@@ -2,13 +2,29 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Domain.Common.Components;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 
 namespace YAPCG.Domain.NUTS.Factories
 {
-    public struct DepositFactory
+    public struct DepositFactory : IFactory<Deposit.DepositSpawnConfig>
     {
-        private static Entity CreateDeposits(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
+        public void Spawn (EntityCommandBuffer ecb, DynamicBuffer<Deposit.DepositSpawnConfig> configs, ref Random random, ref NativeList<Entity> spawned)
+        {
+            foreach (var config in configs)
+            {
+                for (int i = 0; i < config.Small; i++)
+                    spawned.Add(CreateBigDeposit(ecb, config.Position, NamingGenerator.Get(ref random)));
+
+                for (int i = 0; i < config.Medium; i++)
+                    spawned.Add(CreateMediumDeposit(ecb, config.Position, NamingGenerator.Get(ref random)));
+
+                for (int i = 0; i < config.Big; i++)    
+                    spawned.Add(CreateSmallDeposit(ecb, config.Position + float3.zero, NamingGenerator.Get(ref random)));
+            }
+        }        
+        
+        private Entity CreateDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Deposit.Tag>(e);
@@ -23,9 +39,9 @@ namespace YAPCG.Domain.NUTS.Factories
             return e;
         }
 
-        public static Entity CreateBigDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
+        public Entity CreateBigDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
-            Entity e = CreateDeposits(_, position, name);
+            Entity e = CreateDeposit(_, position, name);
             
             _.SetComponent(e, new Deposit.Sizes { S = 20, M = 10, L = 4 });
 
@@ -64,16 +80,16 @@ namespace YAPCG.Domain.NUTS.Factories
             return e;
         }
         
-        public static Entity CreateMediumDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
+        public Entity CreateMediumDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
-            Entity e = CreateDeposits(_, position, name);
+            Entity e = CreateDeposit(_, position, name);
             _.SetComponent(e, new Deposit.Sizes { S = 40, M = 20 });
             return e;
         }
         
-        public static Entity CreateSmallDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
+        public Entity CreateSmallDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
-            Entity e = CreateDeposits(_, position, name);
+            Entity e = CreateDeposit(_, position, name);
             _.SetComponent(e, new Deposit.Sizes { S = 100 });
             return e;
         }
