@@ -25,7 +25,7 @@ namespace YAPCG.Application.Render.Systems
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, StateComponent, Position, HubTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, StateComponent, Position, Domain.NUTS.Hub.HubTag>().Build();
 
             RequireForUpdate<MeshesReference>();
         }

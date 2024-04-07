@@ -25,7 +25,7 @@ namespace YAPCG.Application.UserInterface.Systems
         {
             state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
-            _hubsQuery = SystemAPI.QueryBuilder().WithAll<HubTag, Position>().Build();
+            _hubsQuery = SystemAPI.QueryBuilder().WithAll<Domain.NUTS.Hub.HubTag, Position>().Build();
             _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
             
             state.EntityManager.CreateSingleton(new FocusedHub { Selected = Entity.Null });

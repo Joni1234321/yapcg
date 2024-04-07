@@ -79,9 +79,12 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Layout Group\RadialLayoutGroup.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Rendering\UIGradient.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Modal Window\ModalWindowManagerEditor.cs" />
-    <Compile Include="Assets\Scripts\Domain\Hub\Factories\HubFactory.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Progress Bar\ProgressBar.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Slider\SliderManager.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Deposit.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\DepositFactory.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\HubFactory.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\HubNamingGenerator.cs" />
     <Compile Include="Assets\Scripts\Engine\DebugDrawer\DebugDrawer.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -89,13 +92,12 @@
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Slider\RangeSlider.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerModalWindow.cs" />
-    <Compile Include="Assets\Scripts\Domain\Hub\Components\Deposit.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Dropdown\DropdownMultiSelect.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\Meshes.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Icon\IconManagerEditor.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Modal Window\ModalWindowManager.cs" />
-    <Compile Include="Assets\Scripts\Domain\Entities\Hub.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Hub.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\SphereCollection.cs" />
     <Compile Include="Assets\Scripts\Domain\Hub\Systems\DepositIncomeSystem.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerDropdownItem.cs" />
@@ -120,7 +122,6 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerSliderEditor.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Scripts\Domain\Hub\Systems\DepositSpawner.cs" />
-    <Compile Include="Assets\Scripts\Domain\Hub\Factories\HubNamingGenerator.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Editor Handlers\MUIPEditorHandler.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
@@ -143,7 +144,6 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Horizontal Selector\HorizontalSelectorEditor.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Window\WindowManager.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Window\WindowManagerEditor.cs" />
-    <Compile Include="Assets\Scripts\Domain\Hub\Factories\DepositFactory.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerSwitch.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Dropdown\CustomDropdownEditor.cs" />
@@ -166,7 +166,6 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\ListView\ListViewRow.cs" />
     <Compile Include="Assets\Extensions\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\Scripts\Application\Render\Systems\HubRenderSystem.cs" />
-    <Compile Include="Assets\Scripts\Domain\Hub\Components\HubTag.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Dropdown\CustomDropdown.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Input Field\CustomInputField.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Rendering\Ripple.cs" />

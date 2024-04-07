@@ -1,6 +1,7 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
 using YAPCG.Domain.Hub.Components;
+using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Time.Systems;
 
 namespace YAPCG.Hub.Systems

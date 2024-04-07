@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using YAPCG.Domain.Hub.Components;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
-using YAPCG.Domain.Hub.Factories;
+using YAPCG.Domain.NUTS.Factories;
 using YAPCG.Planet;
 using Random = Unity.Mathematics.Random;
 

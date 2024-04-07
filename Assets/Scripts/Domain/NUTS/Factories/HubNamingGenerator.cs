@@ -1,7 +1,7 @@
 ﻿using Unity.Collections;
 using Random = Unity.Mathematics.Random;
 
-namespace YAPCG.Domain.Hub.Factories
+namespace YAPCG.Domain.NUTS.Factories
 {
     public struct HubNamingGenerator
     {

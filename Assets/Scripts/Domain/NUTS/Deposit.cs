@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace YAPCG.Domain.Hub.Components
+namespace YAPCG.Domain.NUTS
 {
     public struct Deposit
     {

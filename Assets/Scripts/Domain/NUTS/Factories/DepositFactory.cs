@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using YAPCG.Domain.Hub.Components;
 using YAPCG.Engine.Components;
 
-namespace YAPCG.Domain.Hub.Factories
+namespace YAPCG.Domain.NUTS.Factories
 {
     public struct DepositFactory
     {

@@ -2,6 +2,7 @@
 using Unity.Collections;
 using Unity.Entities;
 using YAPCG.Domain.Hub.Components;
+using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
 

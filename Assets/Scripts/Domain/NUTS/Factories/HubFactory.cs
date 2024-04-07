@@ -8,7 +8,7 @@ using YAPCG.Engine.Components;
 using YAPCG.Engine.Render;
 using YAPCG.UI;
 
-namespace YAPCG.Domain.Hub.Factories
+namespace YAPCG.Domain.NUTS.Factories
 {
     public struct HubFactory
     {
@@ -19,7 +19,7 @@ namespace YAPCG.Domain.Hub.Factories
         private static Entity CreateSkeleton(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
-            _.AddComponent<HubTag>(e);
+            _.AddComponent<NUTS.Hub.HubTag>(e);
 
             // Name
             _.AddComponent(e, new Name { Value = name});
