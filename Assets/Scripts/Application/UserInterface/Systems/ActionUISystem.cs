@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Domain.NUTS;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Input;
@@ -79,20 +80,20 @@ namespace YAPCG.Application.UserInterface.Systems
             // if (hovered != focusedHub.ValueRO.Hovered)
             {
                 if (focusedHub.ValueRO.Hovered != Entity.Null) 
-                    SystemAPI.SetComponent(focusedHub.ValueRO.Hovered, StateComponent.Nothing);
+                    SystemAPI.SetComponent(focusedHub.ValueRO.Hovered, AnimationStateComponent.Nothing);
                 
                 if (hovered != Entity.Null)
-                    SystemAPI.SetComponent(hovered, StateComponent.Hovered);
+                    SystemAPI.SetComponent(hovered, AnimationStateComponent.Hovered);
                 
                 focusedHub.ValueRW.Hovered = hovered;
             }
             // if (selected != focusedHub.ValueRO.Selected)
             {
                 if (focusedHub.ValueRO.Selected != Entity.Null) 
-                    SystemAPI.SetComponent(focusedHub.ValueRO.Selected, StateComponent.Nothing);
+                    SystemAPI.SetComponent(focusedHub.ValueRO.Selected, AnimationStateComponent.Nothing);
 
                 if (selected != Entity.Null)
-                   SystemAPI.SetComponent(selected, StateComponent.Selected);
+                   SystemAPI.SetComponent(selected, AnimationStateComponent.Selected);
 
                 HUD.Instance.UpdateHubUI(state.EntityManager, selected);
                 focusedHub.ValueRW.Selected = selected;
@@ -139,6 +140,7 @@ namespace YAPCG.Application.UserInterface.Systems
                 Small = 0
             });
             
+            //CLogger.LogInfo("Building hub");
             return true;
         }
     

@@ -1,7 +1,6 @@
 ﻿namespace YAPCG.Domain.NUTS
 {
-    public interface ISpawnConfig  
+    public interface ISpawnConfig
     {
-        
     }
 }

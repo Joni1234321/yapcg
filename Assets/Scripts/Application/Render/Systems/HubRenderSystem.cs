@@ -25,7 +25,7 @@ namespace YAPCG.Application.Render.Systems
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, StateComponent, Position, Domain.NUTS.Hub.HubTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, AnimationStateComponent, Position, Domain.NUTS.Hub.HubTag>().Build();
 
             RequireForUpdate<MeshesReference>();
         }
@@ -85,7 +85,7 @@ namespace YAPCG.Application.Render.Systems
                     const int STATE_SIZE = sizeof(float);
                     _stateBuffer?.Release();
                     _stateBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, STATE_SIZE);
-                    _stateBuffer.SetData(_query.ToComponentDataArray<StateComponent>(WorldUpdateAllocator));
+                    _stateBuffer.SetData(_query.ToComponentDataArray<AnimationStateComponent>(WorldUpdateAllocator));
                 }
                 
                 _rp.matProps.SetBuffer(SHADER_POSITIONS, _positionBuffer);

@@ -13,37 +13,64 @@ namespace YAPCG.Domain.NUTS.Factories
         {
             foreach (var config in configs)
             {
-                for (int i = 0; i < config.Small; i++)
-                    spawned.Add(CreateBigDeposit(ecb, config.Position, NamingGenerator.Get(ref random)));
+                int j = spawned.Length;
 
-                for (int i = 0; i < config.Medium; i++)
-                    spawned.Add(CreateMediumDeposit(ecb, config.Position, NamingGenerator.Get(ref random)));
+                for (int i = 0; i < config.Total; i++)
+                {
+                    Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
+                    FixedString64Bytes name = NamingGenerator.Get(ref random);
+                    spawned.Add(CreateDeposit(ecb, rgo, name));
+                }
 
-                for (int i = 0; i < config.Big; i++)    
-                    spawned.Add(CreateSmallDeposit(ecb, config.Position + float3.zero, NamingGenerator.Get(ref random)));
+                for (int i = 0; i < config.Small; i++, j++)
+                    ToSmall(ecb, spawned[j]);
+
+                for (int i = 0; i < config.Medium; i++, j++)
+                    ToMedium(ecb, spawned[j]);
+
+                for (int i = 0; i < config.Big; i++, j++)
+                    ToBig(ecb, spawned[j]);
+
             }
         }        
         
-        private Entity CreateDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
+        private Entity CreateDeposit(EntityCommandBuffer _, Deposit.RGO rgo, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Deposit.Tag>(e);
             
+            // Name
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"DEPOSIT: {name}");
     
+            // Components
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20});            
-            
             _.AddComponent(e, new Deposit.Reserves { Value = 0});
+            _.AddComponent(e, new Deposit.RGOType { RGO = rgo });
             _.AddComponent<Deposit.Sizes>(e);
+            
             return e;
         }
 
-        public Entity CreateBigDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
+        private void ToBig(EntityCommandBuffer _, Entity e)
         {
-            Entity e = CreateDeposit(_, position, name);
-            
             _.SetComponent(e, new Deposit.Sizes { S = 20, M = 10, L = 4 });
+        }
+        
+        private void ToMedium(EntityCommandBuffer _, Entity e)
+        {
+            _.SetComponent(e, new Deposit.Sizes { S = 40, M = 20 });
+        }
+
+        private void ToSmall(EntityCommandBuffer _, Entity e)
+        {
+            _.SetComponent(e, new Deposit.Sizes { S = 100 });
+        }
+
+        public Entity CreateBigDeposit(EntityCommandBuffer _, Deposit.RGO rgo, FixedString64Bytes name = default)
+        {
+            Entity e = CreateDeposit(_, rgo, name);
+            
 
             
             /*
@@ -80,19 +107,6 @@ namespace YAPCG.Domain.NUTS.Factories
             return e;
         }
         
-        public Entity CreateMediumDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
-        {
-            Entity e = CreateDeposit(_, position, name);
-            _.SetComponent(e, new Deposit.Sizes { S = 40, M = 20 });
-            return e;
-        }
-        
-        public Entity CreateSmallDeposit(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
-        {
-            Entity e = CreateDeposit(_, position, name);
-            _.SetComponent(e, new Deposit.Sizes { S = 100 });
-            return e;
-        }
-        
+   
     }
 }

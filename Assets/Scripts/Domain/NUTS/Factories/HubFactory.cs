@@ -56,10 +56,12 @@ namespace YAPCG.Domain.NUTS.Factories
             // Components
             _.AddComponent(e, new Position { Value = position });
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
+            _.AddComponent<BuildingSlotsLeft>(e);
 
             // Anim
             _.AddComponent(e, new AnimationComponent { AnimationStart = float.MinValue } );
-            _.AddComponent(e, new StateComponent { State = 0 } );
+            _.AddComponent(e, new AnimationStateComponent { AnimationState = 0 } );
+            
 
             return e;
         }
@@ -67,21 +69,21 @@ namespace YAPCG.Domain.NUTS.Factories
         public Entity CreateBigHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
             Entity e = CreateHub(_, position, name);
-            _.AddComponent(e, new BuildingSlotsLeft { Large = 10, Medium = 5, Small = 5 });
+            _.SetComponent(e, new BuildingSlotsLeft { Large = 10, Medium = 5, Small = 5 });
             return e;
         }
         
         public Entity CreateNormalHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
             Entity e = CreateHub(_, position, name);
-            _.AddComponent(e, new BuildingSlotsLeft { Large = 5, Medium = 10, Small = 10 });
+            _.SetComponent(e, new BuildingSlotsLeft { Large = 5, Medium = 10, Small = 10 });
             return e;
         }
         
         public Entity CreateSmallHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
             Entity e = CreateHub(_, position, name);
-            _.AddComponent(e, new BuildingSlotsLeft { Large = 2, Medium = 5, Small = 25 });
+            _.SetComponent(e, new BuildingSlotsLeft { Large = 2, Medium = 5, Small = 25 });
             return e;
         }
     }

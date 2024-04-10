@@ -24,7 +24,6 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
             state.RequireForUpdate<SharedRandom>();
         }
 
-        
         public void OnUpdate(ref SystemState state)
         {
             Random random = SystemAPI.GetSingleton<SharedRandom>().Random;
@@ -57,7 +56,6 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
 
         void SpawnWorld(ref SystemState state)
         {
-
             // Level
             state.EntityManager.AddComponentData(state.EntityManager.CreateEntity(), new LevelQuad {Size = new float2(100, 100)});
 
@@ -73,7 +71,6 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
             // Deposits
             SystemAPI.GetSingletonBuffer<Deposit.DepositSpawnConfig>(false).Add(new Deposit.DepositSpawnConfig
             {
-                Position = float3.zero,
                 Big = 2,
                 Medium = 1,
                 Small = 1,

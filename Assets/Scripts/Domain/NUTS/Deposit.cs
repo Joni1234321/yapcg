@@ -8,8 +8,9 @@ namespace YAPCG.Domain.NUTS
         [InternalBufferCapacity(0)]
         public struct DepositSpawnConfig : IBufferElementData, ISpawnConfig
         {
-            public float3 Position;
             public int Big, Medium, Small;
+            
+            public int Total => Big + Medium + Small;
         }
         
         public struct Tag : IComponentData
@@ -20,22 +21,22 @@ namespace YAPCG.Domain.NUTS
         {
             public byte Open, S, M, L;
         }
-
-        public struct RGO : IComponentData
-        {
-            public enum RGOType
-            {
-                Coal, 
-                Iron,
-                Aluminum,
-                Gas, 
-                Oil,
-                Rare
-            }
-
-            public RGOType Type;
-        }
         
+        public enum RGO
+        {
+            Coal, 
+            Iron,
+            Aluminum,
+            Gas, 
+            Oil,
+            Rare,
+            COUNT
+        }
+
+        public struct RGOType : IComponentData
+        {
+            public RGO RGO;
+        }
     /*
 
         [InternalBufferCapacity(8)]
