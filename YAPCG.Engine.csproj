@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Engine\Time\Systems\TickDailyGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\SystemGroups\SpawningSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\UnityComponents.cs" />
+    <Compile Include="Assets\Scripts\Engine\Common\mathutils.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RaySphere.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\ActionInput.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />

@@ -47,25 +47,40 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20});            
             _.AddComponent(e, new Deposit.Reserves { Value = 0});
             _.AddComponent(e, new Deposit.RGOType { RGO = rgo });
+            
+            // Temps 
+            _.AddComponent<LaborExtras>(e);
+            
+            // Size dependent
             _.AddComponent<Deposit.Sizes>(e);
+            _.AddComponent<Labor>(e);
             
             return e;
         }
 
-        private void ToBig(EntityCommandBuffer _, Entity e)
+        private void Assemble(EntityCommandBuffer _, Entity e, Deposit.Sizes sizes, Labor labor)  
         {
-            _.SetComponent(e, new Deposit.Sizes { S = 20, M = 10, L = 4 });
-        }
-        
-        private void ToMedium(EntityCommandBuffer _, Entity e)
-        {
-            _.SetComponent(e, new Deposit.Sizes { S = 40, M = 20 });
+            _.SetComponent(e, sizes);
+            _.SetComponent(e, labor);
         }
 
-        private void ToSmall(EntityCommandBuffer _, Entity e)
-        {
-            _.SetComponent(e, new Deposit.Sizes { S = 100 });
-        }
+        private void ToBig(EntityCommandBuffer _, Entity e) =>
+            Assemble(_, e, 
+                new Deposit.Sizes { S = 20, M = 10, L = 4 },
+                new Labor { Population = 12_500, Ceiling = 100_000 }
+            );
+        
+        private void ToMedium(EntityCommandBuffer _, Entity e) =>
+            Assemble(_, e, 
+                new Deposit.Sizes { S = 40, M = 20, L = 0 },
+                new Labor { Population = 3_000, Ceiling = 10_000 }
+            );
+
+        private void ToSmall(EntityCommandBuffer _, Entity e) =>
+            Assemble(_, e, 
+                new Deposit.Sizes { S = 100, M = 0, L = 0 },
+                new Labor { Population = 250, Ceiling = 5_500 }
+            );
 
         public Entity CreateBigDeposit(EntityCommandBuffer _, Deposit.RGO rgo, FixedString64Bytes name = default)
         {
