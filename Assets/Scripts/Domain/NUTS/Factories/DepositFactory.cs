@@ -19,7 +19,7 @@ namespace YAPCG.Domain.NUTS.Factories
                 {
                     Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
                     FixedString64Bytes name = NamingGenerator.Get(ref random);
-                    spawned.Add(CreateDeposit(ecb, rgo, name));
+                    spawned.Add(CreateDeposit(ecb, rgo, ref random, name));
                 }
 
                 for (int i = 0; i < config.Small; i++, j++)
@@ -34,10 +34,10 @@ namespace YAPCG.Domain.NUTS.Factories
             }
         }        
         
-        private Entity CreateDeposit(EntityCommandBuffer _, Deposit.RGO rgo, FixedString64Bytes name = default)
+        private Entity CreateDeposit(EntityCommandBuffer _, Deposit.RGO rgo, ref Random random, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
-            _.AddComponent<Deposit.Tag>(e);
+            _.AddComponent<Deposit.DepositTag>(e);
             
             // Name
             _.AddComponent(e, new Name { Value = name });
@@ -47,13 +47,22 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20});            
             _.AddComponent(e, new Deposit.Reserves { Value = 0});
             _.AddComponent(e, new Deposit.RGOType { RGO = rgo });
-            
-            // Temps 
-            _.AddComponent<LaborExtras>(e);
-            
+
             // Size dependent
             _.AddComponent<Deposit.Sizes>(e);
             _.AddComponent<Labor>(e);
+            
+            // Temps 
+            _.AddComponent<LaborExtras>(e);
+            _.AddComponent<LaborMigration>(e);
+            _.AddBuffer<LaborNeed>(e); 
+            _.AppendToBuffer(e, new LaborNeed { RGO = Deposit.RGO.Coal, Need = 10 });
+            _.AppendToBuffer(e, new LaborNeed { RGO = Deposit.RGO.Iron, Need = 5 });
+            _.AppendToBuffer(e, new LaborNeed { RGO = Deposit.RGO.Aluminum, Need = 3 });
+            _.AppendToBuffer(e, new LaborNeed { RGO = Deposit.RGO.Gas, Need = 7 });
+            _.AppendToBuffer(e, new LaborNeed { RGO = Deposit.RGO.Rare, Need = (ushort)random.NextInt(1, 30) });
+            
+
             
             return e;
         }
@@ -84,7 +93,7 @@ namespace YAPCG.Domain.NUTS.Factories
 
         public Entity CreateBigDeposit(EntityCommandBuffer _, Deposit.RGO rgo, FixedString64Bytes name = default)
         {
-            Entity e = CreateDeposit(_, rgo, name);
+//            Entity e = CreateDeposit(_, rgo, ref ,name);
             
 
             
@@ -119,7 +128,7 @@ namespace YAPCG.Domain.NUTS.Factories
             };
             _.AddComponent(e, l3);*/
             
-            return e;
+            return Entity.Null;
         }
         
    

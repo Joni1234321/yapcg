@@ -4,7 +4,7 @@ namespace YAPCG.Engine.Common
 {
     public struct mathutils
     {
-        private const float STEEPNESS = 2;
+        private const float STEEPNESS = 2f;
 
         
         /// <summary>
@@ -15,10 +15,10 @@ namespace YAPCG.Engine.Common
         /// <summary>
         /// dx/dt tanh
         /// </summary>
-        public static float sech2(float x) => 1 / math.pow(math.cosh(x), 2);
+        public static float sech2(float x) => 1f / math.pow(math.cosh(x), 2f);
         
         
-        public static float logistic(float x) => 1 / (1 + math.exp(-x));
+        public static float logistic(float x) => 1f / (1f + math.exp(-x));
 
         /// <summary>
         /// x and result is between [0, 1] 

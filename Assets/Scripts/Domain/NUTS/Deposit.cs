@@ -13,8 +13,8 @@ namespace YAPCG.Domain.NUTS
             public int Total => Big + Medium + Small;
         }
         
-        public struct Tag : IComponentData
-        {
+        public struct DepositTag : IComponentData
+        { 
         }
 
         public struct Sizes : IComponentData

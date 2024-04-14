@@ -37,6 +37,14 @@ namespace YAPCG.Application.Render.Systems
             RenderHubs();
         }
 
+        [BurstCompile]
+        protected override void OnDestroy()
+        {
+            _positionBuffer.Dispose();
+            _animationsBuffer.Dispose();
+            _stateBuffer.Dispose();
+        }
+
         [BurstDiscard]
         private void RenderHubs()
         {
@@ -97,6 +105,7 @@ namespace YAPCG.Application.Render.Systems
 
         }
 
+        
         private Mesh GetMeshTemp ()
         { 
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
