@@ -18,8 +18,8 @@ namespace YAPCG.Application.UserInterface
         void Awake()
         {
             _ = World.DefaultGameObjectInjectionWorld.EntityManager;
-            _positionsQuery = new EntityQueryBuilder(Allocator.Persistent).WithAll<Position>().Build(_);
-            _rayQuery = new EntityQueryBuilder(Allocator.Persistent).WithAll<SharedRays>().Build(_);
+            _positionsQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<Position>().Build(_);
+            _rayQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<SharedRays>().Build(_); 
         }
         void OnDrawGizmos()
         {
