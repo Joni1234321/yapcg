@@ -59,8 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\MeshSaverEditor.cs" />
-    <Compile Include="Assets\Extensions\Modern UI Pack\Editor\Scripts\InitMUIP.cs" />
-    <Compile Include="Assets\Extensions\Modern UI Pack\Editor\Scripts\ContextMenu.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2023.3.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -1029,10 +1027,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}</Project>
-      <Name>Assembly-CSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="DrawXXL.csproj">
       <Project>{29922bb7-3e65-2929-3ded-e40eaf712272}</Project>
       <Name>DrawXXL</Name>
@@ -1045,6 +1039,10 @@
       <Project>{e16b433d-4bc2-6a74-eee4-45b6d05d17f2}</Project>
       <Name>YAPCG.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="ModernUIPack.csproj">
+      <Project>{27fd58b7-7da9-f7bd-d229-5c9f700557f6}</Project>
+      <Name>ModernUIPack</Name>
+    </ProjectReference>
     <ProjectReference Include="DrawXXL-Editor.csproj">
       <Project>{bea2bc7b-e665-3163-a4ff-1f8ee95ce0fd}</Project>
       <Name>DrawXXL-Editor</Name>
@@ -1052,6 +1050,10 @@
     <ProjectReference Include="YAPCG.Domain.csproj">
       <Project>{e0f14b3b-c98a-3e96-d43b-49ae6bb1f71d}</Project>
       <Name>YAPCG.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="TMP.csproj">
+      <Project>{d0c75cce-18ca-bf77-348b-1ac0cc30e2a9}</Project>
+      <Name>TMP</Name>
     </ProjectReference>
     <ProjectReference Include="YAPCG.Engine.csproj">
       <Project>{fe6cd211-2083-f15b-4a1e-cd93d3d5ddc6}</Project>
@@ -1061,6 +1063,9 @@
       <Project>{2f569eb6-9cbd-7395-1f5d-263c82b42378}</Project>
       <Name>YAPCG.Resources.View.Custom</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Editor\YAPCG.Editor.asmdef" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

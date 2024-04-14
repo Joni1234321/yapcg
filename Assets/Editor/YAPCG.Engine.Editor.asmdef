@@ -1,16 +1,10 @@
 {
-    "name": "YAPCG.Domain",
+    "name": "YAPCG.Engine.Editor",
     "rootNamespace": "YAPCG",
-    "references": [
-        "Unity.Mathematics",
-        "Unity.Entities",
-        "Unity.Collections",
-        "Unity.Burst",
-        "YAPCG.Engine"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": true,
+    "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

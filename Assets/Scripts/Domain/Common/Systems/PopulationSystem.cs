@@ -29,23 +29,27 @@ namespace YAPCG.Domain.Common.Systems
         }
 
         [BurstCompile]
-        public void OnUpdate(ref SystemState state)
+        public unsafe void OnUpdate(ref SystemState state)
         {
             _needsBufferLookup.Update(ref state);
             _laborLookup.Update(ref state);
 
+
             RefRW<SharedRandom> sharedRandom = SystemAPI.GetSingletonRW<SharedRandom>();
-            
-            
-            new PopulationGrowthJob { SharedRandom = sharedRandom, MinGrowth = MIN_GROWTH, MaxGrowth = MAX_GROWTH }.Run();
-            new PopulationNeedsJob { NeedsBufferLookup = _needsBufferLookup }.Run();
-            new MigrationAttractionJob {}.Run();
+            fixed (Random* ptr = &sharedRandom.ValueRW.Random)
+            {
+                new PopulationGrowthJob { Random = ptr, MinGrowth = MIN_GROWTH, MaxGrowth = MAX_GROWTH }.Run();
+                new PopulationNeedsJob { NeedsBufferLookup = _needsBufferLookup }.Run();
+                new MigrationAttractionJob {}.Run();
 
-            NativeArray<Entity> destinations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToEntityArray(state.WorldUpdateAllocator);
-            new MigrationDestinationJob { SharedRandom = sharedRandom, Destinations = destinations, LaborLookup = _laborLookup }.Run();
+                NativeArray<Entity> destinations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToEntityArray(state.WorldUpdateAllocator);
+                new MigrationDestinationJob { Random = ptr , Destinations = destinations, LaborLookup = _laborLookup }.Run();
+                //NativeArray<LaborMigration> migrations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToComponentDataArray<LaborMigration>(state.WorldUpdateAllocator);
+                //migrations.Sort(new LaborMigration.InSorter());
 
-            //NativeArray<LaborMigration> migrations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToComponentDataArray<LaborMigration>(state.WorldUpdateAllocator);
-            //migrations.Sort(new LaborMigration.InSorter());
+            }
+
+
         }
 
     }
@@ -65,31 +69,33 @@ namespace YAPCG.Domain.Common.Systems
     [BurstCompile]
     partial struct MigrationDestinationJob : IJobEntity
     {
+        [NativeDisableUnsafePtrRestriction]
+        public unsafe Random* Random; 
         
-        public readonly unsafe int* SharedRandom; 
-        [ReadOnly] public NativeArray<Entity> Destinations;
+        [ReadOnly] 
+        public NativeArray<Entity> Destinations;
         public ComponentLookup<Labor> LaborLookup;
         
-        void Execute(ref Labor labor, ref LaborMigration migration)
+        unsafe void Execute(in Entity e, ref LaborMigration migration)
         {
-            migration.Target = Destinations[SharedRandom.ValueRW.Random.NextInt(Destinations.Length)];
-            labor.Population -= migration.EmigratingPopulation;
+            migration.Target = Destinations[Random->NextInt(Destinations.Length)];
 
-            Labor updatedLabor = LaborLookup[migration.Target];
-            updatedLabor.Population += migration.EmigratingPopulation;
-            LaborLookup[migration.Target] = updatedLabor;
+            LaborLookup.GetRefRW(e).ValueRW.Population -= migration.EmigratingPopulation;
+            LaborLookup.GetRefRW(migration.Target).ValueRW.Population += migration.EmigratingPopulation;
         }
     }
     
     [BurstCompile]
     partial struct PopulationGrowthJob : IJobEntity
     {
-        public RefRW<SharedRandom> SharedRandom;
+        [NativeDisableUnsafePtrRestriction]
+        public unsafe Random* Random; 
+        [ReadOnly]
         public float MinGrowth, MaxGrowth;
 
-        void Execute(ref Labor labor, ref LaborExtras extras)
+        unsafe void Execute(ref Labor labor, ref LaborExtras extras)
         {
-            float growth = SharedRandom.ValueRW.Random.NextFloat(MinGrowth, MaxGrowth);
+            float growth = Random->NextFloat(MinGrowth, MaxGrowth);
             float housing = mathutils.tanh_diff((float)labor.Population / labor.Ceiling);
             
             extras.HousingModifier = housing;

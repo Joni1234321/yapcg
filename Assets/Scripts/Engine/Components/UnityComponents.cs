@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using YAPCG.Engine.Physics.Collisions;
+using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Engine.Components
 {
@@ -15,7 +16,7 @@ namespace YAPCG.Engine.Components
     
     public struct SharedRandom : IComponentData
     {
-        public Unity.Mathematics.Random Random;
+        public Random Random;
     }
 
     [System.Serializable]
