@@ -11,7 +11,6 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
     [UpdateInGroup(typeof(TickDailyGroup))]
     public partial struct NutsSpawnerSystem : ISystem
     {
-        private EntityQuery _query;
         private Entity _entity;
         public void OnCreate(ref SystemState state)
         {

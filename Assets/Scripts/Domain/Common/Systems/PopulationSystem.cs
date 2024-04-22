@@ -35,19 +35,18 @@ namespace YAPCG.Domain.Common.Systems
             _laborLookup.Update(ref state);
 
 
-            RefRW<SharedRandom> sharedRandom = SystemAPI.GetSingletonRW<SharedRandom>();
-            fixed (Random* ptr = &sharedRandom.ValueRW.Random)
-            {
-                new PopulationGrowthJob { Random = ptr, MinGrowth = MIN_GROWTH, MaxGrowth = MAX_GROWTH }.Run();
-                new PopulationNeedsJob { NeedsBufferLookup = _needsBufferLookup }.Run();
-                new MigrationAttractionJob {}.Run();
+            Random* random;
+            fixed (Random* ptr = &SystemAPI.GetSingletonRW<SharedRandom>().ValueRW.Random) { random = ptr; }
+            
+            new PopulationGrowthJob { Random = random, MinGrowth = MIN_GROWTH, MaxGrowth = MAX_GROWTH }.Run();
+            new PopulationNeedsJob { NeedsBufferLookup = _needsBufferLookup }.Run();
+            new MigrationAttractionJob {}.Run();
 
-                NativeArray<Entity> destinations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToEntityArray(state.WorldUpdateAllocator);
-                new MigrationDestinationJob { Random = ptr , Destinations = destinations, LaborLookup = _laborLookup }.Run();
-                //NativeArray<LaborMigration> migrations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToComponentDataArray<LaborMigration>(state.WorldUpdateAllocator);
-                //migrations.Sort(new LaborMigration.InSorter());
+            NativeArray<Entity> destinations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToEntityArray(state.WorldUpdateAllocator);
+            new MigrationDestinationJob { Random = random , Destinations = destinations, LaborLookup = _laborLookup }.Run();
+            //NativeArray<LaborMigration> migrations = SystemAPI.QueryBuilder().WithAll<LaborMigration>().Build().ToComponentDataArray<LaborMigration>(state.WorldUpdateAllocator);
+            //migrations.Sort(new LaborMigration.InSorter());
 
-            }
 
 
         }
@@ -62,7 +61,7 @@ namespace YAPCG.Domain.Common.Systems
         {
             migration.In = extras.NeedsMissing;
             migration.Out = extras.NeedsMissing;
-            migration.EmigratingPopulation = (long)math.ceil(migration.Out * EMIGRATION_RATE * labor.Population);
+            migration.EmigratingPopulation = (long)math.log(migration.Out * EMIGRATION_RATE * labor.Population);
         }
     }
     

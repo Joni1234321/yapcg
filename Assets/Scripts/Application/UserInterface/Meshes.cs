@@ -21,7 +21,6 @@ namespace YAPCG.Application.UserInterface
         public SharedSizes SharedSizes;
         
         private EntityManager _;
-        private EntityQuery _query;
         private static readonly int HUB_RADIUS = Shader.PropertyToID("_Scale");
 
         // Can be null, but assume it isnt

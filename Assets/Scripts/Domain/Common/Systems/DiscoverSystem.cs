@@ -50,7 +50,6 @@ namespace YAPCG.Domain.Common.Systems
         partial struct DepositJob : IJobEntity
         {
             private const int DISCOVER_COST_INCREMENT = 10;
-            public EntityCommandBuffer ECB;
             void Execute(in Entity e, ref DiscoverProgress discoverProgress, ref Deposit.Sizes sizes)
             {
                 discoverProgress.Value += discoverProgress.Progress;

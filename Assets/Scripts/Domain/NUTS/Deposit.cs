@@ -30,6 +30,7 @@ namespace YAPCG.Domain.NUTS
             Gas, 
             Oil,
             Rare,
+            Oxygen,
             COUNT
         }
 
