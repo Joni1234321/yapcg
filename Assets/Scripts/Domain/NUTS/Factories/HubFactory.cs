@@ -13,8 +13,29 @@ namespace YAPCG.Domain.NUTS.Factories
 
         public void Spawn (EntityCommandBuffer ecb, DynamicBuffer<Hub.HubSpawnConfig> configs, ref Random random, ref NativeList<Entity> spawned)
         {
+            
+            
             foreach (Hub.HubSpawnConfig config in configs)
             {
+                
+                int j = spawned.Length;
+
+                for (int i = 0; i < config.Total; i++)
+                {
+                    Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
+                    FixedString64Bytes name = NamingGenerator.Get(ref random);
+                    spawned.Add(CreateDeposit(ecb, rgo, ref random, name));
+                }
+
+                for (int i = 0; i < config.Small; i++, j++)
+                    ToSmall(ecb, spawned[j]);
+
+                for (int i = 0; i < config.Medium; i++, j++)
+                    ToMedium(ecb, spawned[j]);
+
+                for (int i = 0; i < config.Big; i++, j++)
+                    ToBig(ecb, spawned[j]);
+                
                 for (int i = 0; i < config.Small; i++)
                     spawned.Add(
                         CreateSmallHub(
@@ -65,6 +86,27 @@ namespace YAPCG.Domain.NUTS.Factories
 
             return e;
         }
+
+        private void Assemble(EntityCommandBuffer _, Entity e, BuildingSlotsLeft buildingSlotsLeft)
+        {
+            _.SetComponent(e, buildingSlotsLeft);
+        }
+
+        private void ToSmall(EntityCommandBuffer _, Entity e) =>
+            Assemble(_, e,
+                new BuildingSlotsLeft { Large = 2, Medium = 5, Small = 25 }
+            );
+        
+        private void ToMedium(EntityCommandBuffer _, Entity e) =>
+            Assemble(_, e,
+                new BuildingSlotsLeft { Large = 5, Medium = 10, Small = 10 }
+            );
+        
+        private void ToBig(EntityCommandBuffer _, Entity e) =>
+            Assemble(_, e,
+                new BuildingSlotsLeft { Large = 10, Medium = 5, Small = 5 }
+            );
+        
         
         public Entity CreateBigHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
         {
