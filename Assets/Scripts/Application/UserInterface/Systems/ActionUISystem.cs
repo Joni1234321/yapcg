@@ -135,9 +135,7 @@ namespace YAPCG.Application.UserInterface.Systems
             SystemAPI.GetSingletonBuffer<Hub.HubSpawnConfig>(false).Add(new Hub.HubSpawnConfig
             {
                 Position = hit.point,  
-                Big = 1, 
-                Medium = 0, 
-                Small = 0
+                Size = Hub.Size.Medium,
             });
             
             //CLogger.LogInfo("Building hub");

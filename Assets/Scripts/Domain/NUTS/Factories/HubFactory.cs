@@ -1,9 +1,11 @@
-﻿using Unity.Collections;
+﻿using System;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
+using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Domain.NUTS.Factories
 {
@@ -13,59 +15,33 @@ namespace YAPCG.Domain.NUTS.Factories
 
         public void Spawn (EntityCommandBuffer ecb, DynamicBuffer<Hub.HubSpawnConfig> configs, ref Random random, ref NativeList<Entity> spawned)
         {
-            
-            
             foreach (Hub.HubSpawnConfig config in configs)
             {
+                Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
+                FixedString64Bytes name = NamingGenerator.Get(ref random);
                 
-                int j = spawned.Length;
-
-                for (int i = 0; i < config.Total; i++)
+                Entity e = CreateHub(ecb, rgo, config.Position, name);
+                
+                switch (config.Size)
                 {
-                    Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
-                    FixedString64Bytes name = NamingGenerator.Get(ref random);
-                    spawned.Add(CreateDeposit(ecb, rgo, ref random, name));
+                    case Hub.Size.Small:
+                        ToSmall(ecb, e);
+                        break;
+                    case Hub.Size.Medium:
+                        ToMedium(ecb, e);
+                        break;
+                    case Hub.Size.Big:
+                        ToBig(ecb, e);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-
-                for (int i = 0; i < config.Small; i++, j++)
-                    ToSmall(ecb, spawned[j]);
-
-                for (int i = 0; i < config.Medium; i++, j++)
-                    ToMedium(ecb, spawned[j]);
-
-                for (int i = 0; i < config.Big; i++, j++)
-                    ToBig(ecb, spawned[j]);
                 
-                for (int i = 0; i < config.Small; i++)
-                    spawned.Add(
-                        CreateSmallHub(
-                            ecb,
-                            config.Position + GetPositionOnSquare(ref random, 100),
-                            NamingGenerator.Get(ref random)
-                        )
-                    );
-
-                for (int i = 0; i < config.Medium; i++)
-                    spawned.Add(
-                        CreateNormalHub(
-                            ecb,
-                            config.Position + GetPositionOnSquare(ref random, 25),
-                            NamingGenerator.Get(ref random)
-                        )
-                    );
-
-                for (int i = 0; i < config.Big; i++)
-                    spawned.Add(
-                        CreateBigHub(
-                            ecb,
-                            config.Position,
-                            NamingGenerator.Get(ref random)
-                        )
-                    );
+                spawned.Add(e);
             }
         }        
         
-        private Entity CreateHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
+        private Entity CreateHub(EntityCommandBuffer _, Deposit.RGO rgo, float3 position, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Hub.HubTag>(e);
@@ -106,27 +82,5 @@ namespace YAPCG.Domain.NUTS.Factories
             Assemble(_, e,
                 new BuildingSlotsLeft { Large = 10, Medium = 5, Small = 5 }
             );
-        
-        
-        public Entity CreateBigHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
-        {
-            Entity e = CreateHub(_, position, name);
-            _.SetComponent(e, new BuildingSlotsLeft { Large = 10, Medium = 5, Small = 5 });
-            return e;
-        }
-        
-        public Entity CreateNormalHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
-        {
-            Entity e = CreateHub(_, position, name);
-            _.SetComponent(e, new BuildingSlotsLeft { Large = 5, Medium = 10, Small = 10 });
-            return e;
-        }
-        
-        public Entity CreateSmallHub(EntityCommandBuffer _, float3 position, FixedString64Bytes name = default)
-        {
-            Entity e = CreateHub(_, position, name);
-            _.SetComponent(e, new BuildingSlotsLeft { Large = 2, Medium = 5, Small = 25 });
-            return e;
-        }
     }
 }

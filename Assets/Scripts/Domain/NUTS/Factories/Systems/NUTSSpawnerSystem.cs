@@ -57,15 +57,20 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
         {
             // Level
             state.EntityManager.AddComponentData(state.EntityManager.CreateEntity(), new LevelQuad {Size = new float2(100, 100)});
-
-            // Hubs
-            SystemAPI.GetSingletonBuffer<Hub.HubSpawnConfig>(false).Add(new Hub.HubSpawnConfig
+            
+            const int W = 2, H = 2;
+            DynamicBuffer<Hub.HubSpawnConfig> hubs = SystemAPI.GetSingletonBuffer<Hub.HubSpawnConfig>(false);
+            for (int y = -H; y <= H; y++)
             {
-                Position = float3.zero,
-                Big = 1,
-                Medium = 100,
-                Small = 1000
-            });
+                for (int x = -W; x <= W; x++)
+                {
+                    hubs.Add(new Hub.HubSpawnConfig
+                    {
+                        Position = new float3(x, 0, y) * 10,
+                        Size = Hub.Size.Big,
+                    });
+                }
+            }
 
             // Deposits
             SystemAPI.GetSingletonBuffer<Deposit.DepositSpawnConfig>(false).Add(new Deposit.DepositSpawnConfig
