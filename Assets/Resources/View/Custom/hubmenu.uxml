@@ -1,6 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Resources/View/main.uss?fileID=7433441132597879392&amp;guid=c8c56bc5dabe31f49a1cbc1a34332ed1&amp;type=3#main" />
     <ui:VisualElement name="hub-menu" style="flex-grow: 0; flex-direction: column; background-color: rgba(255, 255, 255, 0.48);">
+        <ui:VisualElement name="terrain">
+            <YAPCG.Resources.View.Custom.NumberLabel title="Terrain" value="Hills" name="hub-population" />
+        </ui:VisualElement>
+        <ui:VisualElement name="name">
+            <YAPCG.Resources.View.Custom.NumberLabel title="Pop" value="200k" name="hub-population" />
+        </ui:VisualElement>
         <ui:VisualElement name="slots" class="flex-gap" style="flex-grow: 1; flex-direction: row; justify-content: flex-start;">
             <YAPCG.Resources.View.Custom.SlotControl label="L" value="1" hue="#FF0000" name="slots-l" />
             <YAPCG.Resources.View.Custom.SlotControl label="M" value="2" hue="#00FF55" name="slots-m" />

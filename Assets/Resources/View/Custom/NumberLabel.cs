@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using UnityEngine.UIElements;
 
 namespace YAPCG.Resources.View.Custom
@@ -33,21 +34,18 @@ namespace YAPCG.Resources.View.Custom
                 if (_value == value)
                     return;
                 _value = value;
-                UpdateProgressBarTitle(value, _max);
+                _valueLabel.text = value;
             }
         }
 
       
-        public ProgressBarControl() : base("View/Custom/numberlabel")
+        public NumberLabel() : base("View/Custom/numberlabel")
         {
-            _changeLabel = Q<Label>("change");
             _titleLabel = Q<Label>("title");
-            _progressBar = Q<ProgressBar>();
+            _valueLabel = Q<Label>("value");
 
-            Title = "Progress";
-            Max = 100;
-            Value = 20;
-            Change = 4;
+            Title = "Pop";
+            Value = "200k";
         }
     }
 }
