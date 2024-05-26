@@ -4,17 +4,17 @@ using Unity.Mathematics;
 
 namespace YAPCG.Engine.Common.DOTS.Factory
 {
-    public class FactoryUtility
+    public static class FactoryUtility
     {
-        public static void CallFactory<T>(EntityCommandBuffer ecb, EntityManager _, Entity factoryEntity, IFactory<T> factory, ref Random random, out NativeList<Entity> spawned) 
+        public static void CallFactory<T>(this EntityCommandBuffer ecb, EntityManager _, Entity factoryEntity, ref Random random, IFactory<T> factory, out NativeList<Entity> spawned) 
             where T : unmanaged, IFactoryParams, IBufferElementData
         {
-            var configs = _.GetBuffer<T>(factoryEntity);
+            DynamicBuffer<T> factoryParams = _.GetBuffer<T>(factoryEntity);
             spawned = new NativeList<Entity>(Allocator.Temp);
-            foreach(T config in configs)
+            foreach(T config in factoryParams)
                 factory.Spawn(ecb, config, ref random, ref spawned);
             
-            configs.Clear();
+            factoryParams.Clear();
         }
 
     }

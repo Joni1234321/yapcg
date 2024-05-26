@@ -27,13 +27,12 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
 
         public void Spawn(ref EntityCommandBuffer ecb, ref SystemState state, ref Random random)
         {
-            FactoryUtility.CallFactory(ecb, state.EntityManager, _factoryEntity, new HubFactory(), ref random, out var hubs);
-            FactoryUtility.CallFactory(ecb, state.EntityManager, _factoryEntity, new DepositFactory(), ref random, out _);
-            FactoryUtility.CallFactory(ecb, state.EntityManager, _factoryEntity, new SolarSystemFactory(), ref random, out _);
+            ecb.CallFactory(state.EntityManager, _factoryEntity, ref random, new HubFactory(), out var hubs);
+            ecb.CallFactory(state.EntityManager, _factoryEntity, ref random, new DepositFactory(), out _);
+            ecb.CallFactory(state.EntityManager, _factoryEntity, ref random, new SolarSystemFactory(), out _);
 
             foreach(var hub in hubs) ecb.SetComponent(hub, new  DiscoverProgress { Value = random.NextInt(0, 40), Progress = 1, MaxValue = 40});
         }
-
 
         private NativeList<Deposit.DepositFactoryParams> GetDeposits() => new(Allocator.Persistent) { new() { Big = 2, Medium = 1, Small = 1, } };
         
