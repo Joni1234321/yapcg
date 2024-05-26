@@ -9,7 +9,7 @@ using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
-using YAPCG.Engine.Render.Systems;
+using YAPCG.Engine.SystemGroups;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
 
@@ -132,7 +132,7 @@ namespace YAPCG.Application.UserInterface.Systems
             DebugDrawer.DrawTriangles(triangles);
             DebugDrawer.DrawRaycastHit(ray, hit);
  
-            SystemAPI.GetSingletonBuffer<Hub.HubSpawnConfig>(false).Add(new Hub.HubSpawnConfig
+            SystemAPI.GetSingletonBuffer<Hub.HubFactoryParams>(false).Add(new Hub.HubFactoryParams
             {
                 Position = hit.point,  
                 Size = Hub.Size.Medium,

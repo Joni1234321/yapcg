@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Domain.NUTS.SpawnConfigs;
+using YAPCG.Domain.NUTS.Factories;
+using YAPCG.Engine.Common.DOTS.Factory;
 
 namespace YAPCG.Domain.NUTS
 {
@@ -9,7 +10,7 @@ namespace YAPCG.Domain.NUTS
         public struct DepositTag : IComponentData { }
 
         [InternalBufferCapacity(0)]
-        public struct DepositSpawnConfig : IBufferElementData, ISpawnConfig
+        public struct DepositFactoryParams : IBufferElementData, IFactoryParams
         {
             public int Big, Medium, Small;
             

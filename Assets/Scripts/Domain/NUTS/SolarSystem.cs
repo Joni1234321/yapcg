@@ -1,5 +1,4 @@
 ﻿using Unity.Entities;
-using YAPCG.Domain.NUTS.SpawnConfigs;
 
 namespace YAPCG.Domain.NUTS
 {
@@ -16,9 +15,10 @@ namespace YAPCG.Domain.NUTS
         {
             public float Distance;
         }
-        
-        
-        
 
+        public struct CelestialSize : IComponentData
+        {
+            public float Size;
+        }
     }
 }

@@ -2,21 +2,21 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Domain.Common.Components;
-using YAPCG.Domain.NUTS.SpawnConfigs;
 using YAPCG.Engine.Common;
+using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
 
 namespace YAPCG.Domain.NUTS.Factories
 {
     [InternalBufferCapacity(0)]
-    public struct SolarySystemSpawnConfig : IBufferElementData, ISpawnConfig
+    public struct SolarySystemFactoryParams : IBufferElementData, IFactoryParams
     {
         public int Planets;
     }
     
-    public partial struct SolarSystemFactory : IFactory<SolarySystemSpawnConfig>
+    public struct SolarSystemFactory : IFactory<SolarySystemFactoryParams>
     {
-        public void Spawn(EntityCommandBuffer ecb, SolarySystemSpawnConfig config, ref Random random,
+        public void Spawn(EntityCommandBuffer ecb, SolarySystemFactoryParams config, ref Random random,
             ref NativeList<Entity> spawned)
         {
             // create planet
@@ -35,8 +35,9 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"SUN: {name}");
             
-            
-            
+            // Give it a size            
+            _.AddComponent(e, new SolarSystem.CelestialSize() { Size = random.NextGauss(100f, 30f, 50f, 300f)});
+
             return e;
         }
         
@@ -53,6 +54,7 @@ namespace YAPCG.Domain.NUTS.Factories
             // Orbit
             _.AddComponent(e, new SolarSystem.Orbiting() { Parent = parent} );
             _.AddComponent(e, new SolarSystem.OrbitingDistance() { Distance = random.NextFloat(1f, 10f)} );
+            _.AddComponent(e, new SolarSystem.CelestialSize() { Size = random.NextGauss(10f, 3f, 1f, 100f)});
             
             return e;
         }

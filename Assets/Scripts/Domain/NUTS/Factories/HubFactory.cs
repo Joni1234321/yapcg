@@ -4,16 +4,17 @@ using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Common;
+using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
 using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Domain.NUTS.Factories
 {
-    public struct HubFactory : IFactory<Hub.HubSpawnConfig>
+    public struct HubFactory : IFactory<Hub.HubFactoryParams>
     {
         private static float3 GetPositionOnSquare(ref Random random, float radius) => random.NextFloat3(new float3(-radius, 0, -radius), new float3(radius, 0, radius));
 
-        public void Spawn(EntityCommandBuffer ecb, Hub.HubSpawnConfig config, ref Random random,
+        public void Spawn(EntityCommandBuffer ecb, Hub.HubFactoryParams config, ref Random random,
             ref NativeList<Entity> spawned)
         {
             Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);

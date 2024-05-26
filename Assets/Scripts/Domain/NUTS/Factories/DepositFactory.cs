@@ -3,13 +3,14 @@ using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Common;
+using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
 
 namespace YAPCG.Domain.NUTS.Factories
 {
-    public struct DepositFactory : IFactory<Deposit.DepositSpawnConfig>
+    public struct DepositFactory : IFactory<Deposit.DepositFactoryParams>
     {
-        public void Spawn(EntityCommandBuffer ecb, Deposit.DepositSpawnConfig config, ref Random random,
+        public void Spawn(EntityCommandBuffer ecb, Deposit.DepositFactoryParams config, ref Random random,
             ref NativeList<Entity> spawned)
         {
             int j = spawned.Length;

@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Domain.NUTS.SpawnConfigs;
+using YAPCG.Engine.Common.DOTS.Factory;
 
 namespace YAPCG.Domain.NUTS
 {
@@ -9,7 +9,7 @@ namespace YAPCG.Domain.NUTS
         public struct HubTag : IComponentData { }
         
         [InternalBufferCapacity(0)]
-        public struct HubSpawnConfig : IBufferElementData, ISpawnConfig
+        public struct HubFactoryParams : IBufferElementData, IFactoryParams
         {
             public float3 Position;
             public Size Size;
