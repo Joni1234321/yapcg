@@ -59,19 +59,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Domain\NUTS\Hub.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\SolarSystemFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\Housing.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\DepositFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\BuildingSlotsLeft.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\PopulationSystem.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\ISpawnConfig.cs" />
+    <Compile Include="Assets\Scripts\Domain\Common\Components\Terrain.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\DiscoverProgress.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\Labor.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\DiscoverSystem.cs" />
-    <Compile Include="Assets\Scripts\Domain\NUTS\ISpawnConfig.cs" />
-    <Compile Include="Assets\Scripts\Domain\NUTS\Planet.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\NUTSSpawnerSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\HubFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\ProductionSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Deposit.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\SolarSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\IFactory.cs" />
     <None Include="Assets\Scripts\Domain\YAPCG.Domain.asmdef" />
     <Reference Include="UnityEngine">

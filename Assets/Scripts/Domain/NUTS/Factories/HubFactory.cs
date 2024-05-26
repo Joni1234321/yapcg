@@ -13,35 +13,34 @@ namespace YAPCG.Domain.NUTS.Factories
     {
         private static float3 GetPositionOnSquare(ref Random random, float radius) => random.NextFloat3(new float3(-radius, 0, -radius), new float3(radius, 0, radius));
 
-        public void Spawn (EntityCommandBuffer ecb, DynamicBuffer<Hub.HubSpawnConfig> configs, ref Random random, ref NativeList<Entity> spawned)
+        public void Spawn(EntityCommandBuffer ecb, Hub.HubSpawnConfig config, ref Random random,
+            ref NativeList<Entity> spawned)
         {
-            foreach (Hub.HubSpawnConfig config in configs)
+            Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
+            Terrain.TerrainType terrain = (Terrain.TerrainType)random.NextInt((int)Terrain.TerrainType.COUNT);
+            FixedString64Bytes name = NamingGenerator.Get(ref random);
+            
+            Entity e = CreateHub(ecb, rgo, config.Position, terrain, name);
+            
+            switch (config.Size)
             {
-                Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
-                FixedString64Bytes name = NamingGenerator.Get(ref random);
-                
-                Entity e = CreateHub(ecb, rgo, config.Position, name);
-                
-                switch (config.Size)
-                {
-                    case Hub.Size.Small:
-                        ToSmall(ecb, e);
-                        break;
-                    case Hub.Size.Medium:
-                        ToMedium(ecb, e);
-                        break;
-                    case Hub.Size.Big:
-                        ToBig(ecb, e);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                
-                spawned.Add(e);
+                case Hub.Size.Small:
+                    ToSmall(ecb, e);
+                    break;
+                case Hub.Size.Medium:
+                    ToMedium(ecb, e);
+                    break;
+                case Hub.Size.Big:
+                    ToBig(ecb, e);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+            
+            spawned.Add(e);
         }        
         
-        private Entity CreateHub(EntityCommandBuffer _, Deposit.RGO rgo, float3 position, FixedString64Bytes name = default)
+        private Entity CreateHub(EntityCommandBuffer _, Deposit.RGO rgo, float3 position, Terrain.TerrainType terrain = Terrain.TerrainType.Flatlands, FixedString64Bytes name = default)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Hub.HubTag>(e);
@@ -54,6 +53,7 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Position { Value = position });
             _.AddComponent(e, new DiscoverProgress { Progress = 1, Value = 0, MaxValue = 20 });
             _.AddComponent<BuildingSlotsLeft>(e);
+            _.AddComponent(e, new Terrain { Type = terrain });
 
             // Anim
             _.AddComponent(e, new AnimationComponent { AnimationStart = float.MinValue } );

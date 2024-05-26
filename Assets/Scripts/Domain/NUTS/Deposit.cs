@@ -1,10 +1,13 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
+using YAPCG.Domain.NUTS.SpawnConfigs;
 
 namespace YAPCG.Domain.NUTS
 {
     public struct Deposit
     {
+        public struct DepositTag : IComponentData { }
+
         [InternalBufferCapacity(0)]
         public struct DepositSpawnConfig : IBufferElementData, ISpawnConfig
         {
@@ -13,9 +16,6 @@ namespace YAPCG.Domain.NUTS
             public int Total => Big + Medium + Small;
         }
         
-        public struct DepositTag : IComponentData
-        { 
-        }
 
         public struct Sizes : IComponentData
         {

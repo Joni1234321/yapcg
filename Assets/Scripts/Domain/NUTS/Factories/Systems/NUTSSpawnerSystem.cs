@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Domain.Common.Components;
+using YAPCG.Domain.NUTS.SpawnConfigs;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
 
@@ -15,8 +16,10 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
         public void OnCreate(ref SystemState state)
         {
             _entity = state.EntityManager.CreateEntity();
+            
             state.EntityManager.AddBuffer<Hub.HubSpawnConfig>(_entity);
             state.EntityManager.AddBuffer<Deposit.DepositSpawnConfig>(_entity);
+            state.EntityManager.AddBuffer<SolarySystemSpawnConfig>(_entity);
 
             SpawnWorld(ref state);
             
@@ -30,9 +33,11 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
             
             var hubs = new NativeList<Entity>(Allocator.Temp);
             var deposits = new NativeList<Entity>(Allocator.Temp); 
+            var solarsystems = new NativeList<Entity>(Allocator.Temp);  
 
             SpawnConfigs(ecb, state.EntityManager, new HubFactory(), ref random, ref hubs);
             SpawnConfigs(ecb, state.EntityManager, new DepositFactory(), ref random, ref deposits);
+            SpawnConfigs(ecb, state.EntityManager, new SolarSystemFactory(), ref random, ref solarsystems);
             
             foreach(var hub in hubs) ecb.SetComponent(hub, new  DiscoverProgress { Value = random.NextInt(0, 40), Progress = 1, MaxValue = 40});
 
@@ -47,11 +52,12 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
             where T : unmanaged, ISpawnConfig, IBufferElementData
         {
             var configs = _.GetBuffer<T>(_entity);
-
-            factory.Spawn(ecb, configs, ref random, ref spawned);
+            
+            foreach(T config in configs)
+                factory.Spawn(ecb, config, ref random, ref spawned);
+            
             configs.Clear();
         }
-
 
         void SpawnWorld(ref SystemState state)
         {

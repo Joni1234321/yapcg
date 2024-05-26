@@ -9,29 +9,26 @@ namespace YAPCG.Domain.NUTS.Factories
 {
     public struct DepositFactory : IFactory<Deposit.DepositSpawnConfig>
     {
-        public void Spawn (EntityCommandBuffer ecb, DynamicBuffer<Deposit.DepositSpawnConfig> configs, ref Random random, ref NativeList<Entity> spawned)
+        public void Spawn(EntityCommandBuffer ecb, Deposit.DepositSpawnConfig config, ref Random random,
+            ref NativeList<Entity> spawned)
         {
-            foreach (var config in configs)
+            int j = spawned.Length;
+
+            for (int i = 0; i < config.Total; i++)
             {
-                int j = spawned.Length;
-
-                for (int i = 0; i < config.Total; i++)
-                {
-                    Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
-                    FixedString64Bytes name = NamingGenerator.Get(ref random);
-                    spawned.Add(CreateDeposit(ecb, rgo, ref random, name));
-                }
-
-                for (int i = 0; i < config.Small; i++, j++)
-                    ToSmall(ecb, spawned[j]);
-
-                for (int i = 0; i < config.Medium; i++, j++)
-                    ToMedium(ecb, spawned[j]);
-
-                for (int i = 0; i < config.Big; i++, j++)
-                    ToBig(ecb, spawned[j]);
-
+                Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
+                FixedString64Bytes name = NamingGenerator.Get(ref random);
+                spawned.Add(CreateDeposit(ecb, rgo, ref random, name));
             }
+
+            for (int i = 0; i < config.Small; i++, j++)
+                ToSmall(ecb, spawned[j]);
+
+            for (int i = 0; i < config.Medium; i++, j++)
+                ToMedium(ecb, spawned[j]);
+
+            for (int i = 0; i < config.Big; i++, j++)
+                ToBig(ecb, spawned[j]);
         }        
         
         private Entity CreateDeposit(EntityCommandBuffer _, Deposit.RGO rgo, ref Random random, FixedString64Bytes name = default)

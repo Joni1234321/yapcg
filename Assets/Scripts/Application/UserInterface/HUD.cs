@@ -4,6 +4,7 @@ using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
 using YAPCG.Domain.Common.Components;
+using YAPCG.Domain.Common.Systems;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Resources.View.Custom;
@@ -63,6 +64,8 @@ namespace YAPCG.Application.UserInterface
             DiscoveryProgress.Max = discovery.MaxValue;
             DiscoveryProgress.Value = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;
+            
+            
         }
 
         public static HUD Instance { get; private set; }

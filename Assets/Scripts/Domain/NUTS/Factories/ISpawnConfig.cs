@@ -1,4 +1,4 @@
-﻿namespace YAPCG.Domain.NUTS
+﻿namespace YAPCG.Domain.NUTS.SpawnConfigs
 {
     public interface ISpawnConfig
     {
