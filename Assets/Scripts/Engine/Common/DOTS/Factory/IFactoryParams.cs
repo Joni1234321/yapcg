@@ -1,6 +1,8 @@
-﻿namespace YAPCG.Engine.Common.DOTS.Factory
+﻿using Unity.Entities;
+
+namespace YAPCG.Engine.Common.DOTS.Factory
 {
-    public interface IFactoryParams
+    public interface IFactoryParams : IBufferElementData
     {
         
     }
