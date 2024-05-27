@@ -41,10 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Packages\com.singularitygroup.hotreload\package.json" />
     <None Include="Assets\Resources\View\main.uss" />
-    <None Include="Assets\Extensions\Draw XXL\Resources\DrawXXL_lines.shader" />
-    <None Include="Assets\Extensions\Draw XXL\Resources\DrawXXL_lines_overlay.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2023.3.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

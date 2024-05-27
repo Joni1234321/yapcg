@@ -58,7 +58,6 @@
     <Analyzer Include="C:\Active\Unity\YAPCG\Library\PackageCache\com.unity.entities\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Engine\Common\DOTS\EntityExtensions.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\FactoryUtility.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\CLogger.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\SystemGroup.cs" />
@@ -75,6 +74,7 @@
     <Compile Include="Assets\Scripts\Engine\Common\NamingGenerator.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IFactory.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\Systems\InputSystemGroup.cs" />
+    <Compile Include="Assets\Scripts\Engine\Common\DOTS\EntityExtensions.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IWorldFactory.cs" />
     <Compile Include="Assets\Scripts\Engine\DOTSExtension\EntityManagerExtension.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\QuadSize.cs" />

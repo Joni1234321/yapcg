@@ -69,9 +69,9 @@
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\SampleWorldConfigs.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\Labor.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\DiscoverSystem.cs" />
-    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\WorldFactorySystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\HubFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\ProductionSystem.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\WorldFactorySystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Deposit.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\SolarSystem.cs" />
     <None Include="Assets\Scripts\Domain\YAPCG.Domain.asmdef" />
