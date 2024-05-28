@@ -1,9 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
-using YAPCG.Engine.OrbitalMechanics;
-using YAPCG.Engine.Physics;
 using YAPCG.Simulation.Units;
-using Mass = YAPCG.Simulation.Units.Mass;
 
 namespace YAPCG.Simulation.OrbitalMechanics
 {

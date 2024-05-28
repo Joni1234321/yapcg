@@ -1,9 +1,6 @@
 ﻿using System;
-using Unity.Entities;
-using Unity.Mathematics;
-using UnityEngine.UIElements;
 
-namespace YAPCG.Engine.Physics
+namespace YAPCG.Simulation.Units
 {
     public readonly struct Mass
     {
