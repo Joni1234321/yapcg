@@ -29,14 +29,15 @@ namespace YAPCG.Domain.NUTS.Factories
         private Entity CreateSun(EntityCommandBuffer _, ref Random random)
         {
             Entity e = _.CreateEntity();
-            
+            _.AddComponent<Body.BodyTag>(e);
+
             // Name
             FixedString64Bytes name = NamingGenerator.Get(ref random);
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"SUN: {name}");
             
             // Give it a size            
-            _.AddComponent(e, new SolarSystem.CelestialSize() { Size = random.NextGauss(100f, 30f, 50f, 300f)});
+            _.AddComponent(e, new Body.BodySize() { Size = random.NextGauss(100f, 30f, 50f, 300f)});
 
             return e;
         }
@@ -44,7 +45,8 @@ namespace YAPCG.Domain.NUTS.Factories
         private Entity CreatePlanet(EntityCommandBuffer _, Entity parent, ref Random random)
         {
             Entity e = _.CreateEntity();
-            _.AddComponent<Deposit.DepositTag>(e);
+            _.AddComponent<Body.BodyTag>(e);
+            _.AddComponent<Body.PlanetTag>(e);
             
             // Name
             FixedString64Bytes name = NamingGenerator.Get(ref random);
@@ -52,9 +54,9 @@ namespace YAPCG.Domain.NUTS.Factories
             _.SetName(e, $"PLANET: {name}");
             
             // Orbit
-            _.AddComponent(e, new SolarSystem.Orbiting() { Parent = parent} );
-            _.AddComponent(e, new SolarSystem.OrbitingDistance() { Distance = random.NextFloat(1f, 10f)} );
-            _.AddComponent(e, new SolarSystem.CelestialSize() { Size = random.NextGauss(10f, 3f, 1f, 100f)});
+            _.AddComponent(e, new Body.Orbiting() { Parent = parent} );
+            _.AddComponent(e, new Body.OrbitingDistance() { Distance = random.NextFloat(1f, 10f)} );
+            _.AddComponent(e, new Body.BodySize() { Size = random.NextGauss(10f, 3f, 1f, 100f)});
             
             return e;
         }

@@ -2,8 +2,9 @@
 
 namespace YAPCG.Domain.NUTS
 {
-    public struct SolarSystem
+    public struct Body
     {
+        public struct BodyTag : IComponentData { }
         public struct PlanetTag : IComponentData { }
 
         public struct Orbiting : IComponentData
@@ -16,7 +17,7 @@ namespace YAPCG.Domain.NUTS
             public float Distance;
         }
 
-        public struct CelestialSize : IComponentData
+        public struct BodySize : IComponentData
         {
             public float Size;
         }

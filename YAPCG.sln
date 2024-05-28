@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Application", "YAPCG.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Resources.View.Custom", "YAPCG.Resources.View.Custom.csproj", "{2f569eb6-9cbd-7395-1f5d-263c82b42378}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Simulation", "YAPCG.Simulation.csproj", "{89b75208-b802-1519-26a6-975a91b0553c}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}"
 EndProject
 Global
@@ -36,6 +38,8 @@ Global
 		{e16b433d-4bc2-6a74-eee4-45b6d05d17f2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2f569eb6-9cbd-7395-1f5d-263c82b42378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2f569eb6-9cbd-7395-1f5d-263c82b42378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89b75208-b802-1519-26a6-975a91b0553c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89b75208-b802-1519-26a6-975a91b0553c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection

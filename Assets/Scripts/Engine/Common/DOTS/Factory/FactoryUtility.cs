@@ -6,26 +6,22 @@ namespace YAPCG.Engine.Common.DOTS.Factory
 {
     public static class FactoryUtility
     {
-        public static Entity FactoryEntity;
+        public static Entity FactoryEntity = Entity.Null;
 
         public static DynamicBuffer<T> InitFactory<T>(this EntityManager _)
             where T : unmanaged, IFactoryParams
         {
-            if (FactoryEntity == Entity.Null)
+            if (!_.Exists(FactoryEntity))
             {
                 FactoryEntity = _.CreateEntity();
                 _.SetName(FactoryEntity, "Factory Entity");
             }
             return _.AddBuffer<T>(FactoryEntity);
         }
-        public static void InitFactory<T>(this EntityManager _, NativeArray<T> data) 
-            where T : unmanaged, IFactoryParams
-        => _.InitFactory<T>().AddRange(data);
-        
         public static void InitFactoryAndDispose<T>(this EntityManager _, NativeArray<T> data)
             where T : unmanaged, IFactoryParams
         {
-            _.InitFactory(data);
+            _.InitFactory<T>().AddRange(data);
             data.Dispose();
         }
         

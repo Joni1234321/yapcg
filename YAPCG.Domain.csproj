@@ -73,7 +73,7 @@
     <Compile Include="Assets\Scripts\Domain\Common\Systems\ProductionSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\WorldFactorySystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Deposit.cs" />
-    <Compile Include="Assets\Scripts\Domain\NUTS\SolarSystem.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Body.cs" />
     <None Include="Assets\Scripts\Domain\YAPCG.Domain.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2023.3.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
