@@ -2,6 +2,7 @@
   "name": "YAPCG.Simulation",
   "rootNamespace": "YAPCG",
   "references": [
+    "YAPCG.Engine",
     "Unity.Mathematics",
     "Unity.Entities",
     "Unity.Collections",

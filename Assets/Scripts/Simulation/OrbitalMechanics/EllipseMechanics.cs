@@ -3,8 +3,23 @@
 namespace YAPCG.Simulation.OrbitalMechanics
 {
     // https://github.com/lbaars/orbit-nerd-scripts
-    public class EllipseMechanics
+    public static class EllipseMechanics
     {
+
+        /// <summary>
+        /// Get point
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="nu">true anomaly</param>
+        /// <returns></returns>
+        public static float2 GetPoint(float a, float b, float nu)
+        {
+            float x = a * math.cos(nu);
+            float y = b * math.sin(nu);
+            return new float2(x, y);
+        }
+        
         /// <summary>
         /// Calculates the true anomaly (degrees from planet to orbit) 
         /// </summary>
@@ -51,9 +66,9 @@ namespace YAPCG.Simulation.OrbitalMechanics
         {
             float trueAnomaly = math.atan2(math.sin(eccentricAnomaly) * math.sqrt(1 - eccentricity * eccentricity),
                 math.cos(eccentricAnomaly) - eccentricity);
-            trueAnomaly %= (2 * math.PI);
+            trueAnomaly %= math.PI2;
             if (trueAnomaly < 0)
-                trueAnomaly += 2 * math.PI;
+                trueAnomaly += math.PI2;
 
             return trueAnomaly;
         }
@@ -61,9 +76,9 @@ namespace YAPCG.Simulation.OrbitalMechanics
         public static float EccentricAnomalyToMeanAnomaly(float eccentricAnomaly, float eccentricity)
         {
            float meanAnomaly = eccentricAnomaly - eccentricity * math.sin(eccentricAnomaly);
-            meanAnomaly %= 2*math.PI;
+            meanAnomaly %= math.PI2;
             if (meanAnomaly < 0)
-                meanAnomaly += 2*math.PI;
+                meanAnomaly += math.PI2;
             return meanAnomaly;
         }
 
@@ -75,14 +90,15 @@ namespace YAPCG.Simulation.OrbitalMechanics
         /// <returns>E</returns>
         public static float TrueAnomalyToEccentricAnomaly(float trueAnomaly, float eccentricity)
         {
-            return math.atan2(math.sin(trueAnomaly) * math.sqrt(1 - eccentricity * eccentricity),
-                eccentricity + math.cos(trueAnomaly));
+            float eccentricAnomaly = math.atan2(math.sin(trueAnomaly) * math.sqrt(1 - eccentricity * eccentricity), eccentricity + math.cos(trueAnomaly));
+            return eccentricAnomaly;
         }
 
         public static float TrueAnomalyToMeanAnomaly(float trueAnomaly, float eccentricity)
         {
             float eccentricAnomaly = TrueAnomalyToEccentricAnomaly(trueAnomaly, eccentricity);
-            return EccentricAnomalyToMeanAnomaly(eccentricAnomaly, eccentricity);
+            float meanAnomaly = EccentricAnomalyToMeanAnomaly(eccentricAnomaly, eccentricity);
+            return meanAnomaly;
         }
         
         /// <summary>
@@ -109,53 +125,19 @@ namespace YAPCG.Simulation.OrbitalMechanics
             // b^2 = a^2 - c^2
             return math.sqrt(semiMajorAxis * semiMajorAxis - linearEccentricity * linearEccentricity);
         }
-        
+
         /// <summary>
         /// Returns position on plane
         /// </summary>
-        /// <param name="eccentricAnomaly"></param>
         /// <param name="semiMajorAxis"></param>
         /// <param name="semiMinorAxis"></param>
+        /// <param name="eccentricAnomaly"></param>
         /// <returns></returns>
-        public static float2 GetPositionInOrbit(float eccentricAnomaly, float semiMajorAxis, float semiMinorAxis)
+        public static float2 GetPositionInOrbit(float semiMajorAxis, float semiMinorAxis, float eccentricAnomaly)
         {
             float x = semiMajorAxis * math.cos(eccentricAnomaly);
             float y = semiMinorAxis * math.sin(eccentricAnomaly);
             return new float2(x, y);
-        } 
-        
-        
-        public static double Sin(double d) {
-            d += math.PI;
-            double x2 = math.floor(d*(1/(2*math.PI)));
-            d -= x2*(2*math.PI);
-            d-=math.PI;
-   
-            x2 = d * d;
-   
-            return //accurate to 6.82e-8, 3.3x faster than Math.sin, 
-                //faster than lookup table in real-world conditions due to no cache misses
-                //all values from "Fast Polynomial Approximations to Sine and Cosine", Garret, C. K., 2012
-                (((((-2.05342856289746600727e-08*x2 + 2.70405218307799040084e-06)*x2
-                    - 1.98125763417806681909e-04)*x2 + 8.33255814755188010464e-03)*x2
-                  - 1.66665772196961623983e-01)*x2 + 9.99999707044156546685e-01)*d;
-        }
-
-
-        public static double Cos(double d) {
-            d += math.PI;
-            double x2 = math.floor(d*(1/(2*math.PI)));
-            d -= x2*(2*math.PI);
-            d-=math.PI;
-   
-            d *= d;
-   
-            return //max error 5.6e-7, 4x faster than Math.cos, 
-                //faster than lookup table in real-world conditions due to less cache misses
-                //all values from "Fast Polynomial Approximations to Sine and Cosine", Garret, C. K., 2012
-                ((((- 2.21941782786353727022e-07*d + 2.42532401381033027481e-05)*d
-                   - 1.38627507062573673756e-03)*d + 4.16610337354021107429e-02)*d
-                 - 4.99995582499065048420e-01)*d + 9.99999443739537210853e-01;
         }
     }
 

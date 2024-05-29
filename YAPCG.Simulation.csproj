@@ -58,16 +58,16 @@
     <Analyzer Include="C:\Active\Unity\YAPCG\Library\PackageCache\com.unity.entities\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\ExtraMechanics.cs" />
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\EllipseMechanics.cs" />
     <Compile Include="Assets\Scripts\Simulation\Units\Length.cs" />
     <Compile Include="Assets\Scripts\Simulation\Units\Time.cs" />
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\CircleMechanics.cs" />
+    <Compile Include="Assets\Scripts\Simulation\Units\StandardGravitationalParameter.cs" />
     <Compile Include="Assets\Scripts\Simulation\Units\Mass.cs" />
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\OrbitalMechanics.cs" />
+    <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\HohmannMechanics.cs" />
     <None Include="Assets\Scripts\Simulation\YAPCG.Simulation.asmdef" />
-    <Reference Include="Unity.Entities">
-      <HintPath>Library\ScriptAssemblies\Unity.Entities.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2023.3.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -829,6 +829,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="YAPCG.Engine.csproj">
+      <Project>{fe6cd211-2083-f15b-4a1e-cd93d3d5ddc6}</Project>
+      <Name>YAPCG.Engine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

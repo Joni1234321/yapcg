@@ -14,7 +14,14 @@ namespace YAPCG.Simulation.OrbitalMechanics
         {
             if (period == 0)
                 return 0;
-            return 2 * math.PI * time / period;
+            return math.PI2 * time / period;
+        }
+
+        public static float2 GetPoint(float r, float theta)
+        {
+            float x = r * math.cos(theta);
+            float y = r * math.sin(theta);
+            return new float2(x, y);
         }
     }
 }
