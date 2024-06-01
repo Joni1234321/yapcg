@@ -49,16 +49,16 @@
     <Compile Include="Assets\Resources\View\Custom\CustomUI.cs" />
     <Compile Include="Assets\Resources\View\Custom\SlotControl.cs" />
     <Compile Include="Assets\Resources\View\Custom\NumberLabel.cs" />
+    <Compile Include="Assets\Resources\View\Custom\WorldPlanetControl.cs" />
     <Compile Include="Assets\Resources\View\Custom\ProgressBarControl.cs" />
     <None Include="Assets\Resources\View\Custom\progressbar.uxml" />
-    <None Include="Assets\Resources\View\Custom\terrain.uxml" />
     <None Include="Assets\Resources\View\Custom\hubmenu.uxml" />
+    <None Include="Assets\Resources\View\Custom\worldplanet.uxml" />
     <None Include="Assets\Resources\View\Custom\screen.uxml" />
     <None Include="Assets\Resources\View\Custom\slots.uxml" />
     <None Include="Assets\Resources\View\Custom\hubitem.uxml" />
     <None Include="Assets\Resources\View\Custom\numberlabel.uxml" />
     <None Include="Assets\Resources\View\Custom\YAPCG.Resources.View.Custom.asmdef" />
-    <None Include="Assets\Resources\View\Custom\terrain 1.uxml" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2023.3.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
