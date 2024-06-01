@@ -1,8 +1,5 @@
-﻿using System;
-using Unity.Burst;
-using Unity.Collections;
+﻿using Unity.Burst;
 using Unity.Entities;
-using Unity.Entities.Content;
 using Unity.Mathematics;
 using UnityEngine;
 using YAPCG.Application.UserInterface;
@@ -67,26 +64,19 @@ namespace YAPCG.Application.Render.Systems
 
         private void Render(Mesh mesh, Material material) 
         {
-            _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1000))};
+            RenderParams renderParams = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1000))};
 
             int n = _query.CalculateEntityCount();
             if (n == 0) 
                 return;
             
-            _positions.UpdateBuffer(_query, _rp.matProps, WorldUpdateAllocator);
-            _animations.UpdateBuffer(_query, _rp.matProps, WorldUpdateAllocator);
-            _states.UpdateBuffer(_query, _rp.matProps, WorldUpdateAllocator);
+            _positions.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _animations.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _states.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
                 
-            Graphics.RenderMeshPrimitives(_rp, mesh, 0, n);
+            Graphics.RenderMeshPrimitives(renderParams, mesh, 0, n);
         }
         
-        private Mesh GetMeshTemp ()
-        { 
-            GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Mesh mesh = temp.GetComponent<MeshFilter>().mesh;
-            UnityEngine.Object.Destroy(temp);
-            return mesh;
-        }
     }
 
 

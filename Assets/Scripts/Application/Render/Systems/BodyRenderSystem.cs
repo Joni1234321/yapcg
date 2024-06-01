@@ -8,6 +8,7 @@ using UnityEngine;
 using YAPCG.Application.UserInterface;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.Render;
 using YAPCG.Engine.SystemGroups;
 
 namespace YAPCG.Application.Render.Systems
@@ -17,10 +18,8 @@ namespace YAPCG.Application.Render.Systems
     internal partial class BodyRenderSystem : SystemBase
     {
         private EntityQuery _query;
-        private GraphicsBuffer _positionsBuffer, _scalesBuffer;
-        private static readonly int SHADER_POSITIONS = Shader.PropertyToID("_Positions");
-        private static readonly int SHADER_SCALES = Shader.PropertyToID("_Scales");
-        private RenderParams _rp;
+        private static RenderUtils.ShaderHelper<Position> _positions = new(Shader.PropertyToID("_Positions"), sizeof(float) * 3);
+        private static RenderUtils.ShaderHelper<ScaleComponent> _scales = new(Shader.PropertyToID("_Scales"), sizeof(float));
 
         [BurstCompile]
         protected override void OnCreate()
@@ -40,8 +39,8 @@ namespace YAPCG.Application.Render.Systems
         [BurstCompile]
         protected override void OnDestroy()
         {
-            _positionsBuffer?.Dispose();
-            _scalesBuffer?.Dispose();
+            _positions.Dispose();
+            _scales.Dispose();
         }
 
         [BurstDiscard]
@@ -65,30 +64,18 @@ namespace YAPCG.Application.Render.Systems
 
         private void Render(Mesh mesh, Material material) 
         {
-            _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1000))};
+            RenderParams renderParams = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1000))};
 
             int n = _query.CalculateEntityCount();
             if (n == 0) 
                 return;
             
-            SetBuffer<Position>(_positionsBuffer, sizeof(float) * 3, SHADER_POSITIONS);
-            SetBuffer<ScaleComponent>(_scalesBuffer, sizeof(float), SHADER_SCALES);
+            _positions.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _scales.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
 
-            Graphics.RenderMeshPrimitives(_rp, mesh, 0, n);
+            Graphics.RenderMeshPrimitives(renderParams, mesh, 0, n);
         }
 
-        void SetBuffer<T>(GraphicsBuffer buffer, int structSize, int shaderProperty) where T : unmanaged, IComponentData
-        {
-            NativeArray<T> data = _query.ToComponentDataArray<T>(WorldUpdateAllocator);
-            SetBuffer(buffer, data, structSize, shaderProperty);
-        }
-        
-        void SetBuffer<T>(GraphicsBuffer buffer, NativeArray<T> data, int structSize, int shaderProperty) where T : unmanaged, IComponentData
-        {
-            buffer?.Release();
-            buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, data.Length, structSize);
-            buffer.SetData(data);
-            _rp.matProps.SetBuffer(shaderProperty, buffer);
-        }
+
     }
 }

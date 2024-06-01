@@ -7,13 +7,12 @@ namespace YAPCG.Engine.Render
 {
     public static class RenderUtils
     {
-        public static GraphicsBuffer SetBufferData<T>(GraphicsBuffer buffer, NativeArray<T> data, int structSize)
-            where T : unmanaged, IComponentData
-        {
-            buffer?.Release();
-            buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, data.Length, structSize);
-            buffer.SetData(data);
-            return buffer;
+        public static Mesh GetMeshTemp ()
+        { 
+            GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Mesh mesh = temp.GetComponent<MeshFilter>().mesh;
+            UnityEngine.Object.Destroy(temp);
+            return mesh;
         }
         
         public struct ShaderHelper<T> : IDisposable
