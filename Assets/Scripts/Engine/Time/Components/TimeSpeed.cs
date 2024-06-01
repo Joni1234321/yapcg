@@ -7,12 +7,12 @@ namespace YAPCG.Engine.Time.Components
         public float SpeedUp;
     }
         
-    internal struct Ticks : IComponentData
+    public struct Ticks : IComponentData
     {
         public int Value;
     }
 
-    internal struct DeltaTick : IComponentData
+    public struct DeltaTick : IComponentData
     {
         public float Value;
     }

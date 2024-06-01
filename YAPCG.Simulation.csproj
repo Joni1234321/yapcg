@@ -61,9 +61,9 @@
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\ExtraMechanics.cs" />
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\EllipseMechanics.cs" />
     <Compile Include="Assets\Scripts\Simulation\Units\Length.cs" />
-    <Compile Include="Assets\Scripts\Simulation\Units\Time.cs" />
     <Compile Include="Assets\Scripts\Simulation\Units\MassConverter.cs" />
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\CircleMechanics.cs" />
+    <Compile Include="Assets\Scripts\Simulation\Units\SiTime.cs" />
     <Compile Include="Assets\Scripts\Simulation\Units\StandardGravitationalParameter.cs" />
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\OrbitalMechanics.cs" />
     <Compile Include="Assets\Scripts\Simulation\OrbitalMechanics\HohmannMechanics.cs" />

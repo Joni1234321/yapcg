@@ -5,6 +5,8 @@ using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
+using YAPCG.Simulation.OrbitalMechanics;
+using YAPCG.Simulation.Units;
 
 namespace YAPCG.Domain.NUTS.Factories
 {
@@ -21,9 +23,9 @@ namespace YAPCG.Domain.NUTS.Factories
         {
             // create planet
             spawned.Add(CreateSun(ecb, ref random));
-            
+            var mu = new StandardGravitationalParameter(new MassConverter(330_000, MassConverter.UnitType.EarthMass).To(MassConverter.UnitType.KiloGrams));
             for (int i = 0; i < config.Planets; i++)
-                spawned.Add(CreatePlanet(ecb, spawned[0], ref random));
+                spawned.Add(CreatePlanet(ecb, spawned[0], mu, ref random));
         }
         
         private Entity CreateSun(EntityCommandBuffer _, ref Random random)
@@ -35,18 +37,19 @@ namespace YAPCG.Domain.NUTS.Factories
             FixedString64Bytes name = NamingGenerator.Get(ref random);
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"SUN: {name}");
-
-            // Position
-            _.AddComponent<Position>(e);
-            _.AddComponent(e, new ScaleComponent { Value = 1 });
             
             // Give it a size            
-            _.AddComponent(e, new Body.BodySize() { Size = random.NextGauss(100f, 30f, 50f, 300f)});
+            float size = random.NextGauss(100f, 30f, 50f, 300f);
+            _.AddComponent(e, new Body.BodySize { Size = size });
 
+            // Render
+            _.AddComponent(e, new Position { Value = new float3(0) });
+            _.AddComponent(e, new ScaleComponent { Value = size / 20f });
+            
             return e;
         }
         
-        private Entity CreatePlanet(EntityCommandBuffer _, Entity parent, ref Random random)
+        private Entity CreatePlanet(EntityCommandBuffer _, Entity parent, StandardGravitationalParameter mu, ref Random random)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Body.BodyTag>(e);
@@ -57,15 +60,23 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"PLANET: {name}");
             
-            // Position
-            _.AddComponent<Position>(e);
-            _.AddComponent(e, new ScaleComponent { Value = 1 });
-
             // Orbit
-            _.AddComponent(e, new Body.Orbiting() { Parent = parent} );
-            _.AddComponent(e, new Body.OrbitingDistance() { Distance = random.NextFloat(1f, 10f)} );
-            _.AddComponent(e, new Body.BodySize() { Size = random.NextGauss(10f, 3f, 1f, 100f)});
+            float size = random.NextGauss(10f, 3f, 1f, 100f);
+            float orbitDistance = random.NextFloat(1f, 5f);
+            float distance = new Length(orbitDistance, Length.UnitType.AstronomicalUnits).To(Length.UnitType.Meters);
             
+            SiTime period = OrbitalMechanics.GetOrbitalPeriod(mu, distance);
+            
+            float linearEccentricity = EllipseMechanics.GetLinearEccentricity(distance, distance); // this is the case since its a circular orbit
+            float eccentricity = distance == 0 ? 0 : linearEccentricity / distance;
+            
+            _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, Distance = orbitDistance, Eccentricity = eccentricity } );
+            _.AddComponent(e, new Body.BodySize { Size = size });
+            
+            // Render
+            _.AddComponent(e, new Position { Value = new float3(orbitDistance, 0, 0) });
+            _.AddComponent(e, new ScaleComponent { Value = size / 5f});
+
             return e;
         }
         

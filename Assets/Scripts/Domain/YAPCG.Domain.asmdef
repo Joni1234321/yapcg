@@ -6,7 +6,8 @@
         "Unity.Entities",
         "Unity.Collections",
         "Unity.Burst",
-        "YAPCG.Engine"
+        "YAPCG.Engine",
+        "YAPCG.Simulation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -7,14 +7,12 @@ namespace YAPCG.Domain.NUTS
         public struct BodyTag : IComponentData { }
         public struct PlanetTag : IComponentData { }
 
-        public struct Orbiting : IComponentData
+        public struct Orbit : IComponentData
         {
             public Entity Parent;
-        }
-
-        public struct OrbitingDistance : IComponentData
-        {
             public float Distance;
+            public float Eccentricity;
+            public Simulation.Units.SiTime Period;
         }
 
         public struct BodySize : IComponentData

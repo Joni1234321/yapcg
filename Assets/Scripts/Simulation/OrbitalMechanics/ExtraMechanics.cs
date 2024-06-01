@@ -3,7 +3,7 @@ using YAPCG.Engine.Common;
 
 namespace YAPCG.Simulation.OrbitalMechanics
 {
-    public class ExtraMechanics
+    public static class ExtraMechanics
     {
         public struct OrbitData
         {
@@ -18,7 +18,7 @@ namespace YAPCG.Simulation.OrbitalMechanics
             float2 point = EllipseMechanics.GetPoint(orbitData.SemiMajorAxis, orbitData.SemiMinorAxis, trueAnomaly);
             float2 rotated = mathutils.rotate(point, orbitData.Rotation);
 
-            return new float3(rotated + orbitData.Center, 0);
+            return new float3(rotated + orbitData.Center, 0).xzy;
         }
         
         

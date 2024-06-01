@@ -3,18 +3,19 @@
 namespace YAPCG.Simulation.Units
 {
 
-    public readonly struct Mass
+    public struct Mass
     {
-        public readonly float EarthMass;
+        public float EarthMass;
         public Mass(float earthMass) => EarthMass = earthMass;
     }
-    public readonly struct Time
+    public struct SiTime
     {
-        public readonly float Seconds;
-        public Time(float seconds) => Seconds = seconds;
+        public float Days;
+        public SiTime(float seconds) => Days = seconds / 86400f;
+        
     }
     
-    public readonly struct TimeConverter
+    public struct TimeConverter
     {
         public static TimeConverter Zero() => new TimeConverter(0, UnitType.Seconds);
 
@@ -28,8 +29,8 @@ namespace YAPCG.Simulation.Units
             Years
         }
 
-        private readonly float val;
-        private readonly UnitType unit;
+        private float val;
+        private UnitType unit;
         
         public TimeConverter(float val, UnitType unit)
         {

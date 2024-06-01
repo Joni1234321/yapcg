@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Domain\Common\Components\DiscoverProgress.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\Labor.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\DiscoverSystem.cs" />
+    <Compile Include="Assets\Scripts\Domain\Common\Systems\OrbitalMovementSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\SampleWorldFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\HubFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\ProductionSystem.cs" />
@@ -839,6 +840,10 @@
     <ProjectReference Include="YAPCG.Engine.csproj">
       <Project>{fe6cd211-2083-f15b-4a1e-cd93d3d5ddc6}</Project>
       <Name>YAPCG.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="YAPCG.Simulation.csproj">
+      <Project>{89b75208-b802-1519-26a6-975a91b0553c}</Project>
+      <Name>YAPCG.Simulation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

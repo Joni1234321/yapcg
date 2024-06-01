@@ -11,11 +11,11 @@ namespace YAPCG.Simulation.OrbitalMechanics
         /// <param name="mu"></param>
         /// <param name="semiMajorAxis">semimajor</param>
         /// <returns></returns>
-        public static Time GetOrbitalPeriod(StandardGravitationalParameter mu, float semiMajorAxis)
+        public static SiTime GetOrbitalPeriod(StandardGravitationalParameter mu, float semiMajorAxis)
         {
             // https://en.wikipedia.org/wiki/Orbital_period
             // T = 2Pi * sqrt(a^3/GM)
-            return new Time (math.PI2 * semiMajorAxis * math.sqrt(semiMajorAxis / mu.Value));
+            return new SiTime (math.PI2 * semiMajorAxis * math.sqrt(semiMajorAxis / mu.Value));
         }
         
         
