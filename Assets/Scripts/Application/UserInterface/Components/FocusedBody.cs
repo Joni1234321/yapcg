@@ -2,7 +2,7 @@
 
 namespace YAPCG.UI.Components
 {
-    public struct FocusedHub : IComponentData
+    public struct FocusedBody : IComponentData
     {
         public Entity Selected, Hovered;
     }

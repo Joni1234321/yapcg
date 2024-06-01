@@ -13,16 +13,16 @@ namespace YAPCG.Engine.Components
         public float Value;
     }
 
-    public struct AnimationComponent : IComponentData
+    public struct FadeComponent : IComponentData
     {
-        public float AnimationStart;
+        public float FadeStartTime;
     }
 
-    public struct AnimationStateComponent : IComponentData
+    public struct StateColorScaleComponent : IComponentData
     {
-        public float AnimationState;
-        public static AnimationStateComponent Nothing => new() { AnimationState = 0 };
-        public static AnimationStateComponent Hovered => new() { AnimationState = 0.3f };
-        public static AnimationStateComponent Selected => new() { AnimationState = 0.6f };
+        public float StateColorScale;
+        public static StateColorScaleComponent Nothing => new() { StateColorScale = 0 };
+        public static StateColorScaleComponent Hovered => new() { StateColorScale = 0.3f };
+        public static StateColorScaleComponent Selected => new() { StateColorScale = 0.6f };
     }
 }

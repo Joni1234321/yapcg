@@ -60,8 +60,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Application\UserInterface\Meshes.cs" />
     <Compile Include="Assets\Scripts\Application\Render\Systems\BodyRenderSystem.cs" />
+    <Compile Include="Assets\Scripts\Application\UserInterface\Components\FocusedBody.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\Systems\UserInterfaceSystem.cs" />
-    <Compile Include="Assets\Scripts\Application\UserInterface\Components\FocusedHub.cs" />
     <Compile Include="Assets\Scripts\Application\Render\Systems\HubRenderSystem.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\Systems\ActionUISystem.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\HUD.cs" />

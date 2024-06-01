@@ -32,7 +32,7 @@ namespace YAPCG.Domain.Common.Systems
             
             const int DISCOVER_COST_INCREMENT = 30;
             
-            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref AnimationComponent animationComponent)
+            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref FadeComponent fadeComponent)
             {
                 discoverProgress.Value += discoverProgress.Progress;
                 if (Unity.Burst.CompilerServices.Hint.Unlikely(discoverProgress.Value >= discoverProgress.MaxValue))
@@ -41,7 +41,7 @@ namespace YAPCG.Domain.Common.Systems
                     discoverProgress.MaxValue += DISCOVER_COST_INCREMENT;
 
                     buildingSlotsLeft.Medium++;
-                    animationComponent.AnimationStart = Time;
+                    fadeComponent.FadeStartTime = Time;
                 }
             }
         }

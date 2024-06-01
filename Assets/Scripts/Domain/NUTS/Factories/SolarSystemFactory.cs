@@ -38,14 +38,18 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"SUN: {name}");
             
-            // Give it a size            
+            // Planet            
             float size = random.NextGauss(100f, 30f, 50f, 300f);
             _.AddComponent(e, new Body.BodySize { Size = size });
-
+            _.AddComponent(e, new DiscoverProgress() { MaxValue = 30 });
+            
+            
             // Render
             _.AddComponent(e, new Position { Value = new float3(0) });
             _.AddComponent(e, new ScaleComponent { Value = size / 20f });
-            
+            _.AddComponent(e, new FadeComponent { FadeStartTime = float.MinValue } );
+            _.AddComponent(e, new StateColorScaleComponent { StateColorScale = 0 } );
+
             return e;
         }
         
@@ -72,39 +76,15 @@ namespace YAPCG.Domain.NUTS.Factories
             
             _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, Distance = orbitDistance, Eccentricity = eccentricity } );
             _.AddComponent(e, new Body.BodySize { Size = size });
-            
+            _.AddComponent(e, new DiscoverProgress() { MaxValue = 30 });
+
             // Render
             _.AddComponent(e, new Position { Value = new float3(orbitDistance, 0, 0) });
-            _.AddComponent(e, new ScaleComponent { Value = size / 5f});
+            _.AddComponent(e, new ScaleComponent { Value = size / 5f });
+            _.AddComponent(e, new FadeComponent { FadeStartTime = float.MinValue } );
+            _.AddComponent(e, new StateColorScaleComponent { StateColorScale = 0 } );
 
             return e;
         }
-        
-        
-
-        private void Assemble(EntityCommandBuffer _, Entity e, Deposit.Sizes sizes, Labor labor)  
-        {
-            _.SetComponent(e, sizes);
-            _.SetComponent(e, labor);
-        }
-
-        private void ToBig(EntityCommandBuffer _, Entity e) =>
-            Assemble(_, e, 
-                new Deposit.Sizes { S = 20, M = 10, L = 4 },
-                new Labor { Population = 12_500, Ceiling = 100_000 }
-            );
-        
-        private void ToMedium(EntityCommandBuffer _, Entity e) =>
-            Assemble(_, e, 
-                new Deposit.Sizes { S = 40, M = 20, L = 0 },
-                new Labor { Population = 3_000, Ceiling = 10_000 }
-            );
-
-        private void ToSmall(EntityCommandBuffer _, Entity e) =>
-            Assemble(_, e, 
-                new Deposit.Sizes { S = 100, M = 0, L = 0 },
-                new Labor { Population = 250, Ceiling = 5_500 }
-            );
-
     }
 }

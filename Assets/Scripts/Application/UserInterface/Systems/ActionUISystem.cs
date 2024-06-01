@@ -18,39 +18,38 @@ namespace YAPCG.Application.UserInterface.Systems
     [UpdateInGroup(typeof(RenderSystemGroup))]
     public partial struct ActionUISystem : ISystem
     {
-        private EntityQuery _hubsQuery, _levelQuery;
+        private EntityQuery _bodyQuery, _levelQuery;
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
-            _hubsQuery = SystemAPI.QueryBuilder().WithAll<Domain.NUTS.Hub.HubTag, Position>().Build();
+            _bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, ScaleComponent>().Build();
             _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
             
-            state.EntityManager.CreateSingleton(new FocusedHub { Selected = Entity.Null });
+            state.EntityManager.CreateSingleton(new FocusedBody { Selected = Entity.Null });
 
             state.RequireForUpdate<ActionInput>(); 
-            state.RequireForUpdate<FocusedHub>();
+            state.RequireForUpdate<FocusedBody>();
         }
 
         private int NegativeMod(int x, int m) => (x % m + m) % m;
 
-        private Entity GetAdjacentHub (Entity currentHub, int distance)
+        private Entity GetAdjacentBody (Entity currentBody, int distance)
         {
+            NativeArray<Entity> bodies = _bodyQuery.ToEntityArray(Temp);
 
-            NativeArray<Entity> hubs = _hubsQuery.ToEntityArray(Temp);
-
-            if (hubs.Length == 0) return Entity.Null;
+            if (bodies.Length == 0) return Entity.Null;
                 
             int i;
-            for (i = 0; i < hubs.Length; i++)
-                if (hubs[i] == currentHub)
+            for (i = 0; i < bodies.Length; i++)
+                if (bodies[i] == currentBody)
                     break;
 
-            int adjacentEntityIndex = NegativeMod(i + distance, hubs.Length);
-            Entity adjacentHub = hubs[adjacentEntityIndex];
-            hubs.Dispose();
+            int adjacentEntityIndex = NegativeMod(i + distance, bodies.Length);
+            Entity adjacentBody = bodies[adjacentEntityIndex];
+            bodies.Dispose();
             
-            return adjacentHub;
+            return adjacentBody;
         }
         public void OnUpdate(ref SystemState state)
         {
@@ -59,70 +58,66 @@ namespace YAPCG.Application.UserInterface.Systems
             Raycast.ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
             
             if (action.ShouldBuildHub)
-                BuildHubOnMouse(ray);
+                BuildBodyOnMouse(ray);
 
-            RefRW<FocusedHub> focusedHub = SystemAPI.GetSingletonRW<FocusedHub>();
-            Entity selected = focusedHub.ValueRO.Selected;
-            Entity hovered = GetHoverHub(ray);
+            RefRW<FocusedBody> focusedBody = SystemAPI.GetSingletonRW<FocusedBody>();
+            Entity selected = focusedBody.ValueRO.Selected;
+            Entity hovered = GetHoverBody(ray);
 
             
             if (action.Next)
-                selected = GetAdjacentHub(selected, 1);
+                selected = GetAdjacentBody(selected, 1);
 
             if (action.Previous)
-                selected = GetAdjacentHub(selected, -1);
+                selected = GetAdjacentBody(selected, -1);
             
-            if (action.LeftClickSelectHub)
-                // if (hovered != Entity.Null)
+            if (action.LeftClickSelectBody)
                 selected = hovered;
+            
+            // Hovered
+            if (focusedBody.ValueRO.Hovered != Entity.Null) 
+                SystemAPI.SetComponent(focusedBody.ValueRO.Hovered, StateColorScaleComponent.Nothing);
 
-            // Hovering and select effects
-            // if (hovered != focusedHub.ValueRO.Hovered)
-            {
-                if (focusedHub.ValueRO.Hovered != Entity.Null) 
-                    SystemAPI.SetComponent(focusedHub.ValueRO.Hovered, AnimationStateComponent.Nothing);
-                
-                if (hovered != Entity.Null)
-                    SystemAPI.SetComponent(hovered, AnimationStateComponent.Hovered);
-                
-                focusedHub.ValueRW.Hovered = hovered;
-            }
-            // if (selected != focusedHub.ValueRO.Selected)
-            {
-                if (focusedHub.ValueRO.Selected != Entity.Null) 
-                    SystemAPI.SetComponent(focusedHub.ValueRO.Selected, AnimationStateComponent.Nothing);
+            if (hovered != Entity.Null)
+                SystemAPI.SetComponent(hovered, StateColorScaleComponent.Hovered);
+            
+            focusedBody.ValueRW.Hovered = hovered;
 
-                if (selected != Entity.Null)
-                   SystemAPI.SetComponent(selected, AnimationStateComponent.Selected);
+            // Selected
+            if (focusedBody.ValueRO.Selected != Entity.Null) 
+                SystemAPI.SetComponent(focusedBody.ValueRO.Selected, StateColorScaleComponent.Nothing);
 
-                HUD.Instance.UpdateHubUI(state.EntityManager, selected);
-                focusedHub.ValueRW.Selected = selected;
+            if (selected != Entity.Null)
+               SystemAPI.SetComponent(selected, StateColorScaleComponent.Selected);
 
-            }
+            HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
+            //HUD.Instance.UpdateHubUI(state.EntityManager, selected);
+            
+            focusedBody.ValueRW.Selected = selected;
 
         }
 
         
         [BurstCompile]
-        Entity GetHoverHub(Raycast.ray ray)
+        Entity GetHoverBody(Raycast.ray ray)
         {
-            NativeArray<float3> positions = GetHubPositions();
-            SharedSizes sizes = SystemAPI.GetSingleton<SharedSizes>();
+            NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
+            NativeArray<float> sizes = _bodyQuery.ToComponentDataArray<ScaleComponent>(Temp).Reinterpret<ScaleComponent, float>();
             SphereCollection spheres = new SphereCollection
             {
                 Positions = positions, 
-                Radius = sizes.HubRadius
+                Radius = sizes
             };
             
             if (!RaySphere.CheckCollision(ray, spheres, out Raycast.hit hit))
                 return Entity.Null;
 
-            return _hubsQuery.ToEntityArray(Temp)[hit.index];
+            return _bodyQuery.ToEntityArray(Temp)[hit.index];
         }
 
         
         [BurstCompile]
-        bool BuildHubOnMouse(Raycast.ray ray)
+        bool BuildBodyOnMouse(Raycast.ray ray)
         {
             TriangleCollection triangles = new TriangleCollection { Positions = GetLevelTriangles() };
 
@@ -138,14 +133,11 @@ namespace YAPCG.Application.UserInterface.Systems
                 Size = Hub.Size.Medium,
             });
             
-            //CLogger.LogInfo("Building hub");
+            //CLogger.LogInfo("Building body");
             return true;
         }
     
         
-        [BurstCompile]
-        NativeArray<float3> GetHubPositions () => _hubsQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
-
         [BurstCompile]
         NativeArray<float3> GetLevelTriangles()
         {

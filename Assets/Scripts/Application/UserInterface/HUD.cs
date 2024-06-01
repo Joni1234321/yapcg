@@ -42,6 +42,29 @@ namespace YAPCG.Application.UserInterface
 
         }
 
+        public void UpdateBodyUI(EntityManager _, Entity hub)
+        {
+            UI.visible = hub != Entity.Null;
+            
+            if (hub == Entity.Null)
+                return;
+            
+            FixedString64Bytes bodyName = _.GetComponentData<Name>(hub).Value;
+            //BuildingSlotsLeft slotsLeft = _.GetComponentData<BuildingSlotsLeft>(hub);
+            DiscoverProgress discovery = _.GetComponentData<DiscoverProgress>(hub);
+
+
+            HubNameLabel.text = bodyName.ToString();
+            /*
+            SlotControlS.Value = slotsLeft.Small.ToString();
+            SlotControlM.Value = slotsLeft.Medium.ToString();
+            SlotControlL.Value = slotsLeft.Large.ToString();*/
+
+            DiscoveryProgress.Max = discovery.MaxValue;
+            DiscoveryProgress.Value = discovery.Value;
+            DiscoveryProgress.Change = discovery.Progress;
+        }
+        
 
         public void UpdateHubUI(EntityManager _, Entity hub)
         {
@@ -64,8 +87,6 @@ namespace YAPCG.Application.UserInterface
             DiscoveryProgress.Max = discovery.MaxValue;
             DiscoveryProgress.Value = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;
-            
-            
         }
 
         public static HUD Instance { get; private set; }

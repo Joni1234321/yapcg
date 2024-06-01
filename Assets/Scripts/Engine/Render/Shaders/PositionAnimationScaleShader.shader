@@ -1,4 +1,4 @@
-﻿Shader "Primitives/PositionAlternative"
+Shader "Primitives/PositionAnimationScale"
 {
     Properties
     {
@@ -13,7 +13,6 @@
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
         
-        _Scale ("Scale", Range(0.01, 10)) = 1
     }
     SubShader
     {
@@ -34,6 +33,7 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             StructuredBuffer<float3> _Positions;
+            StructuredBuffer<float> _Scales;
             StructuredBuffer<float> _FadeStartTime;
             StructuredBuffer<float> _StateColorScale;
 
@@ -49,10 +49,9 @@
             // Light
             uniform float _Intensity, _Ambient;
             uniform sampler2D _MainTex;
-
-            uniform float _Scale;
             CBUFFER_END
 
+            
             struct attributes
             {
                 float3 normal : NORMAL;
@@ -77,7 +76,7 @@
                 varyings o;
                 const float3 pos = _Positions[instance_id];
 
-                o.vertex = TransformObjectToHClip(v.vertex.xyz * _Scale + pos);
+                o.vertex = TransformObjectToHClip(v.vertex.xyz * _Scales[instance_id] + pos);
                 o.uv = v.uv;
                 o.diffuse = saturate(dot(v.normal, _MainLightPosition.xyz));
                 o.instance_id = instance_id;
@@ -93,8 +92,8 @@
 
                 // animation
                 const float time_since_start = _Time.y - _FadeStartTime[i.instance_id];
-                const float animation_t = time_since_start / _FadeDuration;
-                const float alternative_scale = (time_since_start <= _FadeDuration) * sin_norm(TWO_PI * animation_t);
+                const float fade_scale = time_since_start / _FadeDuration;
+                const float alternative_scale = (time_since_start <= _FadeDuration) * sin_norm(TWO_PI * fade_scale);
                 const float state_scale = _StateColorScale[i.instance_id];
                  
                 // color

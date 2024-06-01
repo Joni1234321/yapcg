@@ -30,7 +30,7 @@ namespace YAPCG.Engine.Input.Systems
                     ShouldBuildHub = GetKeyDown(KeyCode.A),
                     Next = GetKeyDown(KeyCode.Z),
                     Previous = GetKeyDown(KeyCode.X),
-                    LeftClickSelectHub = GetMouseButtonDown(0) // for now should change to detect if ui
+                    LeftClickSelectBody = GetMouseButtonDown(0) // for now should change to detect if ui
                 }
             );
 

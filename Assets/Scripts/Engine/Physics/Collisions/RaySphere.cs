@@ -20,7 +20,7 @@ namespace YAPCG.Engine.Physics.Collisions
             int n = spheres.Positions.Length;
             for (int i = 0; i < n; i++)
             {
-                if (!RayCollideWithSphere(ray, spheres.Positions[i], spheres.Radius, out float t))
+                if (!RayCollideWithSphere(ray, spheres.Positions[i], spheres.Radius[i], out float t))
                     continue;
                 if (t > closest) // t is farther away than closest
                     continue;

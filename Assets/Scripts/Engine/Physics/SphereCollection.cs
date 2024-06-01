@@ -5,7 +5,7 @@ namespace YAPCG.Engine.Physics
 {
     public struct SphereCollection
     {
-        public float Radius;
+        public NativeArray<float> Radius;
         public NativeArray<float3> Positions;
     }
     

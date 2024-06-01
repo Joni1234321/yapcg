@@ -15,15 +15,13 @@ namespace YAPCG.Application.Render.Systems
     {
         private EntityQuery _query;
         private static RenderUtils.ShaderHelper<Position> _positions = new(Shader.PropertyToID("_Positions"), sizeof(float) * 3);
-        private static RenderUtils.ShaderHelper<AnimationComponent> _animations = new(Shader.PropertyToID("_AnimationsStartTime"), sizeof(float));
-        private static RenderUtils.ShaderHelper<AnimationStateComponent> _states = new(Shader.PropertyToID("_State"), sizeof(float));
-        private RenderParams _rp;
-
+        private static RenderUtils.ShaderHelper<FadeComponent> _animations = new(Shader.PropertyToID("_FadeStartTime"), sizeof(float));
+        private static RenderUtils.ShaderHelper<StateColorScaleComponent> _stateColorScales = new(Shader.PropertyToID("_StateColorScale"), sizeof(float));
 
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<AnimationComponent, AnimationStateComponent, Position, Domain.NUTS.Hub.HubTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<FadeComponent, StateColorScaleComponent, Position, Domain.NUTS.Hub.HubTag>().Build();
 
             RequireForUpdate<MeshesSingleton>();
         }
@@ -40,7 +38,7 @@ namespace YAPCG.Application.Render.Systems
         {
             _positions.Dispose();
             _animations.Dispose();
-            _states.Dispose();
+            _stateColorScales.Dispose();
         }
 
         [BurstDiscard]
@@ -72,7 +70,7 @@ namespace YAPCG.Application.Render.Systems
             
             _positions.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
             _animations.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
-            _states.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _stateColorScales.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
                 
             Graphics.RenderMeshPrimitives(renderParams, mesh, 0, n);
         }
