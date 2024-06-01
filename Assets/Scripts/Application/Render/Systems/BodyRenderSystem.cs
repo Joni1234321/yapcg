@@ -20,11 +20,19 @@ namespace YAPCG.Application.Render.Systems
         private EntityQuery _query;
         private static RenderUtils.ShaderHelper<Position> _positions = new(Shader.PropertyToID("_Positions"), sizeof(float) * 3);
         private static RenderUtils.ShaderHelper<ScaleComponent> _scales = new(Shader.PropertyToID("_Scales"), sizeof(float));
+        private static RenderUtils.ShaderHelper<FadeStartTimeComponent> _fadeStartTimes = new(Shader.PropertyToID("_FadeStartTimes"), sizeof(float));
+        private static RenderUtils.ShaderHelper<AlternativeColorRatio> _alternativeColorRatios = new(Shader.PropertyToID("_AlternativeColorRatios"), sizeof(float));
 
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, Body.BodyTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<
+                Position, 
+                ScaleComponent, 
+                FadeStartTimeComponent, 
+                AlternativeColorRatio, 
+                Body.BodyTag
+            >().Build();
 
             RequireForUpdate<MeshesSingleton>();
         }
@@ -41,6 +49,8 @@ namespace YAPCG.Application.Render.Systems
         {
             _positions.Dispose();
             _scales.Dispose();
+            _fadeStartTimes.Dispose();
+            _alternativeColorRatios.Dispose();
         }
 
         [BurstDiscard]
@@ -72,6 +82,8 @@ namespace YAPCG.Application.Render.Systems
             
             _positions.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
             _scales.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _fadeStartTimes.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _alternativeColorRatios.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
 
             Graphics.RenderMeshPrimitives(renderParams, mesh, 0, n);
         }

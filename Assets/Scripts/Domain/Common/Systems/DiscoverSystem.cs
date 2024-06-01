@@ -20,10 +20,9 @@ namespace YAPCG.Domain.Common.Systems
         public void OnUpdate(ref SystemState state)
         {
             new HubJob { Time = (float)SystemAPI.Time.ElapsedTime }.Run();
+            new BodyJob { Time = (float)SystemAPI.Time.ElapsedTime }.Run();
         }
 
-
-        
         [BurstCompile]
         partial struct HubJob : IJobEntity
         {
@@ -32,7 +31,7 @@ namespace YAPCG.Domain.Common.Systems
             
             const int DISCOVER_COST_INCREMENT = 30;
             
-            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref FadeComponent fadeComponent)
+            void Execute(ref DiscoverProgress discoverProgress, ref BuildingSlotsLeft buildingSlotsLeft, ref FadeStartTimeComponent fadeStartTimeComponent)
             {
                 discoverProgress.Value += discoverProgress.Progress;
                 if (Unity.Burst.CompilerServices.Hint.Unlikely(discoverProgress.Value >= discoverProgress.MaxValue))
@@ -41,11 +40,31 @@ namespace YAPCG.Domain.Common.Systems
                     discoverProgress.MaxValue += DISCOVER_COST_INCREMENT;
 
                     buildingSlotsLeft.Medium++;
-                    fadeComponent.FadeStartTime = Time;
+                    fadeStartTimeComponent.FadeStartTime = Time;
                 }
             }
         }
         
+        [BurstCompile]
+        partial struct BodyJob : IJobEntity
+        {
+            [ReadOnly] 
+            public float Time;
+            
+            const int DISCOVER_COST_INCREMENT = 30;
+            
+            void Execute(ref DiscoverProgress discoverProgress, ref FadeStartTimeComponent fadeStartTimeComponent)
+            {
+                discoverProgress.Value += discoverProgress.Progress;
+                if (Unity.Burst.CompilerServices.Hint.Unlikely(discoverProgress.Value >= discoverProgress.MaxValue))
+                {
+                    discoverProgress.Value -= discoverProgress.MaxValue;
+                    discoverProgress.MaxValue += DISCOVER_COST_INCREMENT;
+
+                    fadeStartTimeComponent.FadeStartTime = Time;
+                }
+            }
+        }
         [BurstCompile]
         partial struct DepositJob : IJobEntity
         {

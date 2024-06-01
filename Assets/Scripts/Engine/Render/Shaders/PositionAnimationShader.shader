@@ -5,10 +5,10 @@
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
         
-        _StateColor ("State Color", Color) = (0.5, .8, .8, 1)
+        _AlternativeColor ("Alternative Color", Color) = (0.5, .8, .8, 1)
         
         _FadeDuration ("Fade Duration", Range(0, 10)) = 2
-        _AlternativeColor ("Alternative Color", Color) = (1, 0.5, 0.5, 1)
+        _FadeColor ("Fade Color", Color) = (1, 0.5, 0.5, 1)
 
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
@@ -32,18 +32,19 @@
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Helper.hlsl"
 
-            StructuredBuffer<float3> _Positions;
-            StructuredBuffer<float> _FadeStartTime;
-            StructuredBuffer<float> _StateColorScale;
+            StructuredBuffer<float3> _Positions; 
+            StructuredBuffer<float> _FadeStartTimes;
+            StructuredBuffer<float> _AlternativeColorRatios;
 
             CBUFFER_START(UnityPerMaterial)
             // Coloring
             uniform float4 _Color;
-            uniform float4 _StateColor;
-
-            // Alternative
             uniform float4 _AlternativeColor;
+
+            // Fade
+            uniform float4 _FadeColor;
             uniform float _FadeDuration;
 
             // Light
@@ -69,8 +70,6 @@
                 uint instance_id : SV_InstanceID;
             };
 
-            float cos_norm (float x) { return cos(x) * 0.5 + 0.5; }
-            float sin_norm (float x) { return cos(x + PI) * 0.5 + 0.5; }
             
             varyings vert(const attributes v, const uint instance_id : SV_InstanceID)
             {
@@ -92,15 +91,15 @@
                 const float3 light =  i.diffuse * _Intensity + _Ambient;
 
                 // animation
-                const float time_since_start = _Time.y - _FadeStartTime[i.instance_id];
+                const float time_since_start = _Time.y - _FadeStartTimes[i.instance_id];
                 const float animation_t = time_since_start / _FadeDuration;
-                const float alternative_scale = (time_since_start <= _FadeDuration) * sin_norm(TWO_PI * animation_t);
-                const float state_scale = _StateColorScale[i.instance_id];
+                const float fade_scale = (time_since_start <= _FadeDuration) * sin_norm(TWO_PI * animation_t);
+                const float alternative_scale = _AlternativeColorRatios[i.instance_id];
                  
                 // color
-                const half4 state_color = _StateColor * sin_norm(TWO_PI * _Time.x);
-                const float3 albedo = lerp(tex2D(_MainTex, i.uv), 0.5 + state_color * 0.5, state_scale);
-                const half4 color = lerp(_Color, _AlternativeColor, alternative_scale);
+                const half4 state_color = _AlternativeColor * sin_norm(TWO_PI * _Time.x);
+                const float3 albedo = lerp(tex2D(_MainTex, i.uv), state_color, alternative_scale);
+                const half4 color = lerp(_Color, _FadeColor, fade_scale);
                 return half4(albedo * color * light, 1);
             }
             ENDHLSL

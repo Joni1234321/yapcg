@@ -32,7 +32,8 @@ namespace YAPCG.Domain.NUTS.Factories
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Body.BodyTag>(e);
-            
+            _.AddComponent<Body.SunTag>(e);
+
             // Name
             FixedString64Bytes name = NamingGenerator.Get(ref random);
             _.AddComponent(e, new Name { Value = name });
@@ -41,14 +42,14 @@ namespace YAPCG.Domain.NUTS.Factories
             // Planet            
             float size = random.NextGauss(100f, 30f, 50f, 300f);
             _.AddComponent(e, new Body.BodySize { Size = size });
-            _.AddComponent(e, new DiscoverProgress() { MaxValue = 30 });
+            _.AddComponent(e, new DiscoverProgress() { MaxValue = 100 });
             
             
             // Render
             _.AddComponent(e, new Position { Value = new float3(0) });
             _.AddComponent(e, new ScaleComponent { Value = size / 20f });
-            _.AddComponent(e, new FadeComponent { FadeStartTime = float.MinValue } );
-            _.AddComponent(e, new StateColorScaleComponent { StateColorScale = 0 } );
+            _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
+            _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
 
             return e;
         }
@@ -76,13 +77,13 @@ namespace YAPCG.Domain.NUTS.Factories
             
             _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, Distance = orbitDistance, Eccentricity = eccentricity } );
             _.AddComponent(e, new Body.BodySize { Size = size });
-            _.AddComponent(e, new DiscoverProgress() { MaxValue = 30 });
+            _.AddComponent(e, new DiscoverProgress() { MaxValue = 30, Progress = 1});
 
             // Render
             _.AddComponent(e, new Position { Value = new float3(orbitDistance, 0, 0) });
             _.AddComponent(e, new ScaleComponent { Value = size / 5f });
-            _.AddComponent(e, new FadeComponent { FadeStartTime = float.MinValue } );
-            _.AddComponent(e, new StateColorScaleComponent { StateColorScale = 0 } );
+            _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
+            _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
 
             return e;
         }

@@ -5,8 +5,6 @@ Shader "Primitives/Position"
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
         
-        _StateColor ("State Color", Color) = (0.5, .8, .8, 1)
-        
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
         
@@ -35,7 +33,6 @@ Shader "Primitives/Position"
             CBUFFER_START(UnityPerMaterial)
             // Coloring
             uniform float4 _Color;
-            uniform float4 _StateColor;
 
             // Light
             uniform float _Intensity, _Ambient;
@@ -58,9 +55,6 @@ Shader "Primitives/Position"
                 uint instance_id : SV_InstanceID;
             };
 
-            float cos_norm (float x) { return cos(x) * 0.5 + 0.5; }
-            float sin_norm (float x) { return cos(x + PI) * 0.5 + 0.5; }
-            
             varyings vert(const attributes v, const uint instance_id : SV_InstanceID)
             {
                 varyings o;

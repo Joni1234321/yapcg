@@ -76,19 +76,19 @@ namespace YAPCG.Application.UserInterface.Systems
             
             // Hovered
             if (focusedBody.ValueRO.Hovered != Entity.Null) 
-                SystemAPI.SetComponent(focusedBody.ValueRO.Hovered, StateColorScaleComponent.Nothing);
+                SystemAPI.SetComponent(focusedBody.ValueRO.Hovered, AlternativeColorRatio.Nothing);
 
             if (hovered != Entity.Null)
-                SystemAPI.SetComponent(hovered, StateColorScaleComponent.Hovered);
+                SystemAPI.SetComponent(hovered, AlternativeColorRatio.Hovered);
             
             focusedBody.ValueRW.Hovered = hovered;
 
             // Selected
             if (focusedBody.ValueRO.Selected != Entity.Null) 
-                SystemAPI.SetComponent(focusedBody.ValueRO.Selected, StateColorScaleComponent.Nothing);
+                SystemAPI.SetComponent(focusedBody.ValueRO.Selected, AlternativeColorRatio.Nothing);
 
             if (selected != Entity.Null)
-               SystemAPI.SetComponent(selected, StateColorScaleComponent.Selected);
+               SystemAPI.SetComponent(selected, AlternativeColorRatio.Selected);
 
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
             //HUD.Instance.UpdateHubUI(state.EntityManager, selected);

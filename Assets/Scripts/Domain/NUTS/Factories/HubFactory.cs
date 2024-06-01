@@ -57,8 +57,8 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Terrain { Type = terrain });
 
             // Anim
-            _.AddComponent(e, new FadeComponent { FadeStartTime = float.MinValue } );
-            _.AddComponent(e, new StateColorScaleComponent { StateColorScale = 0 } );
+            _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
+            _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
             
 
             return e;

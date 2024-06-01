@@ -15,13 +15,13 @@ namespace YAPCG.Application.Render.Systems
     {
         private EntityQuery _query;
         private static RenderUtils.ShaderHelper<Position> _positions = new(Shader.PropertyToID("_Positions"), sizeof(float) * 3);
-        private static RenderUtils.ShaderHelper<FadeComponent> _animations = new(Shader.PropertyToID("_FadeStartTime"), sizeof(float));
-        private static RenderUtils.ShaderHelper<StateColorScaleComponent> _stateColorScales = new(Shader.PropertyToID("_StateColorScale"), sizeof(float));
+        private static RenderUtils.ShaderHelper<FadeStartTimeComponent> _fadeStartTimes = new(Shader.PropertyToID("_FadeStartTimes"), sizeof(float));
+        private static RenderUtils.ShaderHelper<AlternativeColorRatio> _alternativeColorRatios = new(Shader.PropertyToID("_AlternativeColorRatios"), sizeof(float));
 
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<FadeComponent, StateColorScaleComponent, Position, Domain.NUTS.Hub.HubTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<FadeStartTimeComponent, AlternativeColorRatio, Position, Domain.NUTS.Hub.HubTag>().Build();
 
             RequireForUpdate<MeshesSingleton>();
         }
@@ -37,8 +37,8 @@ namespace YAPCG.Application.Render.Systems
         protected override void OnDestroy()
         {
             _positions.Dispose();
-            _animations.Dispose();
-            _stateColorScales.Dispose();
+            _fadeStartTimes.Dispose();
+            _alternativeColorRatios.Dispose();
         }
 
         [BurstDiscard]
@@ -69,8 +69,8 @@ namespace YAPCG.Application.Render.Systems
                 return;
             
             _positions.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
-            _animations.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
-            _stateColorScales.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _fadeStartTimes.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            _alternativeColorRatios.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
                 
             Graphics.RenderMeshPrimitives(renderParams, mesh, 0, n);
         }
