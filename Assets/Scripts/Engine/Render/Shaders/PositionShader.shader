@@ -10,7 +10,6 @@ Shader "Primitives/Position"
         _Intensity ("Intensity", Range(0.0, 3.0)) = 0.7
         _Ambient ("Ambient", Range(0.0, 1.0)) = 0.2
         
-        _Scale ("Scale", Range(0.01, 10)) = 1
     }
     SubShader
     {
@@ -31,8 +30,7 @@ Shader "Primitives/Position"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             StructuredBuffer<float3> _Positions;
-            StructuredBuffer<float> _States;
-            StructuredBuffer<half4> _Colors; 
+            StructuredBuffer<float> _Scales;
 
             CBUFFER_START(UnityPerMaterial)
             // Coloring
@@ -42,8 +40,6 @@ Shader "Primitives/Position"
             // Light
             uniform float _Intensity, _Ambient;
             uniform sampler2D _MainTex;
-
-                uniform float _Scale;
             CBUFFER_END
 
             struct attributes
@@ -67,11 +63,10 @@ Shader "Primitives/Position"
             
             varyings vert(const attributes v, const uint instance_id : SV_InstanceID)
             {
-
                 varyings o;
                 const float3 pos = _Positions[instance_id];
 
-                o.vertex = TransformObjectToHClip(v.vertex.xyz * _Scale + pos);
+                o.vertex = TransformObjectToHClip(v.vertex.xyz * _Scales[instance_id] + pos);
                 o.uv = v.uv;
                 o.diffuse = saturate(dot(v.normal, _MainLightPosition.xyz));
                 o.instance_id = instance_id;
@@ -85,12 +80,8 @@ Shader "Primitives/Position"
                 // light
                 const float3 light =  i.diffuse * _Intensity + _Ambient;
 
-                // animation
-                const float state = _States[i.instance_id];
-                 
                 // color
-                const half4 state_color = _StateColor * sin_norm(TWO_PI * _Time.x);
-                const float3 albedo = lerp(tex2D(_MainTex, i.uv), state_color * 0.5 + 0.5, state);
+                const float3 albedo = tex2D(_MainTex, i.uv);
                 const half4 color = _Color;
                 return half4(albedo * color * light, 1);
             }

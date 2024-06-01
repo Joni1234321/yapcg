@@ -8,6 +8,11 @@ namespace YAPCG.Engine.Components
         public float3 Value;
     }
 
+    public struct ScaleComponent : IComponentData
+    {
+        public float Value;
+    }
+
     public struct AnimationComponent : IComponentData
     {
         public float AnimationStart;

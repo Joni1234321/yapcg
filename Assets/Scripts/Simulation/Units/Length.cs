@@ -13,22 +13,22 @@ namespace YAPCG.Simulation.Units
             AstronomicalUnits
         }
 
-        private readonly double val;
+        private readonly float val;
         private readonly UnitType unit;
 
-        public Length(double val, UnitType unit)
+        public Length(float val, UnitType unit)
         {
             this.val = val;
             this.unit = unit;
         }
 
-        public double To(UnitType newUnit)
+        public float To(UnitType newUnit)
         {
-            double meters = val * MeterPerUnit(unit);
+            float meters = val * MeterPerUnit(unit);
             return meters / MeterPerUnit(newUnit);
         }
 
-        private double MeterPerUnit(UnitType unit) => unit switch
+        private float MeterPerUnit(UnitType unit) => unit switch
         {
             UnitType.Meters => 1,
             UnitType.KiloMeters => 1000,
@@ -41,7 +41,7 @@ namespace YAPCG.Simulation.Units
             return new Length(a.To(UnitType.Meters) + b.To(UnitType.Meters), UnitType.Meters);
         }
 
-        public static Length operator /(Length a, double b)
+        public static Length operator /(Length a, float b)
         {
             if (b == 0)
             {

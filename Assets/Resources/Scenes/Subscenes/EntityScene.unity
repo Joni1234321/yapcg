@@ -165,10 +165,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Deposit:
     material: {fileID: 2100000, guid: 39def2a9befff614faec4598cb713e69, type: 2}
-    mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   Hub:
     material: {fileID: 2100000, guid: 04ad5ed2d9111624e823ee2f3f69f2d2, type: 2}
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  Body:
+    material: {fileID: 2100000, guid: e8e4d7b5ac78e524ca37270a10f2b948, type: 2}
+    mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   SharedSizes:
     HubRadius: 2
 --- !u!1660057539 &9223372036854775807

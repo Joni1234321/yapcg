@@ -2,9 +2,21 @@
 
 namespace YAPCG.Simulation.Units
 {
+
+    public readonly struct Mass
+    {
+        public readonly float EarthMass;
+        public Mass(float earthMass) => EarthMass = earthMass;
+    }
     public readonly struct Time
     {
-        public static Time Zero() => new Time(0, UnitType.Seconds);
+        public readonly float Seconds;
+        public Time(float seconds) => Seconds = seconds;
+    }
+    
+    public readonly struct TimeConverter
+    {
+        public static TimeConverter Zero() => new TimeConverter(0, UnitType.Seconds);
 
         public enum UnitType
         {
@@ -16,31 +28,31 @@ namespace YAPCG.Simulation.Units
             Years
         }
 
-        private readonly double val;
+        private readonly float val;
         private readonly UnitType unit;
         
-        public Time(double val, UnitType unit)
+        public TimeConverter(float val, UnitType unit)
         {
             this.val = val;
             this.unit = unit;
         }
         
-        public double To(UnitType newUnit)
+        public float To(UnitType newUnit)
         {
-            double meters = val * SecondsPerUnit(unit);
+            float meters = val * SecondsPerUnit(unit);
             return meters / SecondsPerUnit(newUnit);
         }
 
-        public static implicit operator bool(Time time) => time.val != 0;
+        public static implicit operator bool(TimeConverter timeConverter) => timeConverter.val != 0;
 
-        private double SecondsPerUnit(UnitType unit) => unit switch
+        private float SecondsPerUnit(UnitType unit) => unit switch
         {
             UnitType.Seconds => 1,
             UnitType.Minutes => 60,
             UnitType.Hours => 3600,
             UnitType.Days => 86400,
             UnitType.Weeks => 86400 * 7,
-            UnitType.Years => 86400 * 365.2425,
+            UnitType.Years => 86400 * 365.2425f,
             _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, null)
         };
     }

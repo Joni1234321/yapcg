@@ -11,12 +11,16 @@ namespace YAPCG.Simulation.Units
         /// <summary>
         /// Given in N * M^2 * KG^(-2)
         /// </summary>
-        public const double GRAVITATIONAL_CONSTANT = 0.000_000_000_066_743;
-        public double Value;
+        public const float GRAVITATIONAL_CONSTANT = 0.000_000_000_066_743f;
+        public float Value;
         
-        public StandardGravitationalParameter(Mass mass)
+        /// <summary>
+        /// Given in N * M^2 * KG^(-2)
+        /// </summary>
+        /// <param name="mass">kg</param>
+        public StandardGravitationalParameter(float mass)
         {
-            Value = GRAVITATIONAL_CONSTANT * mass.To(Mass.UnitType.KiloGrams);
+            Value = GRAVITATIONAL_CONSTANT * mass;
         }
     }
 }

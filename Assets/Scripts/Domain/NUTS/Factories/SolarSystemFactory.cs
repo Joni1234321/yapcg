@@ -24,17 +24,21 @@ namespace YAPCG.Domain.NUTS.Factories
             
             for (int i = 0; i < config.Planets; i++)
                 spawned.Add(CreatePlanet(ecb, spawned[0], ref random));
-        }           
+        }
         
         private Entity CreateSun(EntityCommandBuffer _, ref Random random)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Body.BodyTag>(e);
-
+            
             // Name
             FixedString64Bytes name = NamingGenerator.Get(ref random);
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"SUN: {name}");
+
+            // Position
+            _.AddComponent<Position>(e);
+            _.AddComponent(e, new ScaleComponent { Value = 1 });
             
             // Give it a size            
             _.AddComponent(e, new Body.BodySize() { Size = random.NextGauss(100f, 30f, 50f, 300f)});
@@ -53,6 +57,10 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"PLANET: {name}");
             
+            // Position
+            _.AddComponent<Position>(e);
+            _.AddComponent(e, new ScaleComponent { Value = 1 });
+
             // Orbit
             _.AddComponent(e, new Body.Orbiting() { Parent = parent} );
             _.AddComponent(e, new Body.OrbitingDistance() { Distance = random.NextFloat(1f, 10f)} );

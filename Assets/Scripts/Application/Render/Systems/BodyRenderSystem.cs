@@ -1,14 +1,14 @@
-﻿using Unity.Burst;
+﻿using System;
+using System.Runtime.InteropServices;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.Content;
 using Unity.Mathematics;
 using UnityEngine;
 using YAPCG.Application.UserInterface;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
-using YAPCG.UI;
 
 namespace YAPCG.Application.Render.Systems
 {
@@ -17,18 +17,17 @@ namespace YAPCG.Application.Render.Systems
     internal partial class BodyRenderSystem : SystemBase
     {
         private EntityQuery _query;
-        private GraphicsBuffer _positionBuffer, _animationsBuffer, _stateBuffer;
+        private GraphicsBuffer _positionsBuffer, _scalesBuffer;
         private static readonly int SHADER_POSITIONS = Shader.PropertyToID("_Positions");
-        private static readonly int SHADER_ANIMATIONS = Shader.PropertyToID("_AnimationsStartTime");
-        private static readonly int SHADER_STATE = Shader.PropertyToID("_State");
+        private static readonly int SHADER_SCALES = Shader.PropertyToID("_Scales");
         private RenderParams _rp;
 
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<Body.OrbitingDistance, Body.BodySize, Domain.NUTS.Body.BodyTag>().Build();
+            _query = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, Body.BodyTag>().Build();
 
-            RequireForUpdate<MeshesReference>();
+            RequireForUpdate<MeshesSingleton>();
         }
 
         [BurstCompile]
@@ -41,80 +40,55 @@ namespace YAPCG.Application.Render.Systems
         [BurstCompile]
         protected override void OnDestroy()
         {
-            _positionBuffer.Dispose();
-            _animationsBuffer.Dispose();
-            _stateBuffer.Dispose();
+            _positionsBuffer?.Dispose();
+            _scalesBuffer?.Dispose();
         }
 
         [BurstDiscard]
         private void RenderBodies()
         {
-            var meshes = SystemAPI.GetSingleton<MeshesReference>();
+            var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
     
-            if (!meshes.LoadStarted)
+            if (!meshes.Body.LoadStarted)
             {
-                var meshesRW = SystemAPI.GetSingletonRW<MeshesReference>();
-                meshesRW.ValueRW.DepositMaterial.LoadAsync();
-                meshesRW.ValueRW.DepositMesh.LoadAsync();
-                meshesRW.ValueRW.LoadStarted = true;
+                meshes.Body.LoadAsync();
+                SystemAPI.SetSingleton(meshes);
                 return;
             }
 
-            if (meshes.DepositMaterial.LoadingStatus != ObjectLoadingStatus.Completed ||
-                meshes.DepositMesh.LoadingStatus != ObjectLoadingStatus.Completed)
+            if (!meshes.Body.Loaded())
                 return;
 
-            Render(meshes.DepositMesh.Result, meshes.DepositMaterial.Result);
+            Render(meshes.Body.Mesh.Result, meshes.Body.Material.Result);
         }
 
 
-        private NativeList<Position> _positions;
         private void Render(Mesh mesh, Material material) 
         {
-            _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1) * 1000)};
+            _rp = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1000))};
 
-            NativeArray<Body.OrbitingDistance> positions = _query.ToComponentDataArray<Body.OrbitingDistance>(WorldUpdateAllocator);
+            int n = _query.CalculateEntityCount();
+            if (n == 0) 
+                return;
+            
+            SetBuffer<Position>(_positionsBuffer, sizeof(float) * 3, SHADER_POSITIONS);
+            SetBuffer<ScaleComponent>(_scalesBuffer, sizeof(float), SHADER_SCALES);
 
-            int n = positions.Length;
-            if (n != 0)
-            {
-                //if (_buffer.count != n)
-                {
-                    const int POSITION_SIZE = sizeof(float) * 3;
-                    _positionBuffer?.Release();
-                    _positionBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, POSITION_SIZE);
-                    _positionBuffer.SetData(positions);
-                }
-                {
-                    const int ANIMATION_SIZE = sizeof(float);
-                    _animationsBuffer?.Release();
-                    _animationsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, ANIMATION_SIZE);
-                    _animationsBuffer.SetData(_query.ToComponentDataArray<AnimationComponent>(WorldUpdateAllocator));
-                }
-                {
-                    const int STATE_SIZE = sizeof(float);
-                    _stateBuffer?.Release();
-                    _stateBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, n, STATE_SIZE);
-                    _stateBuffer.SetData(_query.ToComponentDataArray<AnimationStateComponent>(WorldUpdateAllocator));
-                }
-                
-                _rp.matProps.SetBuffer(SHADER_POSITIONS, _positionBuffer);
-                _rp.matProps.SetBuffer(SHADER_ANIMATIONS, _animationsBuffer);
-                _rp.matProps.SetBuffer(SHADER_STATE, _stateBuffer);
-                
-                Graphics.RenderMeshPrimitives(_rp, mesh, 0, n);
-            }
-
+            Graphics.RenderMeshPrimitives(_rp, mesh, 0, n);
         }
 
+        void SetBuffer<T>(GraphicsBuffer buffer, int structSize, int shaderProperty) where T : unmanaged, IComponentData
+        {
+            NativeArray<T> data = _query.ToComponentDataArray<T>(WorldUpdateAllocator);
+            SetBuffer(buffer, data, structSize, shaderProperty);
+        }
         
-        private Mesh GetMeshTemp ()
-        { 
-            GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Mesh mesh = temp.GetComponent<MeshFilter>().mesh;
-            UnityEngine.Object.Destroy(temp);
-            return mesh;
+        void SetBuffer<T>(GraphicsBuffer buffer, NativeArray<T> data, int structSize, int shaderProperty) where T : unmanaged, IComponentData
+        {
+            buffer?.Release();
+            buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, data.Length, structSize);
+            buffer.SetData(data);
+            _rp.matProps.SetBuffer(shaderProperty, buffer);
         }
     }
-    
 }
