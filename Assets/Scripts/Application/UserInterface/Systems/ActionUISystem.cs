@@ -96,7 +96,7 @@ namespace YAPCG.Application.UserInterface.Systems
             NativeArray<DiscoverProgress> discoveryProgress = _bodyQuery.ToComponentDataArray<DiscoverProgress>(state.WorldUpdateAllocator);
             NativeArray<short> hues = CollectionHelper.CreateNativeArray<short>(names.Length, state.WorldUpdateAllocator);
             for (int i = 0; i < hues.Length; i++)
-                hues[i] = discoveryProgress[i].Progress == 0 ? (short)68 : (short)183;
+                hues[i] = discoveryProgress[i].Progress == 0 ? (short)68 : (short)163;
             
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
             HUD.Instance.WorldHUD.SetNames(names, positions, hues);
