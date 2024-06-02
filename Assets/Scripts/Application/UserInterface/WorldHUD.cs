@@ -26,7 +26,7 @@ namespace YAPCG.Application.UserInterface
         }
 
         
-        public void SetNames(NativeArray<FixedString64Bytes> names, NativeArray<float3> positions)
+        public void SetNames(NativeArray<FixedString64Bytes> names, NativeArray<float3> positions, NativeArray<short> hues)
         {
             int n = names.Length;
             while (Controls.Count < n)
@@ -42,6 +42,7 @@ namespace YAPCG.Application.UserInterface
             for (int i = 0; i < n; i++)
             {
                 Controls[i].Title = names[i].ToString();
+                Controls[i].Hue = hues[i];
                 float3 screen = Camera.WorldToScreenPoint(positions[i]);
                 float w = Controls[i].resolvedStyle.width;
                 float h = Controls[i].resolvedStyle.height;

@@ -17,77 +17,69 @@ namespace YAPCG.Application.Render.Systems
     [BurstCompile]
     internal partial class BodyRenderSystem : SystemBase
     {
-        private EntityQuery _query;
-        private static RenderUtils.ShaderHelper<Position> _positions = new(Shader.PropertyToID("_Positions"), sizeof(float) * 3);
-        private static RenderUtils.ShaderHelper<ScaleComponent> _scales = new(Shader.PropertyToID("_Scales"), sizeof(float));
-        private static RenderUtils.ShaderHelper<FadeStartTimeComponent> _fadeStartTimes = new(Shader.PropertyToID("_FadeStartTimes"), sizeof(float));
-        private static RenderUtils.ShaderHelper<AlternativeColorRatio> _alternativeColorRatios = new(Shader.PropertyToID("_AlternativeColorRatios"), sizeof(float));
-
+        private EntityQuery _planetQuery, _sunQuery;
+        private RenderUtils.PositionScaleAlternativeMaterialRender _planetRenderer, _sunRenderer;
         [BurstCompile]
         protected override void OnCreate()
         {
-            _query = SystemAPI.QueryBuilder().WithAll<
-                Position, 
-                ScaleComponent, 
-                FadeStartTimeComponent, 
-                AlternativeColorRatio, 
-                Body.BodyTag
-            >().Build();
-
+            _planetQuery = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.PlanetTag>().Build();
+            _sunQuery = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.SunTag>().Build();
             RequireForUpdate<MeshesSingleton>();
+            _planetRenderer = new RenderUtils.PositionScaleAlternativeMaterialRender();
+            _sunRenderer = new RenderUtils.PositionScaleAlternativeMaterialRender();
         }
 
         [BurstCompile]
         protected override void OnUpdate()
         {
             // OPTIMIZATION: SET COMPONENT FLAG THAT WHENEVER ANOTHER OBJECT SPAWNS, THEN CHANGE COMMAND, OTHERWISE DONT
-            RenderBodies();
+            RenderPlanets();
+            RenderSuns();
         }
 
+        
         [BurstCompile]
         protected override void OnDestroy()
         {
-            _positions.Dispose();
-            _scales.Dispose();
-            _fadeStartTimes.Dispose();
-            _alternativeColorRatios.Dispose();
+            _planetRenderer.Dispose();
+            _sunRenderer.Dispose();
         }
 
         [BurstDiscard]
-        private void RenderBodies()
+        private void RenderPlanets()
         {
             var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
     
-            if (!meshes.Body.LoadStarted)
+            if (!meshes.Planet.LoadStarted)
             {
-                meshes.Body.LoadAsync();
+                meshes.Planet.LoadAsync();
                 SystemAPI.SetSingleton(meshes);
                 return;
             }
 
-            if (!meshes.Body.Loaded())
+            if (!meshes.Planet.Loaded())
                 return;
 
-            Render(meshes.Body.Mesh.Result, meshes.Body.Material.Result);
+            _planetRenderer.Render(_planetQuery, meshes.Planet.Mesh.Result, meshes.Planet.Material.Result, WorldUpdateAllocator);
         }
-
-
-        private void Render(Mesh mesh, Material material) 
+        
+        
+        [BurstDiscard]
+        private void RenderSuns()
         {
-            RenderParams renderParams = new RenderParams(material) { matProps = new MaterialPropertyBlock(), worldBounds = new Bounds(float3.zero, new float3(1000))};
-
-            int n = _query.CalculateEntityCount();
-            if (n == 0) 
+            var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
+    
+            if (!meshes.Sun.LoadStarted)
+            {
+                meshes.Sun.LoadAsync();
+                SystemAPI.SetSingleton(meshes);
                 return;
-            
-            _positions.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
-            _scales.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
-            _fadeStartTimes.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
-            _alternativeColorRatios.UpdateBuffer(_query, renderParams.matProps, WorldUpdateAllocator);
+            }
 
-            Graphics.RenderMeshPrimitives(renderParams, mesh, 0, n);
+            if (!meshes.Sun.Loaded())
+                return;
+
+            _sunRenderer.Render(_sunQuery, meshes.Sun.Mesh.Result, meshes.Sun.Material.Result, WorldUpdateAllocator);
         }
-
-
     }
 }

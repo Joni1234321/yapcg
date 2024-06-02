@@ -74,12 +74,10 @@ Shader "Primitives/PositionAnimationScale"
             {
                 varyings o;
                 const float3 pos = _Positions[instance_id];
-
                 o.vertex = TransformObjectToHClip(v.vertex.xyz * _Scales[instance_id] + pos);
                 o.uv = v.uv;
                 o.diffuse = saturate(dot(v.normal, _MainLightPosition.xyz));
                 o.instance_id = instance_id;
-
                 return o;
             }
 

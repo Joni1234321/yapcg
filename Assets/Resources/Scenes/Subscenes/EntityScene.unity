@@ -172,6 +172,9 @@ MonoBehaviour:
   Body:
     material: {fileID: 2100000, guid: e8e4d7b5ac78e524ca37270a10f2b948, type: 2}
     mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  Sun:
+    material: {fileID: 2100000, guid: 34ea18ec737bf3846aa6cd2d29cf6148, type: 2}
+    mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   SharedSizes:
     HubRadius: 2
 --- !u!1660057539 &9223372036854775807

@@ -2,6 +2,7 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
@@ -23,7 +24,7 @@ namespace YAPCG.Application.UserInterface.Systems
         {
             state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
-            _bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, ScaleComponent, Name>().Build();
+            _bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, ScaleComponent, DiscoverProgress, Name>().Build();
             _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
             
             state.EntityManager.CreateSingleton(new FocusedBody { Selected = Entity.Null });
@@ -90,10 +91,15 @@ namespace YAPCG.Application.UserInterface.Systems
             if (selected != Entity.Null)
                SystemAPI.SetComponent(selected, AlternativeColorRatio.Selected);
 
-            NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
-            NativeArray<FixedString64Bytes> names = _bodyQuery.ToComponentDataArray<Name>(Temp).Reinterpret<Name, FixedString64Bytes>();
+            NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(state.WorldUpdateAllocator).Reinterpret<Position, float3>();
+            NativeArray<FixedString64Bytes> names = _bodyQuery.ToComponentDataArray<Name>(state.WorldUpdateAllocator).Reinterpret<Name, FixedString64Bytes>();
+            NativeArray<DiscoverProgress> discoveryProgress = _bodyQuery.ToComponentDataArray<DiscoverProgress>(state.WorldUpdateAllocator);
+            NativeArray<short> hues = CollectionHelper.CreateNativeArray<short>(names.Length, state.WorldUpdateAllocator);
+            for (int i = 0; i < hues.Length; i++)
+                hues[i] = discoveryProgress[i].Progress == 0 ? (short)68 : (short)183;
+            
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
-            HUD.Instance.WorldHUD.SetNames(names, positions);
+            HUD.Instance.WorldHUD.SetNames(names, positions, hues);
             //HUD.Instance.UpdateHubUI(state.EntityManager, selected);
             
             focusedBody.ValueRW.Selected = selected;
