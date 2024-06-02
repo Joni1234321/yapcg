@@ -23,7 +23,7 @@ namespace YAPCG.Application.UserInterface.Systems
         {
             state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
-            _bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, ScaleComponent>().Build();
+            _bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, ScaleComponent, Name>().Build();
             _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
             
             state.EntityManager.CreateSingleton(new FocusedBody { Selected = Entity.Null });
@@ -90,7 +90,10 @@ namespace YAPCG.Application.UserInterface.Systems
             if (selected != Entity.Null)
                SystemAPI.SetComponent(selected, AlternativeColorRatio.Selected);
 
+            NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
+            NativeArray<FixedString64Bytes> names = _bodyQuery.ToComponentDataArray<Name>(Temp).Reinterpret<Name, FixedString64Bytes>();
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
+            HUD.Instance.WorldHUD.SetNames(names, positions);
             //HUD.Instance.UpdateHubUI(state.EntityManager, selected);
             
             focusedBody.ValueRW.Selected = selected;

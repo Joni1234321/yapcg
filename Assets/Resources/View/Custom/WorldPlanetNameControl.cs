@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace YAPCG.Resources.View.Custom
 {
     [UxmlElement]
-    public partial class SlotControl : CustomUI
+    public partial class WorldPlanetNameControl : CustomUI
     {
         
         private string _title;
@@ -25,10 +22,10 @@ namespace YAPCG.Resources.View.Custom
             }
         }
 
-        public SlotControl() : base("View/Custom/WorldPlanet")
+        public WorldPlanetNameControl() : base("View/Custom/worldplanet")
         {
             _titleLabel = Q<Label>("title");
-            Label = "SUN";
+            Title = "SUN";
         }
     }
 }

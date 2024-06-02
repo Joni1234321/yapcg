@@ -53,6 +53,33 @@ namespace YAPCG.Engine.Common
             re.Append(ending);
             return re;
         }
+
         
+        private static readonly string[] PLANET_PREFIXES = 
+        {
+            "Zan", "Pro", "Gor", "Xan", "Ver", "Tar", "Hel", "Bet", "Nor", "Tra"
+        };
+
+        private static readonly string[] PLANET_SUFFIXES = 
+        {
+            "onia", "ar", "ion", "arious", "us", "ara", "on", "ia", "ix", "ara"
+        };
+
+        private static readonly string[] PLANET_MIDDLE = 
+        {
+            "th", "nd", "l", "v", "m", "r", "t", "z", "n", "x"
+        };
+
+        public static FixedString64Bytes GetPlanetName(ref Random random)
+        {
+            var name = PLANET_PREFIXES[random.NextInt(PLANET_PREFIXES.Length)];
+            var midle = PLANET_MIDDLE[random.NextInt(PLANET_MIDDLE.Length)];
+            var ending = PLANET_SUFFIXES[random.NextInt(PLANET_SUFFIXES.Length)];
+            FixedString64Bytes re = "";
+            re.Append(name);
+            re.Append(midle);
+            re.Append(ending);
+            return re;
+        }
     }
 }

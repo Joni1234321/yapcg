@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RayTriangle.cs" />
     <Compile Include="Assets\Scripts\Engine\SystemGroups\RenderSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\MouseInput.cs" />
+    <Compile Include="Assets\Scripts\Engine\Common\NameExtensions.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Systems\TickWeeklyGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\NamingGenerator.cs" />
     <Compile Include="Assets\Scripts\Engine\Render\RenderUtils.cs" />

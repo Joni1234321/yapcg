@@ -36,11 +36,12 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
 
         public NativeArray<SolarySystemFactoryParams> GetSolarSystem() =>
             new(new SolarySystemFactoryParams[] {new () { Planets = 7 } }, Allocator.Persistent);
-        private NativeArray<Deposit.DepositFactoryParams> GetDeposits() => 
-            new(new Deposit.DepositFactoryParams[] { new(){ Big = 2, Medium = 1, Small = 1} }, Allocator.Persistent);
-        
+
+        private NativeArray<Deposit.DepositFactoryParams> GetDeposits() => new(0, Allocator.Persistent);
+            //new(new Deposit.DepositFactoryParams[] { new(){ Big = 2, Medium = 1, Small = 1} }, Allocator.Persistent);
         private NativeArray<Hub.HubFactoryParams> GetHubs()
         {
+            return new(0, Allocator.Persistent);
             const int W = 2, H = 2;
             NativeList<Hub.HubFactoryParams> hubs = new(Allocator.Temp);
             for (int y = -H; y <= H; y++)

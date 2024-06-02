@@ -14,16 +14,14 @@ namespace YAPCG.Application.UserInterface
 {
     public class HUD : MonoBehaviour
     {
-        public UIDocument UIDocument;
-        public VisualElement UI;
-
+        public UIDocument UIDocument, WorldUIDocument;
+        public VisualElement UI, WorldUI;
+        public WorldHUD WorldHUD;
+        
         public SlotControl SlotControlS, SlotControlM, SlotControlL;
         public Label HubNameLabel;
 
         public ProgressBarControl DiscoveryProgress;
-
-        public ListView HubList;
-        public List<string> HubNames;
         
         public void Start()
         {
@@ -35,11 +33,7 @@ namespace YAPCG.Application.UserInterface
 
             DiscoveryProgress = UI.Q<ProgressBarControl>("discovery");
 
-            HubList = UI.Q<ListView>("hub-list");
-            HubList.itemsSource = HubNames;
-            HubList.makeItem = () => new Label();
-            HubList.bindItem = (element, i) => (element as Label).text = i.ToString();
-
+            WorldHUD = new WorldHUD(WorldUIDocument.rootVisualElement.Q("world-ui"));
         }
 
         public void UpdateBodyUI(EntityManager _, Entity hub)

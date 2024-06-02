@@ -58,6 +58,7 @@
     <Analyzer Include="C:\Active\Unity\YAPCG\Library\PackageCache\com.unity.entities\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Application\UserInterface\WorldHUD.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\Meshes.cs" />
     <Compile Include="Assets\Scripts\Application\Render\Systems\BodyRenderSystem.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\Components\FocusedBody.cs" />
