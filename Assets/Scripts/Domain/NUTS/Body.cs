@@ -14,6 +14,7 @@ namespace YAPCG.Domain.NUTS
             public float Distance;
             public float Eccentricity;
             public Simulation.Units.SiTime Period;
+            public float PeriodOffsetTicksF;
         }
 
         public struct BodySize : IComponentData

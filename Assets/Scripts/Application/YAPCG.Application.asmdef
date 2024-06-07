@@ -9,7 +9,8 @@
     "Unity.Entities.Graphics",
     "YAPCG.Domain",
     "YAPCG.Engine",
-    "YAPCG.Resources.View.Custom"
+    "YAPCG.Resources.View.Custom",
+    "YAPCG.Simulation"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

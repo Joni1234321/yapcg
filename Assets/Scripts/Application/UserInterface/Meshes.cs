@@ -11,7 +11,7 @@ namespace YAPCG.Application.UserInterface
 {
     public struct MeshesSingleton : IComponentData
     {
-        public MeshesReference Deposit, Planet, Sun;
+        public MeshesReference Deposit, Planet, Sun, Orbit;
     }
     public struct MeshesReference : IComponentData
     {
@@ -38,7 +38,7 @@ namespace YAPCG.Application.UserInterface
     
     public class Meshes : MonoBehaviour
     {
-        public MeshMaterial Deposit, Hub, Body, Sun;
+        public MeshMaterial Deposit, Hub, Body, Sun, Orbit;
         public SharedSizes SharedSizes;
         
         private EntityManager _;
@@ -70,6 +70,7 @@ namespace YAPCG.Application.UserInterface
             Hub.Load();
             Body.Load();
             Sun.Load();
+            Orbit.Load();
             CLogger.LogLoaded(this, "Deposits and meshes");
         }
 
@@ -83,7 +84,8 @@ namespace YAPCG.Application.UserInterface
             {
                 Deposit = deposit,
                 Planet = new MeshesReference(Body.RenderMeshArray.Meshes[0], Body.RenderMeshArray.Materials[0]),
-                Sun = new MeshesReference(Sun.RenderMeshArray.Meshes[0], Sun.RenderMeshArray.Materials[0])
+                Sun = new MeshesReference(Sun.RenderMeshArray.Meshes[0], Sun.RenderMeshArray.Materials[0]),
+                Orbit = new MeshesReference(Orbit.RenderMeshArray.Meshes[0], Orbit.RenderMeshArray.Materials[0]),
             };
 
             

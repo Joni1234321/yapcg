@@ -64,7 +64,6 @@
     <Compile Include="Assets\Scripts\Engine\Common\SystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\SphereCollection.cs" />
     <Compile Include="Assets\Scripts\Engine\SharedInitSystem.cs" />
-    <Compile Include="Assets\Scripts\Engine\Time\Components\TimeSpeed.cs" />
     <Compile Include="Assets\Scripts\Engine\Render\RenderPositionOnlyTag.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\Position.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RayTriangle.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IWorldFactory.cs" />
     <Compile Include="Assets\Scripts\Engine\DOTSExtension\EntityManagerExtension.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\QuadSize.cs" />
+    <Compile Include="Assets\Scripts\Engine\Time\Components\TickSpeed.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\Name.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Systems\TickDailyGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\SystemGroups\SpawningSystemGroup.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Engine\Time\Systems\GameTimeSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\Systems\InputSystem.cs" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\PositionAnimationShader.shader" />
+    <None Include="Assets\Scripts\Engine\Render\Shaders\Ellipse.shader" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\PositionShader.shader" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\Helper.hlsl" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\PositionAnimationScaleShader.shader" />

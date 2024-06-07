@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Domain\Common\Systems\PopulationSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\Terrain.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\DiscoverProgress.cs" />
+    <Compile Include="Assets\Scripts\Domain\consts.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\Labor.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\DiscoverSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\OrbitalMovementSystem.cs" />

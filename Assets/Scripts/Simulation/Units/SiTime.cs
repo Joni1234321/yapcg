@@ -12,7 +12,6 @@ namespace YAPCG.Simulation.Units
     {
         public float Days;
         public SiTime(float seconds) => Days = seconds / 86400f;
-        
     }
     
     public struct TimeConverter

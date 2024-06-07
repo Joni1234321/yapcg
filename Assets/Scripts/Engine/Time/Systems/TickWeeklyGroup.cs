@@ -8,7 +8,7 @@ namespace YAPCG.Engine.Time.Systems
     {
         protected override void OnUpdate()
         {
-            float ticks = SystemAPI.GetSingleton<Ticks>().Value;
+            int ticks = (int)SystemAPI.GetSingleton<Tick>().TicksF;
             if (ticks % 7 == 0)
                 base.OnUpdate();
         }

@@ -42,7 +42,7 @@ namespace YAPCG.Domain.NUTS.Factories
             // Planet            
             float size = random.NextGauss(100f, 30f, 50f, 300f);
             _.AddComponent(e, new Body.BodySize { Size = size });
-            _.AddComponent(e, new DiscoverProgress() { MaxValue = 100 });
+            _.AddComponent(e, new DiscoverProgress { MaxValue = 100 });
             
             
             // Render
@@ -71,11 +71,11 @@ namespace YAPCG.Domain.NUTS.Factories
             float distance = new Length(orbitDistance, Length.UnitType.AstronomicalUnits).To(Length.UnitType.Meters);
             
             SiTime period = OrbitalMechanics.GetOrbitalPeriod(mu, distance);
+            float offsetTicksF = random.NextFloat(1) * period.Days;
             
             float linearEccentricity = EllipseMechanics.GetLinearEccentricity(distance, distance); // this is the case since its a circular orbit
             float eccentricity = distance == 0 ? 0 : linearEccentricity / distance;
-            
-            _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, Distance = orbitDistance, Eccentricity = eccentricity } );
+            _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, Distance = orbitDistance, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
             _.AddComponent(e, new Body.BodySize { Size = size });
             _.AddComponent(e, new DiscoverProgress() { MaxValue = 30, Progress = 1});
 

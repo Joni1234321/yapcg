@@ -126,19 +126,16 @@ namespace YAPCG.Simulation.OrbitalMechanics
             return math.sqrt(semiMajorAxis * semiMajorAxis - linearEccentricity * linearEccentricity);
         }
 
-        /// <summary>
-        /// Returns position on plane
-        /// </summary>
-        /// <param name="semiMajorAxis"></param>
-        /// <param name="semiMinorAxis"></param>
-        /// <param name="eccentricAnomaly"></param>
-        /// <returns></returns>
-        public static float2 GetPositionInOrbit(float semiMajorAxis, float semiMinorAxis, float eccentricAnomaly)
+        /// <param name="periodTicks"></param>
+        /// <param name="offsetPeriodTicks"></param>
+        /// <param name="ticksF"></param>
+        public static float CalculateMeanAnomaly(float periodTicks, float offsetPeriodTicks, float ticksF)
         {
-            float x = semiMajorAxis * math.cos(eccentricAnomaly);
-            float y = semiMinorAxis * math.sin(eccentricAnomaly);
-            return new float2(x, y);
-        }
+            float percentage = (ticksF - offsetPeriodTicks) / periodTicks;
+            float meanAnomaly = math.PI2 * percentage;
+            return meanAnomaly;
+        } 
+ 
     }
 
 }

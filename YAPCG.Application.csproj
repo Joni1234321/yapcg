@@ -844,6 +844,10 @@
       <Project>{2f569eb6-9cbd-7395-1f5d-263c82b42378}</Project>
       <Name>YAPCG.Resources.View.Custom</Name>
     </ProjectReference>
+    <ProjectReference Include="YAPCG.Simulation.csproj">
+      <Project>{89b75208-b802-1519-26a6-975a91b0553c}</Project>
+      <Name>YAPCG.Simulation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -11,17 +11,17 @@ namespace YAPCG.Simulation.OrbitalMechanics
             public float2 Center;
             public float Rotation;
         }
-
         
-        public static float3 GetPositionOnOrbit(OrbitData orbitData, float trueAnomaly)
+        public static float3 CalculatePositionOnOrbit(OrbitData orbitData, float trueAnomaly)
         {
             float2 point = EllipseMechanics.GetPoint(orbitData.SemiMajorAxis, orbitData.SemiMinorAxis, trueAnomaly);
             float2 rotated = mathutils.rotate(point, orbitData.Rotation);
 
             return new float3(rotated + orbitData.Center, 0).xzy;
         }
-        
-        
+
+
+
         public static OrbitData CreateOrbitHoffmanTransfer(OrbitData orbit1, OrbitData orbit2)
         {
             const float ORBITING_BODY_POSITION = 0; // sun is the foci
@@ -29,7 +29,7 @@ namespace YAPCG.Simulation.OrbitalMechanics
             
             float GetDistanceToSun(OrbitData orbit, float trueAnomaly)
             {
-                float3 position = GetPositionOnOrbit(orbit, trueAnomaly) - ORBITING_BODY_POSITION;
+                float3 position = CalculatePositionOnOrbit(orbit, trueAnomaly) - ORBITING_BODY_POSITION;
                 return math.length(position);
             }
                 

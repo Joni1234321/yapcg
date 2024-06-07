@@ -16,14 +16,13 @@ namespace YAPCG.Domain.Common.Systems
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            state.RequireForUpdate<DeltaTick>();
-            state.RequireForUpdate<Ticks>();
+            state.RequireForUpdate<Tick>();
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            float ticksF = SystemAPI.GetSingleton<Ticks>().Value + SystemAPI.GetSingleton<DeltaTick>().Value;
+            float ticksF = SystemAPI.GetSingleton<Tick>().TicksF;
             new OrbitMovement
             {
                 TicksF = ticksF
@@ -44,15 +43,15 @@ namespace YAPCG.Domain.Common.Systems
                     return;
                 }
                 
+                float meanAnomaly = EllipseMechanics.CalculateMeanAnomaly(orbit.Period.Days, orbit.PeriodOffsetTicksF, TicksF);
+                float trueAnomaly = EllipseMechanics.MeanAnomalyToTrueAnomaly(meanAnomaly, orbit.Eccentricity);
+                
                 ExtraMechanics.OrbitData orbitData = new ExtraMechanics.OrbitData
                 {
                     SemiMajorAxis = orbit.Distance,
                     SemiMinorAxis = orbit.Distance,
                 };
-                
-                float meanAnomaly = math.PI2 * TicksF / orbit.Period.Days;
-                float trueAnomaly = EllipseMechanics.MeanAnomalyToTrueAnomaly(meanAnomaly, orbit.Eccentricity);
-                position.Value = ExtraMechanics.GetPositionOnOrbit(orbitData, trueAnomaly) * 10f;
+                position.Value = ExtraMechanics.CalculatePositionOnOrbit(orbitData, trueAnomaly) * consts.DISTANCE_MULTIPLIER;
             }
         }
     }
