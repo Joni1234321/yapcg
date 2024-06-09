@@ -64,7 +64,7 @@ namespace YAPCG.Domain.NUTS.Factories
             FixedString64Bytes name = NamingGenerator.GetPlanetName(ref random);
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"PLANET: {name}");
-            
+                
             // Orbit
             float size = random.NextGauss(10f, 3f, 1f, 100f);
             float orbitDistance = random.NextFloat(1f, 5f);

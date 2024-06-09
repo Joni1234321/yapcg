@@ -9,7 +9,6 @@
     --color-text: #F5EFED;
 
     color: var(--color-text);
-    background-color: var(--color-background);
     font-size: 14px;
     text-overflow: ellipsis;
 }
@@ -35,12 +34,18 @@ Button {
     background-color: var(--color-background-light);
     border-width: 1px;
     border-color: var(--color-light);
-
-    height: 100%;
 }
 
-.main {
+.section {
+    background-color: var(--color-background);
     padding: 0 4px;
+}
+
+.w-full {
+    width: 100%;
+}
+.h-full {
+    height: 100%;
 }
 
 .text-base {

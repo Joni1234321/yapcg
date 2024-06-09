@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Resources/View/main.uss" />
-    <ui:VisualElement usage-hints="DynamicTransform" name="world-planet" selectable="true" focusable="true" class="main shadow flex-center flex-row flex-gap-row">
-        <ui:Label text="JUPITER" name="title" class="underlined" />
-        <ui:Button text="CLAIM" class="text-sm bg-color-orange"  />
+    <ui:VisualElement usage-hints="DynamicTransform" name="world-planet" selectable="true" focusable="true" class="shadow flex-center flex-column flex-gap-row">
+        <ui:Label text="JUPITER" name="title" class="underlined section" />
+        <ui:Button text="CLAIM" name="claim" class="text-sm bg-color-orange"/>
     </ui:VisualElement>
 </ui:UXML>

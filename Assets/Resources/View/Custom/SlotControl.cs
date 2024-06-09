@@ -9,22 +9,22 @@ namespace YAPCG.Resources.View.Custom
     public partial class SlotControl : CustomUI
     {
         
-        private string _label, _value;
+        private string _title, _value;
         private Color _hue;
         
-        private readonly Label _labelLabel, _valueLabel;
+        private readonly Label _titleLabel, _valueLabel;
         private readonly List<VisualElement> _splits; 
         
         [UxmlAttribute]
-        public string Label
+        public string Title
         {
-            get => _label;
+            get => _title;
             set
             {
-                if (_label == value)
+                if (_title == value)
                     return;
-                _label = value;
-                _labelLabel.text = value;
+                _title = value;
+                _titleLabel.text = value;
             }
         }
         
@@ -65,12 +65,12 @@ namespace YAPCG.Resources.View.Custom
 
         public SlotControl() : base("View/Custom/Slots")
         {
-            _labelLabel = Q<Label>("label");
+            _titleLabel = Q<Label>("title");
             _valueLabel = Q<Label>("value");
             _splits = Query<VisualElement>("split").ToList();
             
             
-            Label = "S";
+            Title = "S";
             Value = 12.ToString();
             Hue = Color.HSVToRGB(0, 1, 1);
         }
