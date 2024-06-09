@@ -1,9 +1,14 @@
 :root {
-    --color-turquoise: #0FD49C;
+    --color-valid: #0FD49C;
+    --color-invalid: #FF858D;
+    --color-impossible: #EBF2FA;
+    
     --color-light: #AAB9CF;
+    
     --color-green: #379D50;
     --color-red: #A71D31;
     --color-orange: #A5864B;
+    
     --color-background: #252A35;
     --color-background-light: #454C5B;
     --color-text: #F5EFED;
@@ -27,13 +32,37 @@ Label {
 }
 
 Button {
-    margin: 0;
-    
     -unity-font-style: bold;
     padding: 0 2px;
     background-color: var(--color-background-light);
-    border-width: 1px;
+    border-width: 0 2px 2px 0;
     border-color: var(--color-light);
+}
+
+Button:hover {
+    background-color: #7b7426;
+    scale: 1.1 1.1;
+    transition-property: background-color, scale; 
+    transition-duration: 0.1s;
+}
+Button:active {
+    background-color: #010a45;
+    transition-property: background-color;
+    transition-duration: 0.1s;
+}
+
+.highlighted {
+    border-color: white;
+}
+.highlight {
+    border-width: 2px 2px 0 2px;
+    border-color: rgba(0,0,0,0);
+}
+
+.highlight:hover {
+    border-color: white;
+    transition-property: border-color;
+    transition-duration: 0.2s;
 }
 
 .section {
@@ -41,49 +70,8 @@ Button {
     padding: 0 4px;
 }
 
-.w-full {
-    width: 100%;
-}
-.h-full {
-    height: 100%;
-}
-
-.text-base {
-    font-size: 14px;
-}
-.text-sm {
-    font-size: 10px;
-}
-.text-lg {
-    font-size: 18px;
-}
-
-.bg-color-green {
-    background-color: var(--color-green);
-}
-.bg-color-orange {
-    background-color: var(--color-orange);
-}
-.bg-color-red {
-     background-color: var(--color-red);
- }
-
-.bg-color-black {
-    background-color: var(--color-background);
-}
-
-.flex-row {
-    flex-direction: row;
-}
-.flex-center {
-    justify-content: center;
-    -unity-text-align: middle-center;
-    align-items: center;
-    align-self: center;
-}
-
 .underlined {
-    border-color: var(--color-turquoise);
+    border-color: var(--color-valid);
     border-width: 0 0 2px 0;
 }
 
@@ -94,4 +82,33 @@ Button {
     text-shadow: 1px 1px 0 darkslategrey;
 }
 
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+.text-base { font-size: 14px; }
+.text-sm { font-size: 10px; }
+.text-lg { font-size: 18px; }
+
+.bg-color-green { background-color: var(--color-green); }
+.bg-color-orange { background-color: var(--color-orange); }
+.bg-color-red { background-color: var(--color-red); }
+
+.bg-color-valid { background-color: var(--color-valid); }
+.bg-color-invalid { background-color: var(--color-invalid); }
+.bg-color-impossible { background-color: var(--color-impossible); }
+
+.border-valid { border-color: var(--color-valid); }
+.border-invalid { border-color: var(--color-invalid); }
+.border-impossible { border-color: var(--color-impossible); }
+
+.bg-color-black { background-color: var(--color-background); }
+
+.flex-row { flex-direction: row; }
+
+.flex-center {
+    justify-content: center;
+    -unity-text-align: middle-center;
+    align-items: center;
+    align-self: center;
+}
 

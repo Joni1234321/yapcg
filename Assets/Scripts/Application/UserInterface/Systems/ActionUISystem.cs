@@ -11,6 +11,7 @@ using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
 using YAPCG.Engine.SystemGroups;
+using YAPCG.Resources.View.Custom;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
 
@@ -94,12 +95,12 @@ namespace YAPCG.Application.UserInterface.Systems
             NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(state.WorldUpdateAllocator).Reinterpret<Position, float3>();
             NativeArray<FixedString64Bytes> names = _bodyQuery.ToComponentDataArray<Name>(state.WorldUpdateAllocator).Reinterpret<Name, FixedString64Bytes>();
             NativeArray<DiscoverProgress> discoveryProgress = _bodyQuery.ToComponentDataArray<DiscoverProgress>(state.WorldUpdateAllocator);
-            NativeArray<short> hues = CollectionHelper.CreateNativeArray<short>(names.Length, state.WorldUpdateAllocator);
-            for (int i = 0; i < hues.Length; i++)
-                hues[i] = discoveryProgress[i].Progress == 0 ? (short)68 : (short)163;
+            NativeArray<StyleClasses.BorderColor> borderColors = CollectionHelper.CreateNativeArray<StyleClasses.BorderColor>(names.Length, state.WorldUpdateAllocator);
+            for (int i = 0; i < borderColors.Length; i++)
+                borderColors[i] = discoveryProgress[i].Progress == 0 ? StyleClasses.BorderColor.Impossible : StyleClasses.BorderColor.Valid;
             
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
-            HUD.Instance.WorldHUD.SetNames(names, positions, hues);
+            HUD.Instance.WorldHUD.SetNames(names, positions, borderColors);
             //HUD.Instance.UpdateHubUI(state.EntityManager, selected);
             
             focusedBody.ValueRW.Selected = selected;

@@ -8,9 +8,8 @@ namespace YAPCG.Resources.View.Custom
     {
         
         private string _title;
-        private short _hue = -1;
+        private StyleClasses.BorderColor _borderColor;
 
-        private readonly VisualElement _root;
         private readonly Label _titleLabel;
         
         [UxmlAttribute]
@@ -25,30 +24,27 @@ namespace YAPCG.Resources.View.Custom
                 _titleLabel.text = value;
             }
         }
-
+        
         [UxmlAttribute]
-        public short Hue
+        public StyleClasses.BorderColor BorderColor
         {
-            get => _hue;
+            get => _borderColor;
             set
             {
-                if (_hue == value)
+                if (_borderColor == value)
                     return;
-                _hue = value;
-                var borderColor = new StyleColor(Color.HSVToRGB(value / 360f, 0.93f, 0.83f));
-                _root.style.borderBottomColor = borderColor;
-                _root.style.borderLeftColor = borderColor;
-                _root.style.borderRightColor = borderColor;
-                _root.style.borderTopColor = borderColor;
+                
+                _titleLabel.RemoveFromClassList(_borderColor.ToClass());
+                _titleLabel.AddToClassList(value.ToClass());
+                _borderColor = value;
             }
         }
 
         public WorldPlanetNameControl() : base("View/Custom/worldplanet")
         {
             _titleLabel = Q<Label>("title");
-            _root = Q<VisualElement>("world-planet");
             Title = "SUN";
-            Hue = 120;
+            _titleLabel.AddToClassList(((StyleClasses.BorderColor)0).ToClass());
         }
     }
 }
