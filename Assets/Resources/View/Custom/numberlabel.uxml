@@ -1,6 +1,7 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement name="number" style="flex-grow: 1; flex-direction: row;">
-        <engine:Label text="Pop" name="title" />
-        <engine:Label text="200.2 K " name="value" style="-unity-font-style: bold;" />
-    </engine:VisualElement>
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/View/main.uss" />
+    <ui:VisualElement name="number" style="flex-grow: 1;">
+        <ui:Label text="Pop" name="title" />
+        <ui:Label text="200.2 K" name="value" style="-unity-font-style: bold;" />
+    </ui:VisualElement>
+</ui:UXML>

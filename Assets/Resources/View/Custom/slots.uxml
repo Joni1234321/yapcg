@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/View/main.uss" />
     <ui:VisualElement name="slot" style="height: 50px; width: 50px;">
         <ui:Label text="12" name="value" style="font-size: 22px; align-items: center; align-self: center; margin-top: -3px; margin-right: 0; margin-bottom: -3px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
         <ui:VisualElement name="split" style="width: 100%; height: 3px; background-color: rgb(96, 63, 63);" />
