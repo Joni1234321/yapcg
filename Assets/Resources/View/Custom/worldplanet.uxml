@@ -1,5 +1,7 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement usage-hints="DynamicTransform" name="world-planet" style="flex-grow: 0; height: auto; width: auto; align-items: center; align-self: center; flex-direction: row; flex-shrink: 0; flex-basis: initial; justify-content: center; background-color: rgb(37, 42, 53); color: rgb(246, 246, 246); -unity-text-outline-color: rgb(0, 0, 0); -unity-font-style: normal; font-size: 14px; -unity-text-outline-width: 0; text-shadow: 1px 1px 1px rgb(105, 105, 105); -unity-text-align: middle-center; text-overflow: ellipsis; border-left-color: rgb(15, 212, 156); border-right-color: rgb(15, 212, 156); border-top-color: rgb(15, 212, 156); border-bottom-color: rgb(15, 212, 156); border-bottom-width: 2px; border-right-width: 0; border-top-width: 0; border-left-width: 0; padding-right: 4px; padding-left: 4px;">
-        <engine:Label text="JUPITER " name="title" selectable="true" focusable="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 2px; padding-right: 2px; padding-bottom: 1px; padding-left: 2px;" />
-    </engine:VisualElement>
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/View/main.uss" />
+    <ui:VisualElement usage-hints="DynamicTransform" name="world-planet" selectable="true" focusable="true" class="main shadow flex-center flex-row flex-gap-row">
+        <ui:Label text="JUPITER" name="title" class="underlined" />
+        <ui:Button text="CLAIM" class="text-sm bg-color-orange"  />
+    </ui:VisualElement>
+</ui:UXML>

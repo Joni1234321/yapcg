@@ -1,3 +1,92 @@
+:root {
+    --color-turquoise: #0FD49C;
+    --color-light: #AAB9CF;
+    --color-green: #379D50;
+    --color-red: #A71D31;
+    --color-orange: #A5864B;
+    --color-background: #252A35;
+    --color-background-light: #454C5B;
+    --color-text: #F5EFED;
+
+    color: var(--color-text);
+    background-color: var(--color-background);
+    font-size: 14px;
+    text-overflow: ellipsis;
+}
+
 .flex-gap > * {
     margin: 6px;
 }
+.flex-gap-row > * {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+Label {
+    margin: 0;
+    padding: 2px 2px 1px;
+}
+
+Button {
+    margin: 0;
+    
+    -unity-font-style: bold;
+    padding: 0 2px;
+    background-color: var(--color-background-light);
+    border-width: 1px;
+    border-color: var(--color-light);
+
+    height: 100%;
+}
+
+.main {
+    padding: 0 4px;
+}
+
+.text-base {
+    font-size: 14px;
+}
+.text-sm {
+    font-size: 10px;
+}
+.text-lg {
+    font-size: 18px;
+}
+
+.bg-color-green {
+    background-color: var(--color-green);
+}
+.bg-color-orange {
+    background-color: var(--color-orange);
+}
+.bg-color-red {
+     background-color: var(--color-red);
+ }
+
+.bg-color-black {
+    background-color: var(--color-background);
+}
+
+.flex-row {
+    flex-direction: row;
+}
+.flex-center {
+    justify-content: center;
+    -unity-text-align: middle-center;
+    align-items: center;
+    align-self: center;
+}
+
+.underlined {
+    border-color: var(--color-turquoise);
+    border-width: 0 0 2px 0;
+}
+
+.shadow {
+    -unity-text-outline-color: black;
+    -unity-font-style: normal;
+    -unity-text-outline-width: 0;
+    text-shadow: 1px 1px 0 darkslategrey;
+}
+
+
