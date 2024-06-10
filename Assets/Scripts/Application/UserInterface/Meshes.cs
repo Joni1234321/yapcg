@@ -76,16 +76,16 @@ namespace YAPCG.Application.UserInterface
 
         void AddMeshesReferenceSingleton(EntityManager _)
         {
-            Material dmat = Deposit.RenderMeshArray.Materials[0];
-            MeshesReference deposit = new MeshesReference(Deposit.RenderMeshArray.Meshes[0], dmat);
+            Material dmat = Deposit.RenderMeshArray.MaterialReferences[0];
+            MeshesReference deposit = new MeshesReference(Deposit.RenderMeshArray.MeshReferences[0], dmat);
             dmat.SetFloat(SHADER_SCALE, SharedSizes.HubRadius);
 
             MeshesSingleton meshesSingleton = new MeshesSingleton()
             {
                 Deposit = deposit,
-                Planet = new MeshesReference(Body.RenderMeshArray.Meshes[0], Body.RenderMeshArray.Materials[0]),
-                Sun = new MeshesReference(Sun.RenderMeshArray.Meshes[0], Sun.RenderMeshArray.Materials[0]),
-                Orbit = new MeshesReference(Orbit.RenderMeshArray.Meshes[0], Orbit.RenderMeshArray.Materials[0]),
+                Planet = new MeshesReference(Body.RenderMeshArray.MeshReferences[0], Body.RenderMeshArray.MaterialReferences[0]),
+                Sun = new MeshesReference(Sun.RenderMeshArray.MeshReferences[0], Sun.RenderMeshArray.MaterialReferences[0]),
+                Orbit = new MeshesReference(Orbit.RenderMeshArray.MeshReferences[0], Orbit.RenderMeshArray.MaterialReferences[0]),
             };
 
             
