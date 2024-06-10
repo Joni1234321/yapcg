@@ -100,7 +100,7 @@ namespace YAPCG.Application.UserInterface.Systems
                 borderColors[i] = discoveryProgress[i].Progress == 0 ? StyleClasses.BorderColor.Impossible : StyleClasses.BorderColor.Valid;
             
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
-            HUD.Instance.WorldHUD.SetNames(names, positions, borderColors);
+            HUD.Instance.WorldHUD.DrawPlanetNames(names, positions, borderColors);
             //HUD.Instance.UpdateHubUI(state.EntityManager, selected);
             
             focusedBody.ValueRW.Selected = selected;

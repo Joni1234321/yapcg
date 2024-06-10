@@ -12,7 +12,7 @@ namespace YAPCG.Application.UserInterface
         public Camera Camera;
         public VisualElement Root;
 
-        public List<WorldPlanetNameControl> Controls;
+        public List<WorldPlanetNameControl> WorldPlanetNameControls;
         public int Visible = 0;
         
         public WorldHUD(VisualElement root)
@@ -20,50 +20,49 @@ namespace YAPCG.Application.UserInterface
             Camera = Camera.main;
             Root = root;
             const int STARTING_COUNT = 8;
-            Controls = new List<WorldPlanetNameControl>(STARTING_COUNT);
+            WorldPlanetNameControls = new List<WorldPlanetNameControl>(STARTING_COUNT);
             for (int i = 0; i < STARTING_COUNT; i++)
                 Add();
         }
 
         
-        public void SetNames(NativeArray<FixedString64Bytes> names, NativeArray<float3> positions, NativeArray<StyleClasses.BorderColor> borderColors)
+        public void DrawPlanetNames(NativeArray<FixedString64Bytes> names, NativeArray<float3> positions, NativeArray<StyleClasses.BorderColor> borderColors)
         {
             int n = names.Length;
-            while (Controls.Count < n)
+            while (WorldPlanetNameControls.Count < n)
                 DoubleSize();
             
             if (Visible < n)
                 for (int i = Visible; i < n; i++)
-                    Controls[i].visible = true;
+                    WorldPlanetNameControls[i].visible = true;
             else if (Visible > n)
-                for (int i = Visible; i < Controls.Count; i++)
-                    Controls[i].visible = false;
+                for (int i = Visible; i < WorldPlanetNameControls.Count; i++)
+                    WorldPlanetNameControls[i].visible = false;
             
             for (int i = 0; i < n; i++)
             {
-                Controls[i].Title = names[i].ToString();
-                Controls[i].BorderColor = borderColors[i];
+                WorldPlanetNameControls[i].Title = names[i].ToString();
+                WorldPlanetNameControls[i].BorderColor = borderColors[i];
                 float3 screen = Camera.WorldToScreenPoint(positions[i]);
-                float w = Controls[i].resolvedStyle.width;
-                float h = Controls[i].resolvedStyle.height;
-                Controls[i].style.left = screen.x - w * 0.5f;
-                Controls[i].style.bottom = screen.y - h * 0.5f - 50;
+                float w = WorldPlanetNameControls[i].resolvedStyle.width;
+                float h = WorldPlanetNameControls[i].resolvedStyle.height;
+                WorldPlanetNameControls[i].style.left = screen.x - w * 0.5f;
+                WorldPlanetNameControls[i].style.bottom = screen.y - h * 0.5f - 50;
             }
         }
 
         void DoubleSize()
         {
-            int n = Controls.Count;
+            int n = WorldPlanetNameControls.Count;
             for (int i = 0; i < n; i++)
                 Add();
         }
 
         void Add()
         {
-            WorldPlanetNameControl control = new WorldPlanetNameControl { visible = true };
-            control.style.position = new StyleEnum<Position>(Position.Absolute);
+            WorldPlanetNameControl control = new WorldPlanetNameControl { visible = true, style = { position = new StyleEnum<Position>(Position.Absolute) }  };
             Root.Add(control);
-            Controls.Add(control);
+            WorldPlanetNameControls.Add(control);
         }
     }
     
