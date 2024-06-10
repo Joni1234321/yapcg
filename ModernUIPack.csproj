@@ -118,6 +118,7 @@
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Context Menu\ContextMenuContentMobile.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Toggle\CustomToggle.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Core\MUIPInternalTools.cs" />
+    <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Tools\ElementTabbing.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Charts\PieChartEditor.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\Slider\SliderManagerEditor.cs" />
     <Compile Include="Assets\Extensions\Modern UI Pack\Scripts\UI Manager\UIManagerProgressBarLoop.cs" />

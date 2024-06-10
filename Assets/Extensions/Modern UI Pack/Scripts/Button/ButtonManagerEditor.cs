@@ -153,21 +153,14 @@ namespace Michsky.MUIP
 
                     GUILayout.BeginVertical(EditorStyles.helpBox);
                     GUILayout.Space(-3);
-
                     autoFitContent.boolValue = MUIPEditorHandler.DrawTogglePlain(autoFitContent.boolValue, customSkin, "Auto-Fit Content");
-
                     GUILayout.Space(4);
-
-                    if (autoFitContent.boolValue == true)
-                    {
-                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
-                        EditorGUI.indentLevel = 1;
-                        EditorGUILayout.PropertyField(padding, new GUIContent(" Padding"), true);
-                        EditorGUI.indentLevel = 0;
-                        GUILayout.EndHorizontal();
-                        MUIPEditorHandler.DrawProperty(spacing, customSkin, "Spacing");
-                    }
-
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+                    EditorGUI.indentLevel = 1;
+                    EditorGUILayout.PropertyField(padding, new GUIContent(" Padding"), true);
+                    EditorGUI.indentLevel = 0;
+                    GUILayout.EndHorizontal();
+                    MUIPEditorHandler.DrawProperty(spacing, customSkin, "Spacing");
                     GUILayout.EndVertical();
 
                     if (Application.isPlaying == true && GUILayout.Button("Refresh", customSkin.button)) { buttonTarget.UpdateUI(); }

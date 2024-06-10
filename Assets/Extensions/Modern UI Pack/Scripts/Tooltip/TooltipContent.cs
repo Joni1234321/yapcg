@@ -90,8 +90,11 @@ namespace Michsky.MUIP
 
         public void OnPointerEnter(PointerEventData eventData) { ProcessEnter(); }
         public void OnPointerExit(PointerEventData eventData) { ProcessExit(); }
+
+#if !UNITY_IOS && !UNITY_ANDROID
         public void OnMouseEnter() { if (useIn3D == true) { ProcessEnter(); } }
         public void OnMouseExit() { if (useIn3D == true) { ProcessExit(); } }
+#endif
 
         public void CheckForContentWidth() { LayoutElementCreator(); StartCoroutine("CalculateContentWidth"); }
 

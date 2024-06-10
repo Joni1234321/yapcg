@@ -142,7 +142,7 @@ namespace Michsky.MUIP
             catch { ShowErrorDialog(); }
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Canvas", false, 8)]
+        [MenuItem("GameObject/Modern UI Pack/Canvas", false, 6)]
         static void CreateCanvas()
         {
             try
@@ -167,7 +167,7 @@ namespace Michsky.MUIP
                 Debug.Log("<b>[Modern UI Pack]</b>Can't find a file named 'MUIP Manager'. Make sure you have 'MUIP Manager' file in Resources folder.");
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Button/Standard", false, 8)]
+        [MenuItem("GameObject/Modern UI Pack/Button/Standard", false, 7)]
         static void BDEF()
         {
             CreateButton("Button/Basic - Outline/Standard");

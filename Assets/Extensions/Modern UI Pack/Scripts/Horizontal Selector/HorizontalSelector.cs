@@ -108,7 +108,7 @@ namespace Michsky.MUIP
             index = defaultIndex;
 
             if (enableIndicators) { UpdateIndicators(); }
-            else { Destroy(indicatorParent.gameObject); }
+            else if (indicatorParent != null) { Destroy(indicatorParent.gameObject); }
         }
 
         public void PreviousItem()

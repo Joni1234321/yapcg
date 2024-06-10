@@ -11,7 +11,7 @@ using UnityEngine.InputSystem;
 namespace Michsky.MUIP
 {
     [ExecuteInEditMode]
-    public class ButtonManager : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, ISubmitHandler
+    public class ButtonManager : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, ISubmitHandler
     {
         // Content
         public Sprite buttonIcon;
@@ -141,7 +141,6 @@ namespace Michsky.MUIP
                 raycastImg.raycastTarget = true;
             }
 
-            if (useUINavigation == true) { AddUINavigation(); }
             if (targetCanvas == null) { targetCanvas = GetComponentInParent<Canvas>(); }
             if (normalCG == null) { normalCG = new GameObject().AddComponent<CanvasGroup>(); normalCG.gameObject.AddComponent<RectTransform>(); normalCG.transform.SetParent(transform); normalCG.gameObject.name = "Normal"; }
             if (highlightCG == null) { highlightCG = new GameObject().AddComponent<CanvasGroup>(); highlightCG.gameObject.AddComponent<RectTransform>(); highlightCG.transform.SetParent(transform); highlightCG.gameObject.name = "Highlight"; }
@@ -151,14 +150,20 @@ namespace Michsky.MUIP
             else if (useRipple == false && rippleParent != null) { Destroy(rippleParent); }
 
             if (gameObject.activeInHierarchy) { StartCoroutine("LayoutFix"); }
+            if (targetButton == null)
+            {
+                if (gameObject.GetComponent<Button>() == null) { targetButton = gameObject.AddComponent<Button>(); }
+                else { targetButton = GetComponent<Button>(); }
+
+                targetButton.transition = Selectable.Transition.None;
+
+                Navigation customNav = new Navigation();
+                customNav.mode = Navigation.Mode.None;
+                targetButton.navigation = customNav;
+            }
+            if (useUINavigation == true) { AddUINavigation(); }
+
             isInitialized = true;
-
-            Button targetButton = gameObject.AddComponent<Button>();
-            targetButton.transition = Selectable.Transition.None;
-
-            Navigation customNav = new Navigation();
-            customNav.mode = Navigation.Mode.None;
-            targetButton.navigation = customNav;
         }
 
         public void UpdateUI()
@@ -278,7 +283,9 @@ namespace Michsky.MUIP
 
         public void AddUINavigation()
         {
-            targetButton = gameObject.AddComponent<Button>();
+            if (targetButton == null)
+                return;
+
             targetButton.transition = Selectable.Transition.None;
             Navigation customNav = new Navigation();
             customNav.mode = navigationMode;
@@ -344,36 +351,49 @@ namespace Michsky.MUIP
         public void OnPointerDown(PointerEventData eventData)
         {
             if (isInteractable == false) { return; }
+#if UNITY_IOS || UNITY_ANDROID
+            if (animationSolution == AnimationSolution.ScriptBased) { StartCoroutine("SetHighlight"); }
+            if (useRipple == true)
+#else
             if (useRipple == true && isPointerOn == true)
+#endif
 #if ENABLE_LEGACY_INPUT_MANAGER
                 if (targetCanvas != null && (targetCanvas.renderMode == RenderMode.ScreenSpaceCamera || targetCanvas.renderMode == RenderMode.WorldSpace)) { CreateRipple(targetCanvas.worldCamera.ScreenToWorldPoint(Input.mousePosition)); }
                 else { CreateRipple(Input.mousePosition); }
 #elif ENABLE_INPUT_SYSTEM
                 if (targetCanvas != null && (targetCanvas.renderMode == RenderMode.ScreenSpaceCamera || targetCanvas.renderMode == RenderMode.WorldSpace)) { CreateRipple(targetCanvas.worldCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue())); }
+#if UNITY_IOS || UNITY_ANDROID
+                else { CreateRipple(Touchscreen.current.primaryTouch.position.ReadValue()); }
+#else
                 else { CreateRipple(Mouse.current.position.ReadValue()); }
+#endif
+#endif
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+#if UNITY_IOS || UNITY_ANDROID
+            if (animationSolution == AnimationSolution.ScriptBased) { StartCoroutine("SetNormal"); }
 #endif
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-#if !UNITY_IOS && !UNITY_ANDROID
             if (isInteractable == false) { return; }
             if (enableButtonSounds == true && useHoverSound == true && soundSource != null) { soundSource.PlayOneShot(hoverSound); }
             if (animationSolution == AnimationSolution.ScriptBased) { StartCoroutine("SetHighlight"); }
+         
             isPointerOn = true;
             onHover.Invoke();
-#endif
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-#if !UNITY_IOS && !UNITY_ANDROID
             if (isInteractable == false) { return; }
             if (animationSolution == AnimationSolution.ScriptBased) { StartCoroutine("SetNormal"); }
 
             isPointerOn = false;
             onLeave.Invoke();
-#endif
         }
 
         public void OnSelect(BaseEventData eventData)
@@ -403,6 +423,7 @@ namespace Michsky.MUIP
             yield return new WaitForSecondsRealtime(0.025f);
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+
             if (disabledCG != null) { LayoutRebuilder.ForceRebuildLayoutImmediate(disabledCG.GetComponent<RectTransform>()); }
             if (normalCG != null) { LayoutRebuilder.ForceRebuildLayoutImmediate(normalCG.GetComponent<RectTransform>()); }
             if (highlightCG != null) { LayoutRebuilder.ForceRebuildLayoutImmediate(highlightCG.GetComponent<RectTransform>()); }
