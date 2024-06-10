@@ -6,6 +6,6 @@ namespace YAPCG.Engine.Input
     {
         public bool ShouldBuildHub;
         public bool Next, Previous;
-        public bool LeftClickSelectBody;
+        public bool LeftClickSelectBody, DeselectBody;
     }
 }

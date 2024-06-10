@@ -7,7 +7,7 @@ namespace YAPCG.Resources.View.Custom
         protected readonly VisualElement Body;
         protected CustomUI(string templateResourcePath)
         {
-            Body = UnityEngine.Resources.Load<VisualTreeAsset>(templateResourcePath).CloneTree();
+            Body = UnityEngine.Resources.Load<VisualTreeAsset>(templateResourcePath).CloneTree().hierarchy[0];
             Add(Body);
         }
         

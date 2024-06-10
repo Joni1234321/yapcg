@@ -47,9 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Resources\View\Custom\WorldPlanetNameControl.cs" />
+    <Compile Include="Assets\Resources\View\Custom\Util\CustomComponents.cs" />
     <Compile Include="Assets\Resources\View\Custom\CustomUI.cs" />
     <Compile Include="Assets\Resources\View\Custom\SlotControl.cs" />
     <Compile Include="Assets\Resources\View\Custom\NumberLabel.cs" />
+    <Compile Include="Assets\Resources\View\Custom\Util\StyleEnums.cs" />
     <Compile Include="Assets\Resources\View\Custom\Util\StyleClasses.cs" />
     <Compile Include="Assets\Resources\View\Custom\ProgressBarControl.cs" />
     <None Include="Assets\Resources\View\Custom\progressbar.uxml" />

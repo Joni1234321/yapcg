@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YAPCG.Resources.View.Custom
+namespace YAPCG.Resources.View.Custom.Util
 {
     public static class StyleClasses
     {
@@ -10,13 +10,26 @@ namespace YAPCG.Resources.View.Custom
             Invalid,
             Impossible
         }
-
+        
         public static string ToClass(this BorderColor borderColor) => borderColor switch
-            {
-                BorderColor.Valid => "border-valid",
-                BorderColor.Invalid => "border-invalid",
-                BorderColor.Impossible => "border-impossible",
-                _ => throw new NotImplementedException()
-            };
+        {
+            BorderColor.Valid => "border-valid",
+            BorderColor.Invalid => "border-invalid",
+            BorderColor.Impossible => "border-impossible",
+            _ => throw new NotImplementedException()
+        };
+
+        public enum Detailed
+        {
+            NotDetailed,
+            Detailed, 
+        }
+
+        public static string ToClass(this Detailed detailed) => detailed switch
+        {
+            Detailed.NotDetailed => "border-hidden",
+            Detailed.Detailed => "border-white",
+            _ => throw new NotImplementedException()
+        };
     }
 }

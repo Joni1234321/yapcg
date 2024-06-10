@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Mathematics;
-using UnityEngine;
 using UnityEngine.UIElements;
 using YAPCG.Resources.View.Custom;
+using YAPCG.Resources.View.Custom.Util;
 
 namespace YAPCG.Application.UserInterface
 {
     public class WorldHUD
     {
-        public Camera Camera;
         public VisualElement Root;
 
         public List<WorldPlanetNameControl> WorldPlanetNameControls;
@@ -17,7 +16,6 @@ namespace YAPCG.Application.UserInterface
         
         public WorldHUD(VisualElement root)
         {
-            Camera = Camera.main;
             Root = root;
             const int STARTING_COUNT = 8;
             WorldPlanetNameControls = new List<WorldPlanetNameControl>(STARTING_COUNT);
@@ -26,7 +24,7 @@ namespace YAPCG.Application.UserInterface
         }
 
         
-        public void DrawPlanetNames(NativeArray<FixedString64Bytes> names, NativeArray<float3> positions, NativeArray<StyleClasses.BorderColor> borderColors)
+        public void DrawPlanetNames(NativeArray<FixedString64Bytes> names, NativeArray<float3> positions, NativeArray<StyleClasses.BorderColor> borderColors, int detailed = -1)
         {
             int n = names.Length;
             while (WorldPlanetNameControls.Count < n)
@@ -43,12 +41,14 @@ namespace YAPCG.Application.UserInterface
             {
                 WorldPlanetNameControls[i].Title = names[i].ToString();
                 WorldPlanetNameControls[i].BorderColor = borderColors[i];
-                float3 screen = Camera.WorldToScreenPoint(positions[i]);
+                WorldPlanetNameControls[i].Detailed = i == detailed ? StyleClasses.Detailed.Detailed : StyleClasses.Detailed.NotDetailed;
+                float3 screen = HUD.Instance.Camera.WorldToScreenPoint(positions[i]);
                 float w = WorldPlanetNameControls[i].resolvedStyle.width;
                 float h = WorldPlanetNameControls[i].resolvedStyle.height;
                 WorldPlanetNameControls[i].style.left = screen.x - w * 0.5f;
                 WorldPlanetNameControls[i].style.bottom = screen.y - h * 0.5f - 50;
             }
+
         }
 
         void DoubleSize()

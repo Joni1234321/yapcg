@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Entities.Content;
 using Unity.Rendering;
 using UnityEngine;
+using UnityEngine.Serialization;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DOTSExtension;
@@ -38,8 +39,8 @@ namespace YAPCG.Application.UserInterface
     
     public class Meshes : MonoBehaviour
     {
-        public MeshMaterial Deposit, Hub, Body, Sun, Orbit;
-        public SharedSizes SharedSizes;
+        public MeshMaterial deposit, hub, body, sun, orbit;
+        public SharedSizes sharedSizes;
         
         private EntityManager _;
         private static readonly int SHADER_SCALE = Shader.PropertyToID("_Scale");
@@ -61,31 +62,31 @@ namespace YAPCG.Application.UserInterface
             _ = World.DefaultGameObjectInjectionWorld.EntityManager;
             
             AddMeshesReferenceSingleton(_);
-            _.AddSingleton(SharedSizes);
+            _.AddSingleton(sharedSizes);
         }
 
         private void Load()
         {
-            Deposit.Load();
-            Hub.Load();
-            Body.Load();
-            Sun.Load();
-            Orbit.Load();
+            deposit.Load();
+            hub.Load();
+            body.Load();
+            sun.Load();
+            orbit.Load();
             CLogger.LogLoaded(this, "Deposits and meshes");
         }
 
         void AddMeshesReferenceSingleton(EntityManager _)
         {
-            Material dmat = Deposit.RenderMeshArray.MaterialReferences[0];
-            MeshesReference deposit = new MeshesReference(Deposit.RenderMeshArray.MeshReferences[0], dmat);
-            dmat.SetFloat(SHADER_SCALE, SharedSizes.HubRadius);
+            Material dmat = this.deposit.RenderMeshArray.MaterialReferences[0];
+            MeshesReference deposit = new MeshesReference(this.deposit.RenderMeshArray.MeshReferences[0], dmat);
+            dmat.SetFloat(SHADER_SCALE, sharedSizes.HubRadius);
 
             MeshesSingleton meshesSingleton = new MeshesSingleton()
             {
                 Deposit = deposit,
-                Planet = new MeshesReference(Body.RenderMeshArray.MeshReferences[0], Body.RenderMeshArray.MaterialReferences[0]),
-                Sun = new MeshesReference(Sun.RenderMeshArray.MeshReferences[0], Sun.RenderMeshArray.MaterialReferences[0]),
-                Orbit = new MeshesReference(Orbit.RenderMeshArray.MeshReferences[0], Orbit.RenderMeshArray.MaterialReferences[0]),
+                Planet = new MeshesReference(body.RenderMeshArray.MeshReferences[0], body.RenderMeshArray.MaterialReferences[0]),
+                Sun = new MeshesReference(sun.RenderMeshArray.MeshReferences[0], sun.RenderMeshArray.MaterialReferences[0]),
+                Orbit = new MeshesReference(orbit.RenderMeshArray.MeshReferences[0], orbit.RenderMeshArray.MaterialReferences[0]),
             };
 
             

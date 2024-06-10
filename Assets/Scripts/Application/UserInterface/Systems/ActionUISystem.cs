@@ -1,19 +1,24 @@
-﻿using Unity.Burst;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
-using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
 using YAPCG.Engine.SystemGroups;
-using YAPCG.Resources.View.Custom;
+using YAPCG.Resources.View.Custom.Util;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
+using Position = YAPCG.Engine.Components.Position;
 
 namespace YAPCG.Application.UserInterface.Systems
 {
@@ -36,23 +41,14 @@ namespace YAPCG.Application.UserInterface.Systems
 
         private int NegativeMod(int x, int m) => (x % m + m) % m;
 
-        private Entity GetAdjacentBody (Entity currentBody, int distance)
+        private int BodyEntityToIndex(Entity body, NativeArray<Entity> bodies)
         {
-            NativeArray<Entity> bodies = _bodyQuery.ToEntityArray(Temp);
-
-            if (bodies.Length == 0) return Entity.Null;
-                
-            int i;
-            for (i = 0; i < bodies.Length; i++)
-                if (bodies[i] == currentBody)
-                    break;
-
-            int adjacentEntityIndex = NegativeMod(i + distance, bodies.Length);
-            Entity adjacentBody = bodies[adjacentEntityIndex];
-            bodies.Dispose();
-            
-            return adjacentBody;
+            for (int i = 0; i < bodies.Length; i++)
+                if (bodies[i] == body)
+                    return i;
+            return -1;
         }
+        
         public void OnUpdate(ref SystemState state)
         {
             ActionInput action = SystemAPI.GetSingleton<ActionInput>();
@@ -62,19 +58,32 @@ namespace YAPCG.Application.UserInterface.Systems
             if (action.ShouldBuildHub)
                 BuildBodyOnMouse(ray);
 
+            NativeArray<Entity> bodies = _bodyQuery.ToEntityArray(state.WorldUpdateAllocator);
+
+            int hoveredIndex = GetHoverBodyIndex(ray);
+            Entity hovered = hoveredIndex != -1 ? bodies[hoveredIndex] : Entity.Null;
+
             RefRW<FocusedBody> focusedBody = SystemAPI.GetSingletonRW<FocusedBody>();
             Entity selected = focusedBody.ValueRO.Selected;
-            Entity hovered = GetHoverBody(ray);
+            int selectedIndex = BodyEntityToIndex(selected, bodies);
 
-            
             if (action.Next)
-                selected = GetAdjacentBody(selected, 1);
+                selectedIndex = NegativeMod(selectedIndex + 1, bodies.Length);
 
             if (action.Previous)
-                selected = GetAdjacentBody(selected, -1);
+                selectedIndex = NegativeMod(selectedIndex - 1, bodies.Length);
+
+            if (bodies.Length != 0 && selectedIndex > 0 && selectedIndex < bodies.Length)
+                selected = bodies[selectedIndex];
             
-            if (action.LeftClickSelectBody)
+            
+            if (action.LeftClickSelectBody && hovered != Entity.Null)
                 selected = hovered;
+            
+            Debug.Log(EventSystem.current.IsPointerOverGameObject());
+
+            if (action.DeselectBody)
+                selected = Entity.Null;
             
             // Hovered
             if (focusedBody.ValueRO.Hovered != Entity.Null) 
@@ -96,11 +105,12 @@ namespace YAPCG.Application.UserInterface.Systems
             NativeArray<FixedString64Bytes> names = _bodyQuery.ToComponentDataArray<Name>(state.WorldUpdateAllocator).Reinterpret<Name, FixedString64Bytes>();
             NativeArray<DiscoverProgress> discoveryProgress = _bodyQuery.ToComponentDataArray<DiscoverProgress>(state.WorldUpdateAllocator);
             NativeArray<StyleClasses.BorderColor> borderColors = CollectionHelper.CreateNativeArray<StyleClasses.BorderColor>(names.Length, state.WorldUpdateAllocator);
+            
             for (int i = 0; i < borderColors.Length; i++)
                 borderColors[i] = discoveryProgress[i].Progress == 0 ? StyleClasses.BorderColor.Impossible : StyleClasses.BorderColor.Valid;
             
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
-            HUD.Instance.WorldHUD.DrawPlanetNames(names, positions, borderColors);
+            HUD.Instance.WorldHUD.DrawPlanetNames(names, positions, borderColors, selectedIndex);
             //HUD.Instance.UpdateHubUI(state.EntityManager, selected);
             
             focusedBody.ValueRW.Selected = selected;
@@ -109,7 +119,7 @@ namespace YAPCG.Application.UserInterface.Systems
 
         
         [BurstCompile]
-        Entity GetHoverBody(Raycast.ray ray)
+        int GetHoverBodyIndex(Raycast.ray ray)
         {
             NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
             NativeArray<float> sizes = _bodyQuery.ToComponentDataArray<ScaleComponent>(Temp).Reinterpret<ScaleComponent, float>();
@@ -120,9 +130,9 @@ namespace YAPCG.Application.UserInterface.Systems
             };
             
             if (!RaySphere.CheckCollision(ray, spheres, out Raycast.hit hit))
-                return Entity.Null;
+                return -1;
 
-            return _bodyQuery.ToEntityArray(Temp)[hit.index];
+            return hit.index;
         }
 
         
@@ -146,7 +156,8 @@ namespace YAPCG.Application.UserInterface.Systems
             //CLogger.LogInfo("Building body");
             return true;
         }
-    
+        
+       
         
         [BurstCompile]
         NativeArray<float3> GetLevelTriangles()

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using YAPCG.Resources.View.Custom.Util;
 
 namespace YAPCG.Resources.View.Custom
 {
@@ -7,7 +9,7 @@ namespace YAPCG.Resources.View.Custom
     public partial class WorldPlanetNameControl : CustomUI
     {
 
-        private bool _detailed;
+        private StyleClasses.Detailed _detailed;
         private string _title;
         private StyleClasses.BorderColor _borderColor;
 
@@ -44,23 +46,31 @@ namespace YAPCG.Resources.View.Custom
         
         
         [UxmlAttribute]
-        public bool Detailed
+        public StyleClasses.Detailed Detailed
         {
             get => _detailed;
             set
             {
                 if (_detailed == value)
                     return;
-                _detailsElement.visible = value;
+                
+                Body.RemoveFromClassList(_detailed.ToClass());
+                Body.AddToClassList(value.ToClass());
+                _detailsElement.style.display = value.ToDisplayStyle();
+                
+                _detailed = value;
             }
         }
-
+ 
         public WorldPlanetNameControl() : base("View/Custom/worldplanet")
         {
             _titleLabel = Q<Label>("title");
             _detailsElement = Q<VisualElement>("details");
-            Title = "SUN";
-            _titleLabel.AddToClassList(((StyleClasses.BorderColor)0).ToClass());
+            
+            
+            Detailed = StyleClasses.Detailed.Detailed; Detailed = StyleClasses.Detailed.NotDetailed;
+            Title = ""; Title = "SUN";
+            BorderColor = StyleClasses.BorderColor.Impossible; BorderColor = StyleClasses.BorderColor.Valid;
         }
     }
 }
