@@ -35,18 +35,13 @@ namespace YAPCG.Application.UserInterface
         public bool Loaded() => Mesh.LoadingStatus == ObjectLoadingStatus.Completed && Material.LoadingStatus == ObjectLoadingStatus.Completed;
     }
     
-    
     public class Meshes : MonoBehaviour
     {
         public MeshMaterial deposit, hub, body, sun, orbit;
         public SharedSizes sharedSizes;
         
-        private EntityManager _;
-        private static readonly int SHADER_SCALE = Shader.PropertyToID("_Scale");
-
         // Can be null, but assume it isnt
         [NotNull] public static Meshes Instance { private set; get; }
-
         
         private void Awake()
         {
@@ -57,44 +52,46 @@ namespace YAPCG.Application.UserInterface
             }
 
             Instance = this;
-            Load();
-            _ = World.DefaultGameObjectInjectionWorld.EntityManager;
-            
-            AddMeshesReferenceSingleton(_);
-            _.AddSingleton(sharedSizes);
         }
 
-        private void Load()
-        {
-            deposit.Load();
-            hub.Load();
-            body.Load();
-            sun.Load();
-            orbit.Load();
-            CLogger.LogLoaded(this, "Deposits and meshes");
-        }
 
-        void AddMeshesReferenceSingleton(EntityManager _)
+        class Baker : Baker<Meshes>
         {
-            Material dmat = this.deposit.RenderMeshArray.MaterialReferences[0];
-            MeshesReference deposit = new MeshesReference(this.deposit.RenderMeshArray.MeshReferences[0], dmat);
-            dmat.SetFloat(SHADER_SCALE, sharedSizes.HubRadius);
-
-            MeshesSingleton meshesSingleton = new MeshesSingleton()
+            private static readonly int SHADER_SCALE = Shader.PropertyToID("_Scale");
+            public override void Bake(Meshes authoring)
             {
-                Deposit = deposit,
-                Planet = new MeshesReference(body.RenderMeshArray.MeshReferences[0], body.RenderMeshArray.MaterialReferences[0]),
-                Sun = new MeshesReference(sun.RenderMeshArray.MeshReferences[0], sun.RenderMeshArray.MaterialReferences[0]),
-                Orbit = new MeshesReference(orbit.RenderMeshArray.MeshReferences[0], orbit.RenderMeshArray.MaterialReferences[0]),
-            };
+                Load(authoring);
+                Entity e = GetEntity(TransformUsageFlags.Renderable);
+                Debug.Log("Baking");
+                authoring.deposit.material.SetFloat(SHADER_SCALE, authoring.sharedSizes.HubRadius);
 
+                MeshesSingleton meshesSingleton = new MeshesSingleton()
+                {
+                    Deposit = ToMeshesReference(authoring.deposit),
+                    Planet = ToMeshesReference(authoring.body),
+                    Sun = ToMeshesReference(authoring.sun),
+                    Orbit = ToMeshesReference(authoring.orbit),
+                };
+                
+                AddComponent(e, meshesSingleton);
+                AddComponent(e, authoring.sharedSizes);
+                return;
+
+                MeshesReference ToMeshesReference (MeshMaterial m) => new(m.mesh, m.material);
+            }
             
-            _.AddSingleton(meshesSingleton);
+            private void Load(Meshes authoring)
+            {
+                authoring.deposit.Load();
+                authoring.hub.Load();
+                authoring.body.Load();
+                authoring.sun.Load();
+                authoring.orbit.Load();
+                CLogger.LogLoaded(authoring, "Deposits and meshes");
+            }
         }
-
-
     }
-
+    
     [System.Serializable]
     public struct MeshMaterial
     {

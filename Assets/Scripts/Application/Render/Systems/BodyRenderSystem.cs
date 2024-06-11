@@ -13,6 +13,7 @@ using YAPCG.Simulation.OrbitalMechanics;
 
 namespace YAPCG.Application.Render.Systems
 {
+    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
     [UpdateInGroup(typeof(RenderSystemGroup))]
     [BurstCompile]
     internal partial class BodyRenderSystem : SystemBase
