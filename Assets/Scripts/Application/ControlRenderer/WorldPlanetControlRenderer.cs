@@ -10,7 +10,7 @@ using YAPCG.Resources.View.Custom.Util;
 
 namespace YAPCG.Application.ControlRenderer
 {
-    public class WorldPlanetControlRenderer : ControlRenderer<WorldPlanetNameControl>
+    public class WorldPlanetControlRenderer : ControlRenderer<WorldPlanetControl>
     {
         private EntityQuery claimSingletonQuery;
 
@@ -39,9 +39,9 @@ namespace YAPCG.Application.ControlRenderer
             }
         }
 
-        protected override WorldPlanetNameControl NewControl(int id)
+        protected override WorldPlanetControl NewControl(int id)
         {
-            WorldPlanetNameControl control =  base.NewControl(id);
+            WorldPlanetControl control =  base.NewControl(id);
             control.ClaimButton.clicked += () =>
             {
                 Entity body = _bodies[id];

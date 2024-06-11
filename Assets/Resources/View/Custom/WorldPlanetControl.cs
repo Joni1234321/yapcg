@@ -7,7 +7,7 @@ using YAPCG.Resources.View.Custom.Util;
 namespace YAPCG.Resources.View.Custom
 {
     [UxmlElement]
-    public partial class WorldPlanetNameControl : CustomUI
+    public partial class WorldPlanetControl : CustomUI
     {
         private StyleClasses.Detailed _detailed;
         private string _title;
@@ -41,6 +41,10 @@ namespace YAPCG.Resources.View.Custom
                 
                 _titleLabel.RemoveFromClassList(_borderColor.ToClass());
                 _titleLabel.AddToClassList(value.ToClass());
+                
+                Body.RemoveFromClassList(_borderColor.ToClass());
+                Body.AddToClassList(value.ToClass());
+                
                 _borderColor = value;
             }
         }
@@ -65,7 +69,7 @@ namespace YAPCG.Resources.View.Custom
 
         
  
-        public WorldPlanetNameControl() : base("View/Custom/worldplanet")
+        public WorldPlanetControl() : base("View/Custom/worldplanet")
         {
             _titleLabel = Q<Label>("title");
             _detailsElement = Q<VisualElement>("details");

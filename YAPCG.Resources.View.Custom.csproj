@@ -46,12 +46,12 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.5f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\View\Custom\WorldPlanetNameControl.cs" />
     <Compile Include="Assets\Resources\View\Custom\Util\CustomComponents.cs" />
     <Compile Include="Assets\Resources\View\Custom\CustomUI.cs" />
     <Compile Include="Assets\Resources\View\Custom\SlotControl.cs" />
     <Compile Include="Assets\Resources\View\Custom\NumberLabel.cs" />
     <Compile Include="Assets\Resources\View\Custom\Util\StyleEnums.cs" />
+    <Compile Include="Assets\Resources\View\Custom\WorldPlanetControl.cs" />
     <Compile Include="Assets\Resources\View\Custom\Util\StyleClasses.cs" />
     <Compile Include="Assets\Resources\View\Custom\ProgressBarControl.cs" />
     <None Include="Assets\Resources\View\Custom\progressbar.uxml" />

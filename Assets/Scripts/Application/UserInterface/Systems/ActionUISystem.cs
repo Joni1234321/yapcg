@@ -13,7 +13,6 @@ using YAPCG.Engine.SystemGroups;
 using YAPCG.Resources.View.Custom.Util;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
-using Position = YAPCG.Engine.Components.Position;
 
 namespace YAPCG.Application.UserInterface.Systems
 {
@@ -25,7 +24,7 @@ namespace YAPCG.Application.UserInterface.Systems
         {
             state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
-            _bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, ScaleComponent, DiscoverProgress, Name>().Build();
+            _bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, Body.Owner, ScaleComponent, DiscoverProgress, Name>().Build();
             _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
             
             state.EntityManager.CreateSingleton(new FocusedBody { Selected = Entity.Null });
@@ -98,10 +97,11 @@ namespace YAPCG.Application.UserInterface.Systems
             NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(state.WorldUpdateAllocator).Reinterpret<Position, float3>();
             NativeArray<FixedString64Bytes> names = _bodyQuery.ToComponentDataArray<Name>(state.WorldUpdateAllocator).Reinterpret<Name, FixedString64Bytes>();
             NativeArray<DiscoverProgress> discoveryProgress = _bodyQuery.ToComponentDataArray<DiscoverProgress>(state.WorldUpdateAllocator);
+            NativeArray<Body.Owner> owners = _bodyQuery.ToComponentDataArray<Body.Owner>(state.WorldUpdateAllocator);
             NativeArray<StyleClasses.BorderColor> borderColors = CollectionHelper.CreateNativeArray<StyleClasses.BorderColor>(names.Length, state.WorldUpdateAllocator);
             
             for (int i = 0; i < borderColors.Length; i++)
-                borderColors[i] = discoveryProgress[i].Progress == 0 ? StyleClasses.BorderColor.Impossible : StyleClasses.BorderColor.Valid;
+                borderColors[i] = owners[i].ID == 0 ? StyleClasses.BorderColor.Impossible : StyleClasses.BorderColor.Valid;
             
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
             HUD.Instance.WorldHUD.WorldPlanetControlRenderer.Draw(entities, names, positions, borderColors, selectedIndex);

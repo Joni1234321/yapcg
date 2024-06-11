@@ -837,6 +837,9 @@
     <Reference Include="Unity.Entities.Graphics">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Graphics.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Entities.Hybrid">
+      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Hybrid.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>

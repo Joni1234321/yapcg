@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/Resources/View/main.uss" />
+    <Style src="project://database/Assets/Resources/View/main.uss?fileID=7433441132597879392&amp;guid=c8c56bc5dabe31f49a1cbc1a34332ed1&amp;type=3#main" />
     <ui:VisualElement name="world-ui" style="flex-grow: 1;">
-        <YAPCG.Resources.View.Custom.WorldPlanetNameControl detailed="true" style="position: absolute; top: 100px; left: 100px;" />
+        <YAPCG.Resources.View.Custom.WorldPlanetControl />
     </ui:VisualElement>
 </ui:UXML>

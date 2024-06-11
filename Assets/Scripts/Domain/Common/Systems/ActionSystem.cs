@@ -1,11 +1,11 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
 using YAPCG.Domain.NUTS;
-using YAPCG.Engine.Input.Systems;
+using YAPCG.Engine.Time.Systems;
 
 namespace YAPCG.Domain.Common.Systems
 {
-    [UpdateInGroup(typeof(InputSystemGroup))]
+    [UpdateInGroup(typeof(TickDailyGroup))]
     public partial struct ActionSystem : ISystem
     {
         [BurstCompile]
