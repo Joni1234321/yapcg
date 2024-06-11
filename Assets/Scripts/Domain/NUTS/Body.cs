@@ -21,5 +21,20 @@ namespace YAPCG.Domain.NUTS
         {
             public float Size;
         }
+
+        public struct Owner : IComponentData
+        {
+            public const byte NO_OWNER = 0;
+            public const byte YOU_OWNER = 1;
+            public byte ID;
+        }
+
+        
+        [InternalBufferCapacity(16)]
+        public struct Claim : IBufferElementData
+        {
+            public byte Owner;
+            public Entity Body;
+        }
     }
 }

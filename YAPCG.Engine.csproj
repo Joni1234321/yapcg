@@ -70,11 +70,11 @@
     <Compile Include="Assets\Scripts\Engine\SystemGroups\RenderSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\MouseInput.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\NameExtensions.cs" />
+    <Compile Include="Assets\Scripts\Engine\Input\InputSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Systems\TickWeeklyGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\NamingGenerator.cs" />
     <Compile Include="Assets\Scripts\Engine\Render\RenderUtils.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IFactory.cs" />
-    <Compile Include="Assets\Scripts\Engine\Input\Systems\InputSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\EntityExtensions.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IWorldFactory.cs" />
     <Compile Include="Assets\Scripts\Engine\DOTSExtension\EntityManagerExtension.cs" />
@@ -87,10 +87,8 @@
     <Compile Include="Assets\Scripts\Engine\Components\UnityComponents.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\mathutils.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RaySphere.cs" />
-    <Compile Include="Assets\Scripts\Engine\Input\ActionInput.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Systems\GameTimeSystemGroup.cs" />
-    <Compile Include="Assets\Scripts\Engine\Input\Systems\InputSystem.cs" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\PositionAnimationShader.shader" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\Ellipse.shader" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\PositionShader.shader" />

@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
 using YAPCG.Domain.Common.Components;
-using YAPCG.Domain.Common.Systems;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Resources.View.Custom;
@@ -28,7 +26,6 @@ namespace YAPCG.Application.UserInterface
         public ProgressBarControl DiscoveryProgress;
 
 
-        public bool IsMouseOverUI() => IsOverUI(new float2(Input.mousePosition.x, Input.mousePosition.y));
         public bool IsOverUI(float2 screenPosition)
         {
             return IsOverVisualElement(UIDocument.rootVisualElement, screenPosition) || IsOverVisualElement(WorldUIDocument.rootVisualElement, screenPosition);

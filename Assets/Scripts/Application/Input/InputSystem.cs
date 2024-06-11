@@ -1,12 +1,15 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
+using YAPCG.Application.UserInterface;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.Input;
+using YAPCG.Engine.Input.Systems;
 using YAPCG.Engine.Physics.Collisions;
-using YAPCG.Engine.SystemGroups;
 using static UnityEngine.Input;
 
-namespace YAPCG.Engine.Input.Systems
+namespace YAPCG.Application.Input
 {
     [UpdateInGroup(typeof(InputSystemGroup))]
     internal partial struct InputSystem : ISystem
@@ -25,13 +28,17 @@ namespace YAPCG.Engine.Input.Systems
             {
                 Left = GetMouseButton(0)
             });
+            
+            float2 mousePosition = new float2(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);
+            bool mouseOverUI = HUD.Instance.IsOverUI(mousePosition);
+            
             SystemAPI.SetSingleton(new ActionInput
                 {
                     ShouldBuildHub = GetKeyDown(KeyCode.A),
                     Next = GetKeyDown(KeyCode.Z),
                     Previous = GetKeyDown(KeyCode.X),
-                    LeftClickSelectBody = GetMouseButtonDown(0), // for now should change to detect if ui
-                    DeselectBody = GetMouseButtonDown(1)
+                    LeftClickSelectBody = GetMouseButtonDown(0) && !mouseOverUI, // for now should change to detect if ui
+                    DeselectBody = GetMouseButtonDown(1) && !mouseOverUI
                 }
             );
 

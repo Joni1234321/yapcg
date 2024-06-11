@@ -43,7 +43,7 @@ namespace YAPCG.Domain.NUTS.Factories
             float size = random.NextGauss(100f, 30f, 50f, 300f);
             _.AddComponent(e, new Body.BodySize { Size = size });
             _.AddComponent(e, new DiscoverProgress { MaxValue = 100 });
-            
+            _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER });
             
             // Render
             _.AddComponent(e, new Position { Value = new float3(0) });
@@ -78,7 +78,8 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, Distance = orbitDistance, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
             _.AddComponent(e, new Body.BodySize { Size = size });
             _.AddComponent(e, new DiscoverProgress() { MaxValue = 30, Progress = 1});
-
+            _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER });
+            
             // Render
             _.AddComponent(e, new Position { Value = new float3(orbitDistance, 0, 0) });
             _.AddComponent(e, new ScaleComponent { Value = size / 5f });

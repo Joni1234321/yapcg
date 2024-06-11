@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -163,22 +162,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248388fb366d4cdbbf4d1701c471ab71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Deposit:
+  deposit:
     material: {fileID: 2100000, guid: 39def2a9befff614faec4598cb713e69, type: 2}
     mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  Hub:
+  hub:
     material: {fileID: 2100000, guid: 04ad5ed2d9111624e823ee2f3f69f2d2, type: 2}
     mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  Body:
+  body:
     material: {fileID: 2100000, guid: e8e4d7b5ac78e524ca37270a10f2b948, type: 2}
     mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  Sun:
+  sun:
     material: {fileID: 2100000, guid: 34ea18ec737bf3846aa6cd2d29cf6148, type: 2}
     mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  Orbit:
+  orbit:
     material: {fileID: 2100000, guid: 887b36e385138b74795a007947fc9df2, type: 2}
     mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
-  SharedSizes:
+  sharedSizes:
     HubRadius: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

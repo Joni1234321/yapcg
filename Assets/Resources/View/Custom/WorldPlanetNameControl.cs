@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,13 +9,13 @@ namespace YAPCG.Resources.View.Custom
     [UxmlElement]
     public partial class WorldPlanetNameControl : CustomUI
     {
-
         private StyleClasses.Detailed _detailed;
         private string _title;
         private StyleClasses.BorderColor _borderColor;
 
         private readonly VisualElement _detailsElement;
         private readonly Label _titleLabel;
+        public readonly Button ClaimButton;
         
         [UxmlAttribute]
         public string Title
@@ -61,12 +62,14 @@ namespace YAPCG.Resources.View.Custom
                 _detailed = value;
             }
         }
+
+        
  
         public WorldPlanetNameControl() : base("View/Custom/worldplanet")
         {
             _titleLabel = Q<Label>("title");
             _detailsElement = Q<VisualElement>("details");
-            
+            ClaimButton = Q<Button>("claim");
             
             Detailed = StyleClasses.Detailed.Detailed; Detailed = StyleClasses.Detailed.NotDetailed;
             Title = ""; Title = "SUN";

@@ -3,7 +3,6 @@ using Unity.Entities;
 using Unity.Entities.Content;
 using Unity.Rendering;
 using UnityEngine;
-using UnityEngine.Serialization;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DOTSExtension;

@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace YAPCG.Engine.Input
+namespace YAPCG.Application.Input
 {
     public struct ActionInput : IComponentData
     {

@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
+using YAPCG.Application.Input;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
-using YAPCG.Engine.Input;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
 using YAPCG.Engine.SystemGroups;
@@ -77,11 +72,9 @@ namespace YAPCG.Application.UserInterface.Systems
                 selected = bodies[selectedIndex];
             
             
-            if (action.LeftClickSelectBody && hovered != Entity.Null)
+            if (action.LeftClickSelectBody)
                 selected = hovered;
             
-            Debug.Log(EventSystem.current.IsPointerOverGameObject());
-
             if (action.DeselectBody)
                 selected = Entity.Null;
             
@@ -101,6 +94,7 @@ namespace YAPCG.Application.UserInterface.Systems
             if (selected != Entity.Null)
                SystemAPI.SetComponent(selected, AlternativeColorRatio.Selected);
 
+            NativeArray<Entity> entities = _bodyQuery.ToEntityArray(state.WorldUpdateAllocator);
             NativeArray<float3> positions = _bodyQuery.ToComponentDataArray<Position>(state.WorldUpdateAllocator).Reinterpret<Position, float3>();
             NativeArray<FixedString64Bytes> names = _bodyQuery.ToComponentDataArray<Name>(state.WorldUpdateAllocator).Reinterpret<Name, FixedString64Bytes>();
             NativeArray<DiscoverProgress> discoveryProgress = _bodyQuery.ToComponentDataArray<DiscoverProgress>(state.WorldUpdateAllocator);
@@ -110,14 +104,13 @@ namespace YAPCG.Application.UserInterface.Systems
                 borderColors[i] = discoveryProgress[i].Progress == 0 ? StyleClasses.BorderColor.Impossible : StyleClasses.BorderColor.Valid;
             
             HUD.Instance.UpdateBodyUI(state.EntityManager, selected);
-            HUD.Instance.WorldHUD.DrawPlanetNames(names, positions, borderColors, selectedIndex);
+            HUD.Instance.WorldHUD.WorldPlanetControlRenderer.Draw(entities, names, positions, borderColors, selectedIndex);
             //HUD.Instance.UpdateHubUI(state.EntityManager, selected);
             
             focusedBody.ValueRW.Selected = selected;
 
         }
 
-        
         [BurstCompile]
         int GetHoverBodyIndex(Raycast.ray ray)
         {
