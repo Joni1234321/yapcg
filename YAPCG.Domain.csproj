@@ -63,6 +63,8 @@
     <Compile Include="Assets\Scripts\Domain\Common\Components\Housing.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\DepositFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\BuildingSlotsLeft.cs" />
+    <Compile Include="Assets\Scripts\Domain\Common\Systems\ActionSystem.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Samples\SampleWorldFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\PopulationSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\Terrain.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Components\DiscoverProgress.cs" />
@@ -70,12 +72,12 @@
     <Compile Include="Assets\Scripts\Domain\Common\Components\Labor.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\DiscoverSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\OrbitalMovementSystem.cs" />
-    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\SampleWorldFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\HubFactory.cs" />
     <Compile Include="Assets\Scripts\Domain\Common\Systems\ProductionSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\WorldFactorySystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Deposit.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Body.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\ActionsEntity.cs" />
     <None Include="Assets\Scripts\Domain\YAPCG.Domain.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

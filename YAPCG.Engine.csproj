@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Engine\Components\UnityComponents.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\mathutils.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RaySphere.cs" />
+    <Compile Include="Assets\Scripts\Engine\Common\DOTS\Globals.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Systems\GameTimeSystemGroup.cs" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\PositionAnimationShader.shader" />

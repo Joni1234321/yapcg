@@ -7,13 +7,8 @@ using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
 using Random = Unity.Mathematics.Random;
 
-namespace YAPCG.Domain.NUTS.Factories.Systems
+namespace YAPCG.Domain.NUTS.Factories.Samples
 {
-    public interface IWorldGet<T> where T : unmanaged
-    {
-        NativeArray<T> InitGet();
-    }
-
     internal struct SampleWorldFactory : IWorldFactory
     {
         public void Setup(ref SystemState state)

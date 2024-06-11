@@ -24,17 +24,16 @@ namespace YAPCG.Domain.NUTS
 
         public struct Owner : IComponentData
         {
-            public const byte NO_OWNER = 0;
-            public const byte YOU_OWNER = 1;
+            public const byte NO_OWNER_ID = 0;
+            public const byte YOU_OWNER_ID = 1;
             public byte ID;
         }
 
         
-        [InternalBufferCapacity(16)]
-        public struct Claim : IBufferElementData
+        public struct ActionClaim : IComponentData
         {
-            public byte Owner;
             public Entity Body;
+            public byte OwnerID;
         }
     }
 }

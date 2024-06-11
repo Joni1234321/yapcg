@@ -1,9 +1,10 @@
-﻿using System;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine.UIElements;
 using YAPCG.Application.UserInterface;
+using YAPCG.Domain.NUTS;
+using YAPCG.Engine.Common.DOTS;
 using YAPCG.Resources.View.Custom;
 using YAPCG.Resources.View.Custom.Util;
 
@@ -11,14 +12,17 @@ namespace YAPCG.Application.ControlRenderer
 {
     public class WorldPlanetControlRenderer : ControlRenderer<WorldPlanetNameControl>
     {
+        private EntityQuery claimSingletonQuery;
+
         public WorldPlanetControlRenderer(VisualElement root) : base(root)
         {
+            claimSingletonQuery = new EntityQueryBuilder(Allocator.Temp).WithAllRW<Body.ActionClaim>().Build(World.DefaultGameObjectInjectionWorld.EntityManager);
         }
 
-        private NativeArray<Entity> _entities;
+        private NativeArray<Entity> _bodies;
         public void Draw(NativeArray<Entity> entities, NativeArray<FixedString64Bytes> names, NativeArray<float3> positions, NativeArray<StyleClasses.BorderColor> borderColors, int detailed = -1)
         {
-            _entities = entities;
+            _bodies = entities;
             int n = names.Length;
             Draw(n);
             
@@ -37,7 +41,13 @@ namespace YAPCG.Application.ControlRenderer
 
         protected override WorldPlanetNameControl NewControl(int id)
         {
-            var control =  base.NewControl(id);
+            WorldPlanetNameControl control =  base.NewControl(id);
+            control.ClaimButton.clicked += () =>
+            {
+                Entity body = _bodies[id];
+                Body.ActionClaim actionClaim = new Body.ActionClaim { Body = body, OwnerID = Body.Owner.YOU_OWNER_ID };
+                claimSingletonQuery.GetSingletonRW<Body.ActionClaim>().ValueRW = actionClaim;
+            };
             return control;
         }
     }
