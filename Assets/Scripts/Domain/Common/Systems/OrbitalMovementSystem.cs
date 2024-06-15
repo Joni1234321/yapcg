@@ -10,6 +10,7 @@ using YAPCG.Simulation.OrbitalMechanics;
 
 namespace YAPCG.Domain.Common.Systems
 {
+    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
     [UpdateInGroup(typeof(RenderSystemGroup))]
     internal partial struct OrbitalMovementSystem : ISystem
     {

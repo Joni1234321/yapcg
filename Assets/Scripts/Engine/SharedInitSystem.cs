@@ -6,6 +6,8 @@ using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Engine
 {
+    //todo: move to baker
+    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial struct SharedInitSystem : ISystem
     {
@@ -13,7 +15,7 @@ namespace YAPCG.Engine
         {
             state.EntityManager.CreateSingleton(new SharedRandom { Random = Random.CreateFromIndex(29) });
             state.EntityManager.CreateSingleton(new SharedCameraManaged { MainCamera = Camera.main });
-            CLogger.LogLoaded(null, "SharedSystemInit");
+            CLogger.LogLoaded(null, "SharedSystemInit"); 
             state.Enabled = false;
         }
     }

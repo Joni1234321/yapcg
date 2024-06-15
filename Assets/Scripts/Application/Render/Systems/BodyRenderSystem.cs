@@ -90,6 +90,12 @@ namespace YAPCG.Application.Render.Systems
         private void RenderOrbits()
         {
             var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
+
+#if UNITY_EDITOR
+            float ticksF = 0;
+#else
+            float ticksF = SystemAPI.GetSingleton<Tick>().TicksF;
+#endif
             if (!meshes.Orbit.LoadStarted)
             {
                 meshes.Orbit.LoadAsync();
@@ -105,15 +111,10 @@ namespace YAPCG.Application.Render.Systems
             RenderParams renderParams = new RenderParams(material) { worldBounds = new Bounds(float3.zero, new float3(1000))};
 
             NativeArray<Body.Orbit> orbits = _orbitQuery.ToComponentDataArray<Body.Orbit>(Allocator.Temp);
-            Matrix4x4[] matricies = GetOrbitMatricies(new float3(0), orbits, SystemAPI.GetSingleton<Tick>().TicksF);
-            
-            //                Graphics.RenderMesh(renderParams, mesh, 0, Matrix4x4.TRS(new float3(1), Quaternion.identity, new float3(10)));
+            Matrix4x4[] matricies = GetOrbitMatricies(new float3(0), orbits, ticksF);
 
             foreach (var matrix in matricies)
                 Graphics.RenderMesh(renderParams, mesh, 0, matrix);
-                
-            
-            //Graphics.RenderMeshInstanced(renderParams, mesh, 0, matricies);
         }
 
         Matrix4x4[] GetOrbitMatricies(float3 orbitposition, NativeArray<Body.Orbit> orbits, float ticksF)

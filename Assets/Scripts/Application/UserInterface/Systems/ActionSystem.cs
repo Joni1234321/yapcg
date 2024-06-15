@@ -19,8 +19,8 @@ using static Unity.Collections.Allocator;
 namespace YAPCG.Application.UserInterface.Systems
 {
     [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)] 
-    [UpdateInGroup(typeof(RenderSystemGroup))]
-    public partial struct ActionUISystem : ISystem
+    [UpdateInGroup(typeof(RenderSystemGroup), OrderFirst = true)]
+    public partial struct ActionSystem : ISystem
     {
         private EntityQuery _levelQuery;
         public void OnCreate(ref SystemState state)

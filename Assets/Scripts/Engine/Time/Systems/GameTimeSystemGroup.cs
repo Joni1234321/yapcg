@@ -1,24 +1,22 @@
-﻿// System that covers ticks
-
-using Unity.Entities;
-using Unity.Mathematics;
+﻿using Unity.Entities;
+using UnityEditor;
+using UnityEngine;
 using YAPCG.Engine.Time.Components;
 
 namespace YAPCG.Engine.Time.Systems
 {
-    
+    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
     [UpdateInGroup(typeof(Common.SystemGroup))]
     // Should not run directly in this group instead if you want every tick, then do TickDailyGroup
     public partial class GameTimeSystemGroup : ComponentSystemGroup
     {
         protected override void OnCreate()
         {
-            World.EntityManager.CreateSingleton(new Tick());
-            World.EntityManager.CreateSingleton(new TickSpeed { SpeedUp = 10 });
-            
+            RequireForUpdate<Tick>();
+            RequireForUpdate<TickSpeed>();
             base.OnCreate();
         }
-
+        
         protected override void OnUpdate()
         {
             float dt = World.Time.DeltaTime;

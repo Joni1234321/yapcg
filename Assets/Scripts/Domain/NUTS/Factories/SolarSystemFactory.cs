@@ -56,6 +56,18 @@ namespace YAPCG.Domain.NUTS.Factories
         
         private Entity CreatePlanet(EntityCommandBuffer _, Entity parent, StandardGravitationalParameter mu, ref Random random)
         {
+            // HINT: burstable code
+            // no mananged array by using stackalloc
+            // no typeof
+            // faster if you set thea rchetype once 
+            // _.create
+            /* HOTPATH EP 2
+            Entity e2 = _.CreateEntity(stackalloc ComponentType[] { ComponentType.ReadOnly<Body.BodySize>() });
+            Entity w1 = _.CreateEntity(stackalloc ComponentType[]
+                {
+                    ComponentType.ReadOnly<Body.BodySize>(),
+                    ComponentType.ReadOnly<Body.PlanetTag>()
+                });*/
             Entity e = _.CreateEntity();
             _.AddComponent<Body.BodyTag>(e);
             _.AddComponent<Body.PlanetTag>(e);

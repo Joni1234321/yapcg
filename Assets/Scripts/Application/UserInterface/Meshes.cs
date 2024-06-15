@@ -61,10 +61,8 @@ namespace YAPCG.Application.UserInterface
             public override void Bake(Meshes authoring)
             {
                 Load(authoring);
-                Entity e = GetEntity(TransformUsageFlags.Renderable);
-                Debug.Log("Baking");
+                Entity e = GetEntity(TransformUsageFlags.None);
                 authoring.deposit.material.SetFloat(SHADER_SCALE, authoring.sharedSizes.HubRadius);
-
                 MeshesSingleton meshesSingleton = new MeshesSingleton()
                 {
                     Deposit = ToMeshesReference(authoring.deposit),

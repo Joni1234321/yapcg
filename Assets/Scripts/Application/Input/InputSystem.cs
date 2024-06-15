@@ -1,16 +1,15 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
-using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using YAPCG.Application.UserInterface;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Input;
-using YAPCG.Engine.Input.Systems;
 using YAPCG.Engine.Physics.Collisions;
-using static UnityEngine.Input;
 
 namespace YAPCG.Application.Input
 {
+    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
     [UpdateInGroup(typeof(InputSystemGroup))]
     internal partial struct InputSystem : ISystem
     {
@@ -20,25 +19,25 @@ namespace YAPCG.Application.Input
             state.EntityManager.CreateSingleton<MouseInput>();
             state.EntityManager.CreateSingleton<ActionInput>();
             state.EntityManager.CreateSingleton<SharedRays>();
+            state.RequireForUpdate<HUD.HUDReady>();
         }
 
         public void OnUpdate(ref SystemState state)
         {
             SystemAPI.SetSingleton(new MouseInput
             {
-                Left = GetMouseButton(0)
+                Left = Mouse.current.leftButton.wasPressedThisFrame
             });
-            
-            float2 mousePosition = new float2(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);
-            bool mouseOverUI = HUD.Instance.IsOverUI(mousePosition);
+
+            bool mouseOverUI = HUD.Instance.IsOverUserInterface(Mouse.current.position.value);
             
             SystemAPI.SetSingleton(new ActionInput
                 {
-                    ShouldBuildHub = GetKeyDown(KeyCode.A),
-                    Next = GetKeyDown(KeyCode.Z),
-                    Previous = GetKeyDown(KeyCode.X),
-                    LeftClickSelectBody = GetMouseButtonDown(0) && !mouseOverUI, // for now should change to detect if ui
-                    DeselectBody = GetMouseButtonDown(1) && !mouseOverUI
+                    ShouldBuildHub = Keyboard.current[Key.A].wasPressedThisFrame,
+                    Next = Keyboard.current[Key.Z].wasPressedThisFrame,
+                    Previous = Keyboard.current[Key.X].wasPressedThisFrame,
+                    LeftClickSelectBody = Mouse.current.leftButton.wasPressedThisFrame && !mouseOverUI, // for now should change to detect if ui
+                    DeselectBody = Mouse.current.rightButton.wasPressedThisFrame && !mouseOverUI
                 }
             );
 
@@ -48,7 +47,7 @@ namespace YAPCG.Application.Input
         [BurstDiscard]
         void SetCameraRay()
         {
-            Ray ray = SystemAPI.ManagedAPI.GetSingleton<SharedCameraManaged>().MainCamera.ScreenPointToRay(mousePosition);
+            Ray ray = SystemAPI.ManagedAPI.GetSingleton<SharedCameraManaged>().MainCamera.ScreenPointToRay(Mouse.current.position.value);
             SystemAPI.SetSingleton(new SharedRays
             {
                 CameraMouseRay = new Raycast.ray {origin = ray.origin, direction = ray.direction }
