@@ -19,7 +19,10 @@ namespace YAPCG.Application.UserInterface
         private void Start()
         {
             if (Instance != null)
+            {
                 CLogger.WarningDuplication(this, "Second instance of HUD created");
+                Destroy(Instance.gameObject);
+            }
             CLogger.LogLoaded(this, "HUD");
             
             Instance = this;

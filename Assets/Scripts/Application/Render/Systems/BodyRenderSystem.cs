@@ -8,6 +8,7 @@ using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Render;
 using YAPCG.Engine.SystemGroups;
+using YAPCG.Engine.Time.Components;
 using YAPCG.Simulation.OrbitalMechanics;
 
 namespace YAPCG.Application.Render.Systems
@@ -89,12 +90,8 @@ namespace YAPCG.Application.Render.Systems
         private void RenderOrbits()
         {
             var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
-
-#if UNITY_EDITOR
-            float ticksF = 0;
-#else
             float ticksF = SystemAPI.GetSingleton<Tick>().TicksF;
-#endif
+            
             if (!meshes.Orbit.LoadStarted)
             {
                 meshes.Orbit.LoadAsync();

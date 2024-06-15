@@ -1,4 +1,6 @@
 ﻿using Unity.Entities;
+using UnityEditor;
+using UnityEngine;
 using YAPCG.Engine.Time.Components;
 
 namespace YAPCG.Engine.Time.Systems
@@ -15,6 +17,9 @@ namespace YAPCG.Engine.Time.Systems
             base.OnCreate();
         }
         
+        #if UNITY_EDITOR
+        private double _lastTick;
+        #endif 
         protected override void OnUpdate()
         {
             float dt = World.Time.DeltaTime;
@@ -24,6 +29,7 @@ namespace YAPCG.Engine.Time.Systems
             int ticks = (int)tick.ValueRO.TicksF;
             float deltaTicks = tick.ValueRO.TicksF - ticks + dt * speedup;
             
+
             if (deltaTicks >= 1)
             {
                 tick.ValueRW.TicksF = ticks + 1;
@@ -33,6 +39,18 @@ namespace YAPCG.Engine.Time.Systems
             {
                 tick.ValueRW.TicksF = ticks + deltaTicks;
             }
+            
+#if UNITY_EDITOR
+            if (!EditorApplication.isPlaying)
+            {
+                double t = EditorApplication.timeSinceStartup;
+                if (t - _lastTick > 1)
+                {
+                    base.OnUpdate();
+                    _lastTick = t;
+                }
+            }
+#endif 
         }
     }
 

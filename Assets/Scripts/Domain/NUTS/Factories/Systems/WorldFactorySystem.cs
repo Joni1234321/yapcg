@@ -1,5 +1,6 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
+using UnityEngine;
 using YAPCG.Domain.NUTS.Factories.Samples;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Time.Systems;
@@ -24,7 +25,7 @@ namespace YAPCG.Domain.NUTS.Factories.Systems
         public void OnUpdate(ref SystemState state)
         {
             Random random = SystemAPI.GetSingleton<SharedRandom>().Random;
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
+            var ecb = new EntityCommandBuffer(state.WorldUpdateAllocator);
             
             _worldFactory.Spawn(ref ecb, ref state, ref random);
             
