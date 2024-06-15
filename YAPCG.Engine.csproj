@@ -63,7 +63,6 @@
     <Compile Include="Assets\Scripts\Engine\DebugDrawer\DebugDrawer.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\SystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\SphereCollection.cs" />
-    <Compile Include="Assets\Scripts\Engine\SharedInitSystem.cs" />
     <Compile Include="Assets\Scripts\Engine\Render\RenderPositionOnlyTag.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Components\RequiredTimeTicks.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\Position.cs" />
@@ -76,6 +75,7 @@
     <Compile Include="Assets\Scripts\Engine\Common\NamingGenerator.cs" />
     <Compile Include="Assets\Scripts\Engine\Render\RenderUtils.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IFactory.cs" />
+    <Compile Include="Assets\Scripts\Engine\RequiredEngineAuthoring.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\EntityExtensions.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IWorldFactory.cs" />
     <Compile Include="Assets\Scripts\Engine\DOTSExtension\EntityManagerExtension.cs" />

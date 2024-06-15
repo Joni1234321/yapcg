@@ -1,14 +1,10 @@
 ﻿using Unity.Entities;
-using UnityEngine;
+using Unity.Entities.Content;
+using Unity.Mathematics;
 using YAPCG.Engine.Physics.Collisions;
-using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Engine.Components
 {
-    public class SharedCameraManaged : IComponentData
-    {
-        public Camera MainCamera;
-    }
     public struct SharedRays : IComponentData
     {
         public Raycast.ray CameraMouseRay;

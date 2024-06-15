@@ -1,6 +1,4 @@
 ﻿using Unity.Entities;
-using UnityEditor;
-using UnityEngine;
 using YAPCG.Engine.Time.Components;
 
 namespace YAPCG.Engine.Time.Systems

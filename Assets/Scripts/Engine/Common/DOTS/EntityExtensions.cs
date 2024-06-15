@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 
 namespace YAPCG.Engine.Common.DOTS

@@ -1,6 +1,4 @@
 ﻿using Unity.Entities;
-using Unity.Mathematics;
-using YAPCG.Domain.NUTS.Factories;
 using YAPCG.Engine.Common.DOTS.Factory;
 
 namespace YAPCG.Domain.NUTS

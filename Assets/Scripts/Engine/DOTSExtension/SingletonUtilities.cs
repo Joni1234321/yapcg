@@ -1,9 +1,6 @@
 ﻿namespace YAPCG.Engine.DOTSExtension
 {
-using System;
-using Unity.Burst.CompilerServices;
-using Unity.Collections.LowLevel.Unsafe;
-using Unity.Entities;
+    using Unity.Entities;
 
 namespace THPS.Singletons
 {

@@ -1,13 +1,9 @@
-﻿using System;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
-using YAPCG.Application.UserInterface;
 using YAPCG.Domain.NUTS;
-using YAPCG.Engine.Common.DOTS;
 using YAPCG.Resources.View.Custom;
 using YAPCG.Resources.View.Custom.Util;
 

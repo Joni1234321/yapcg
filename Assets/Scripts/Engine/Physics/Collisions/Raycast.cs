@@ -1,5 +1,4 @@
-﻿using Unity.Burst.CompilerServices;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 
 namespace YAPCG.Engine.Physics.Collisions
 {

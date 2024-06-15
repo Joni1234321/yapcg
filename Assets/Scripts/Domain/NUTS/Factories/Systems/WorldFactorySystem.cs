@@ -1,10 +1,7 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
-using UnityEngine;
 using YAPCG.Domain.NUTS.Factories.Samples;
-using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
-using YAPCG.Engine.DOTSExtension;
 using YAPCG.Engine.Time.Systems;
 using Random = Unity.Mathematics.Random;
 

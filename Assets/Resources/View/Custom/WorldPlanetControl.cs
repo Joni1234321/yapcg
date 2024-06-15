@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UIElements;
 using YAPCG.Resources.View.Custom.Util;
 

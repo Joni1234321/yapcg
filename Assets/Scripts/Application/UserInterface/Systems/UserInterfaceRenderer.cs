@@ -3,13 +3,10 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
-using YAPCG.Application.ControlRenderer;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
-using YAPCG.Resources.View.Custom;
 using YAPCG.Resources.View.Custom.Util;
 using YAPCG.UI.Components;
 using Position = YAPCG.Engine.Components.Position;
@@ -35,7 +32,7 @@ namespace YAPCG.Application.UserInterface.Systems
            
             HUD.Instance.MainUserInterface.UpdateBodyUI(state.EntityManager, selected); 
             
-            Camera camera = SystemAPI.ManagedAPI.GetSingleton<SharedCameraManaged>().MainCamera;
+            Camera camera = Camera.main;
             NativeArray<Entity> entities = bodyQuery.ToEntityArray(state.WorldUpdateAllocator);
             NativeArray<float3> positions = bodyQuery.ToComponentDataArray<Position>(state.WorldUpdateAllocator).Reinterpret<Position, float3>();
             NativeArray<FixedString64Bytes> names = bodyQuery.ToComponentDataArray<Name>(state.WorldUpdateAllocator).Reinterpret<Name, FixedString64Bytes>();

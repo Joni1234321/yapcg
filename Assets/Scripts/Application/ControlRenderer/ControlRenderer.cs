@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine.UIElements;
 using YAPCG.Resources.View.Custom;

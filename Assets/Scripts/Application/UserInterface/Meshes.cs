@@ -5,7 +5,6 @@ using Unity.Rendering;
 using UnityEngine;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
-using YAPCG.Engine.DOTSExtension;
 
 namespace YAPCG.Application.UserInterface
 {

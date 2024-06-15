@@ -47,7 +47,7 @@ namespace YAPCG.Application.Input
         [BurstDiscard]
         void SetCameraRay()
         {
-            Ray ray = SystemAPI.ManagedAPI.GetSingleton<SharedCameraManaged>().MainCamera.ScreenPointToRay(Mouse.current.position.value);
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.value);
             SystemAPI.SetSingleton(new SharedRays
             {
                 CameraMouseRay = new Raycast.ray {origin = ray.origin, direction = ray.direction }

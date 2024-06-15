@@ -2,17 +2,13 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEditor;
-using UnityEngine;
 using YAPCG.Application.Input;
-using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
 using YAPCG.Engine.SystemGroups;
-using YAPCG.Resources.View.Custom.Util;
 using YAPCG.UI.Components;
 using static Unity.Collections.Allocator;
 

@@ -8,7 +8,6 @@ using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.Render;
 using YAPCG.Engine.SystemGroups;
-using YAPCG.Engine.Time.Components;
 using YAPCG.Simulation.OrbitalMechanics;
 
 namespace YAPCG.Application.Render.Systems

@@ -1,16 +1,9 @@
-﻿using System.Collections.Generic;
-using Unity.Collections;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
-using YAPCG.Application.ControlRenderer;
 using YAPCG.Application.UserInterface.UI;
-using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Common;
-using YAPCG.Engine.Components;
-using YAPCG.Resources.View.Custom;
-using SlotControl = YAPCG.Resources.View.Custom.SlotControl;
 
 namespace YAPCG.Application.UserInterface
 {

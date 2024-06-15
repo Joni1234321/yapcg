@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using UnityEngine.UIElements;
+﻿using UnityEngine.UIElements;
 
 namespace YAPCG.Resources.View.Custom
 {
