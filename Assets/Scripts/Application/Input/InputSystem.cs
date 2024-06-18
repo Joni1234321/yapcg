@@ -37,7 +37,10 @@ namespace YAPCG.Application.Input
                     Next = Keyboard.current[Key.Z].wasPressedThisFrame,
                     Previous = Keyboard.current[Key.X].wasPressedThisFrame,
                     LeftClickSelectBody = Mouse.current.leftButton.wasPressedThisFrame && !mouseOverUI, // for now should change to detect if ui
-                    DeselectBody = Mouse.current.rightButton.wasPressedThisFrame && !mouseOverUI
+                    DeselectBody = Mouse.current.rightButton.wasPressedThisFrame && !mouseOverUI,
+                    SpeedPause = Keyboard.current[Key.P].wasPressedThisFrame,
+                    SpeedIncrease = Keyboard.current[Key.NumpadPlus].wasPressedThisFrame,
+                    SpeedDecrease = Keyboard.current[Key.NumpadMinus].wasPressedThisFrame,
                 }
             );
 

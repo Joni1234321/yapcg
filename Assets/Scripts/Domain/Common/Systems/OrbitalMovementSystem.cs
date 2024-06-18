@@ -38,7 +38,7 @@ namespace YAPCG.Domain.Common.Systems
             
             void Execute(in Body.Orbit orbit, ref Position position)
             {
-                if (orbit.Distance == 0)
+                if (orbit.AU == 0)
                 {
                     position.Value = new float3(0);
                     return;
@@ -49,8 +49,8 @@ namespace YAPCG.Domain.Common.Systems
                 
                 ExtraMechanics.OrbitData orbitData = new ExtraMechanics.OrbitData
                 {
-                    SemiMajorAxis = orbit.Distance,
-                    SemiMinorAxis = orbit.Distance,
+                    SemiMajorAxis = orbit.AU,
+                    SemiMinorAxis = orbit.AU,
                 };
                 position.Value = ExtraMechanics.CalculatePositionOnOrbit(orbitData, trueAnomaly) * consts.DISTANCE_MULTIPLIER;
             }

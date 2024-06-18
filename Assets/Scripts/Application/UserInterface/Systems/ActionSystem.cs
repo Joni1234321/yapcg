@@ -3,14 +3,14 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using YAPCG.Application.Input;
+using YAPCG.Application.UserInterface.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
 using YAPCG.Engine.SystemGroups;
-using YAPCG.UI.Components;
-using static Unity.Collections.Allocator;
+using YAPCG.Engine.Time.Components;
 
 namespace YAPCG.Application.UserInterface.Systems
 {
@@ -21,6 +21,8 @@ namespace YAPCG.Application.UserInterface.Systems
         private EntityQuery _levelQuery;
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<TickSpeedLevel>();
+            state.RequireForUpdate<TickSpeed>();
             state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
             _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
@@ -43,18 +45,18 @@ namespace YAPCG.Application.UserInterface.Systems
         
         public void OnUpdate(ref SystemState state)
         {
-            ActionInput action = SystemAPI.GetSingleton<ActionInput>();
+            ActionInput actionInput = SystemAPI.GetSingleton<ActionInput>();
 
             Raycast.ray ray = SystemAPI.GetSingleton<SharedRays>().CameraMouseRay;
             
-            if (action.ShouldBuildHub)
-                BuildBodyOnMouse(ray);
+            if (actionInput.ShouldBuildHub)
+                BuildBodyOnMouse(ray, ref state);
 
             EntityQuery query = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, ScaleComponent>().Build();
             NativeArray<Entity> bodies = query.ToEntityArray(state.WorldUpdateAllocator);
             
-            NativeArray<float3> positions = query.ToComponentDataArray<Position>(Temp).Reinterpret<Position, float3>();
-            NativeArray<float> sizes = query.ToComponentDataArray<ScaleComponent>(Temp).Reinterpret<ScaleComponent, float>();
+            NativeArray<float3> positions = query.ToComponentDataArray<Position>(state.WorldUpdateAllocator).Reinterpret<Position, float3>();
+            NativeArray<float> sizes = query.ToComponentDataArray<ScaleComponent>(state.WorldUpdateAllocator).Reinterpret<ScaleComponent, float>();
             int hoveredIndex = GetHoverBodyIndex(ray, positions, sizes);
             
             Entity hovered = hoveredIndex != -1 ? bodies[hoveredIndex] : Entity.Null;
@@ -63,20 +65,20 @@ namespace YAPCG.Application.UserInterface.Systems
             Entity selected = focusedBody.ValueRO.Selected;
             int selectedIndex = BodyEntityToIndex(selected, bodies);
 
-            if (action.Next)
+            if (actionInput.Next)
                 selectedIndex = NegativeMod(selectedIndex + 1, bodies.Length);
 
-            if (action.Previous)
+            if (actionInput.Previous)
                 selectedIndex = NegativeMod(selectedIndex - 1, bodies.Length);
 
             if (bodies.Length != 0 && selectedIndex > 0 && selectedIndex < bodies.Length)
                 selected = bodies[selectedIndex];
             
             
-            if (action.LeftClickSelectBody)
+            if (actionInput.LeftClickSelectBody)
                 selected = hovered;
             
-            if (action.DeselectBody)
+            if (actionInput.DeselectBody)
                 selected = Entity.Null;
             
             // Hovered
@@ -96,8 +98,32 @@ namespace YAPCG.Application.UserInterface.Systems
                SystemAPI.SetComponent(selected, AlternativeColorRatio.Selected);
 
             focusedBody.ValueRW.Selected = selected;
+
+            TimeControls(actionInput, ref state);
         }
 
+        void TimeControls(in ActionInput actionInput, ref SystemState state)
+        {
+            TickSpeedLevel speedLevel = SystemAPI.GetSingleton<TickSpeedLevel>();
+            
+            if (actionInput.SpeedIncrease)
+                speedLevel.Level++;
+            if (actionInput.SpeedDecrease)
+                speedLevel.Level--;
+            if (actionInput.SpeedPause)
+                speedLevel.Paused = !speedLevel.Paused;
+
+            if (actionInput is { SpeedPause: false, SpeedIncrease: false, SpeedDecrease: false }) 
+                return;
+            
+            var buffer = SystemAPI.GetSingletonBuffer<TickSpeedLevels>(true);
+            speedLevel.Level = math.clamp(speedLevel.Level, 0, buffer.Length - 1);
+            SystemAPI.SetSingleton(speedLevel);
+            float speed = speedLevel.Paused ? 0 : buffer[speedLevel.Level].Speed;
+            SystemAPI.SetSingleton(new TickSpeed { SpeedUp = speed });
+
+        }
+        
         [BurstCompile]
         int GetHoverBodyIndex(Raycast.ray ray, NativeArray<float3> positions, NativeArray<float> sizes)
         {
@@ -115,9 +141,9 @@ namespace YAPCG.Application.UserInterface.Systems
 
         
         [BurstCompile]
-        bool BuildBodyOnMouse(Raycast.ray ray)
+        bool BuildBodyOnMouse(Raycast.ray ray, ref SystemState state)
         {
-            TriangleCollection triangles = new TriangleCollection { Positions = GetLevelTriangles() };
+            TriangleCollection triangles = new TriangleCollection { Positions = GetLevelTriangles(ref state) };
 
             if (!RayTriangle.CheckCollision(ray, triangles, out Raycast.hit hit))
                 return false;
@@ -131,15 +157,14 @@ namespace YAPCG.Application.UserInterface.Systems
                 Size = Hub.Size.Medium,
             });
             
-            //CLogger.LogInfo("Building body");
             return true;
         }
         
         [BurstCompile]
-        NativeArray<float3> GetLevelTriangles()
+        NativeArray<float3> GetLevelTriangles(ref SystemState state)
         {
-            NativeArray<LevelQuad> quads = _levelQuery.ToComponentDataArray<LevelQuad>(Temp);
-            NativeArray<float3> positions = new NativeArray<float3>(6, Temp);
+            NativeArray<LevelQuad> quads = _levelQuery.ToComponentDataArray<LevelQuad>(state.WorldUpdateAllocator);
+            NativeArray<float3> positions = new NativeArray<float3>(6, state.WorldUpdateAllocator);
             for(int i = 0; i < quads.Length; i++)
             {
                 LevelQuad quad = quads[i];

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\MeshSaverEditor.cs" />
+    <Compile Include="Assets\Editor\FormatTestScript.cs" />
     <None Include="Assets\Editor\YAPCG.Engine.Editor.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

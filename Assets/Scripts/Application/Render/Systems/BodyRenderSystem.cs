@@ -126,7 +126,7 @@ namespace YAPCG.Application.Render.Systems
 
                 Quaternion rotation = Quaternion.Euler(90, 0, (math.PIHALF + trueAnomaly) * math.TODEGREES);
                 const float MULTIPLIER = consts.DISTANCE_MULTIPLIER * 2 / 0.9f; // 0.9f = shader diameter
-                float scale = orbit.Distance * MULTIPLIER;
+                float scale = orbit.AU * MULTIPLIER;
                 matricies[i] = Matrix4x4.TRS(orbitposition, rotation, new float3(scale));
             }
 

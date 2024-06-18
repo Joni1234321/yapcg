@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Resources/View/main.uss" />
-    <ui:VisualElement name="number" style="flex-grow: 1;">
+    <ui:VisualElement name="number" class="flex-row" style="flex-grow: 1; flex-shrink:0;">
         <ui:Label text="Pop" name="title" />
         <ui:Label text="200.2 K" name="value" style="-unity-font-style: bold;" />
     </ui:VisualElement>

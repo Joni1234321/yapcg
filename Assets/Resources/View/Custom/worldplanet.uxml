@@ -3,7 +3,7 @@
     <ui:VisualElement usage-hints="DynamicTransform" name="world-planet" class="shadow flex-top flex-column transition-border border-hat-2">
         <ui:Label text="JUPITER" name="title" class="underlined section" />
         <ui:VisualElement name="details" enabled="true" class="hidden">
-            <ui:Button text="CLAIM" name="claim" class="text-sm bg-color-orange" />
+            <ui:Button text="CLAIM" name="claim" class="text-sm bg-color-orange scale-110-hover" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

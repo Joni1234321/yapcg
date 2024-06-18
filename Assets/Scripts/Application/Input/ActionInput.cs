@@ -7,5 +7,7 @@ namespace YAPCG.Application.Input
         public bool ShouldBuildHub;
         public bool Next, Previous;
         public bool LeftClickSelectBody, DeselectBody;
+
+        public bool SpeedIncrease, SpeedDecrease, SpeedPause;
     }
 }

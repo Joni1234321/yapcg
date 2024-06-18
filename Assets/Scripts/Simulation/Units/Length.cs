@@ -10,7 +10,9 @@ namespace YAPCG.Simulation.Units
         {
             Meters,
             KiloMeters,
-            AstronomicalUnits
+            AstronomicalUnits,
+            EarthRadius,
+            LightSecond,
         }
 
         private readonly float val;
@@ -33,6 +35,8 @@ namespace YAPCG.Simulation.Units
             UnitType.Meters => 1,
             UnitType.KiloMeters => 1000,
             UnitType.AstronomicalUnits => 149_597_870_691,
+            UnitType.EarthRadius => 6_378_137, 
+            UnitType.LightSecond => 299_792_458,
             _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, null)
         };
 

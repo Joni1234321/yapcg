@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Application\ControlRenderer\WorldPlanetControlRenderer.cs" />
+    <Compile Include="Assets\Scripts\Application\UserInterface\Systems\UserInterfaceRenderSystem.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\Systems\ActionSystem.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\Meshes.cs" />
     <Compile Include="Assets\Scripts\Application\ControlRenderer\ControlRenderer.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="Assets\Scripts\Application\Input\InputSystem.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\UI\WorldUserInterface.cs" />
     <Compile Include="Assets\Scripts\Application\Render\Systems\HubRenderSystem.cs" />
-    <Compile Include="Assets\Scripts\Application\UserInterface\Systems\UserInterfaceRenderer.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\HUD.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\DebugScript.cs" />
     <Compile Include="Assets\Scripts\Application\UserInterface\UI\MainUserInterface.cs" />

@@ -1,4 +1,5 @@
 ﻿using Unity.Entities;
+using YAPCG.Simulation.Units;
 
 namespace YAPCG.Domain.NUTS
 {
@@ -11,15 +12,19 @@ namespace YAPCG.Domain.NUTS
         public struct Orbit : IComponentData
         {
             public Entity Parent;
-            public float Distance;
+            public float AU;
             public float Eccentricity;
-            public Simulation.Units.SiTime Period;
+            public SiTime Period;
             public float PeriodOffsetTicksF;
         }
 
-        public struct BodySize : IComponentData
+        public struct BodyInfo : IComponentData
         {
-            public float Size;
+            public float Mu;
+            public float EarthRadius;
+            public float EarthMass;
+            public float EarthGravity;
+            public float EscapeVelocity;
         }
 
         public struct Owner : IComponentData

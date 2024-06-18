@@ -22,13 +22,14 @@ namespace YAPCG.Domain.NUTS.Factories
             ref NativeList<Entity> spawned)
         {
             // create planet
-            spawned.Add(CreateSun(ecb, ref random));
-            var mu = new StandardGravitationalParameter(new MassConverter(330_000, MassConverter.UnitType.EarthMass).To(MassConverter.UnitType.KiloGrams));
+            float earthMass = 330_000;
+            spawned.Add(CreateSun(ecb, earthMass, ref random));
+            StandardGravitationalParameter mu = new StandardGravitationalParameter(new MassConverter(earthMass, MassConverter.UnitType.EarthMass).To(MassConverter.UnitType.KiloGrams));
             for (int i = 0; i < config.Planets; i++)
                 spawned.Add(CreatePlanet(ecb, spawned[0], mu, ref random));
         }
         
-        private Entity CreateSun(EntityCommandBuffer _, ref Random random)
+        private Entity CreateSun(EntityCommandBuffer _, float earthMass, ref Random random)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Body.BodyTag>(e);
@@ -40,14 +41,14 @@ namespace YAPCG.Domain.NUTS.Factories
             _.SetName(e, $"SUN: {name}");
             
             // Planet            
-            float size = random.NextGauss(100f, 30f, 50f, 300f);
-            _.AddComponent(e, new Body.BodySize { Size = size });
+            float earthRadius = random.NextGauss(100f, 30f, 50f, 300f);
+            _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, });
             _.AddComponent(e, new DiscoverProgress { MaxValue = 100 });
             _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
             
             // Render
             _.AddComponent(e, new Position { Value = new float3(0) });
-            _.AddComponent(e, new ScaleComponent { Value = size / 20f });
+            _.AddComponent(e, new ScaleComponent { Value = earthRadius / 20f });
             _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
             _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
 
@@ -78,23 +79,39 @@ namespace YAPCG.Domain.NUTS.Factories
             _.SetName(e, $"PLANET: {name}");
                 
             // Orbit
-            float size = random.NextGauss(10f, 3f, 1f, 100f);
-            float orbitDistance = random.NextFloat(1f, 5f);
-            float distance = new Length(orbitDistance, Length.UnitType.AstronomicalUnits).To(Length.UnitType.Meters);
-            
+            // could have different generators depending on gas or giants
+            float earthRadius = random.NextGauss(10f, 3f, 1f, 100f);
+            float au = random.NextFloat(1f, 5f);
+            float earthMass = random.NextGauss(10f, 3f, 1f, 100f);
+            float offset = random.NextFloat(1);
+
+            // float earthRadius = 1;
+            // float au = 1;
+            // float earthMass = 1;
+            // float offset = random.NextFloat(1);
+            // Orbit calculation
+            float distance = new Length(au, Length.UnitType.AstronomicalUnits).To(Length.UnitType.Meters);
+            float radius = new Length(earthRadius, Length.UnitType.EarthRadius).To(Length.UnitType.Meters);
+            float mass = new MassConverter(earthMass, MassConverter.UnitType.EarthMass).To(MassConverter.UnitType.KiloGrams);
             SiTime period = OrbitalMechanics.GetOrbitalPeriod(mu, distance);
-            float offsetTicksF = random.NextFloat(1) * period.Days;
+            float offsetTicksF = offset * period.Days;
             
             float linearEccentricity = EllipseMechanics.GetLinearEccentricity(distance, distance); // this is the case since its a circular orbit
-            float eccentricity = distance == 0 ? 0 : linearEccentricity / distance;
-            _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, Distance = orbitDistance, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
-            _.AddComponent(e, new Body.BodySize { Size = size });
-            _.AddComponent(e, new DiscoverProgress() { MaxValue = 30, Progress = 1});
+            float eccentricity = distance > 0 ? linearEccentricity / distance : 0;
+            
+            // gravity
+            float ownMu = new StandardGravitationalParameter(mass).Value;
+            float gravity = ownMu / math.pow(radius, 2);
+            float ecapeVelocity = math.sqrt(2 * ownMu / radius);
+            
+            _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, AU = au, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
+            _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, EarthGravity = gravity, EscapeVelocity = ecapeVelocity, Mu = ownMu});
+            _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 1});
             _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
             
             // Render
-            _.AddComponent(e, new Position { Value = new float3(orbitDistance, 0, 0) });
-            _.AddComponent(e, new ScaleComponent { Value = size / 5f });
+            _.AddComponent(e, new Position { Value = new float3(au, 0, 0) });
+            _.AddComponent(e, new ScaleComponent { Value = earthRadius / 5f });
             _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
             _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
 

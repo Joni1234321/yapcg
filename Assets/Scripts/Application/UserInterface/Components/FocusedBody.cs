@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace YAPCG.UI.Components
+namespace YAPCG.Application.UserInterface.Components
 {
     public struct FocusedBody : IComponentData
     {

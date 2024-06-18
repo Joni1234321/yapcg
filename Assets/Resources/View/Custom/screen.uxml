@@ -1,5 +1,47 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/Resources/View/main.uss" />
-    <ui:Template name="hubmenu" src="project://database/Assets/Resources/View/Custom/hubmenu.uxml" />
-    <ui:Instance template="hubmenu" style="position: absolute; bottom: 0;" />
+    <Style src="project://database/Assets/Resources/View/main.uss?fileID=7433441132597879392&amp;guid=c8c56bc5dabe31f49a1cbc1a34332ed1&amp;type=3#main" />
+    <ui:VisualElement name="body-menu" class="border-light border-2" style="position: absolute; bottom: 4px; left: 4px; width: 300px;">
+        <ui:Button text="CLAIM" name="claim" class="text-2xl py-2 bg-color-orange margin-0-hover"  />
+        <ui:VisualElement name="facts">
+            <ui:VisualElement class="flex-row flex-wrap underlined border-light bg-color-grey">
+                <ui:VisualElement class="flex-row flex-wrap">
+                    <YAPCG.Resources.View.Custom.NumberLabel title="G" value="200 mg" name="gravity" />
+                    <YAPCG.Resources.View.Custom.NumberLabel title="ΔV" value="11.2 km/s" name="escape" />
+                </ui:VisualElement>
+                <ui:VisualElement class="flex-row flex-wrap">
+                    <YAPCG.Resources.View.Custom.NumberLabel title="Ø" value="3.5×10&lt;sup&gt;6&lt;/sup&gt; mE&lt;sub&gt;M&lt;/sub&gt;🜨M🜨  M☉" name="radius" />
+                    <YAPCG.Resources.View.Custom.NumberLabel title="M" value="5.9×10^24 kg" name="mass" />
+                </ui:VisualElement>
+                <ui:VisualElement class="flex-row flex-wrap">
+                    <YAPCG.Resources.View.Custom.NumberLabel title="Distance" value="1.23 AU" name="distance" />
+                    <YAPCG.Resources.View.Custom.NumberLabel title="Sidereal" value="200 days" name="sidereal" />
+                </ui:VisualElement>
+                <ui:VisualElement class="flex-row flex-wrap">
+                    <YAPCG.Resources.View.Custom.NumberLabel title="μ☉" value="4.0×10^14 m3/s2" name="mu" />
+                </ui:VisualElement>
+                <ui:VisualElement class="flex-row flex-wrap">
+                    <YAPCG.Resources.View.Custom.NumberLabel title="Perigee" value="200 days" name="perigee" />
+                    <YAPCG.Resources.View.Custom.NumberLabel title="Apogee" value="1.23 AU" name="apogee" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Label text="Body XX" name="name" class="bg-semi-transparent" />
+        </ui:VisualElement>
+        <ui:VisualElement name="stats" class="section">
+            <ui:VisualElement name="terrain">
+                <YAPCG.Resources.View.Custom.NumberLabel title="Terrain" value="Hills" name="hub-population" />
+            </ui:VisualElement>
+            <ui:VisualElement name="name">
+                <YAPCG.Resources.View.Custom.NumberLabel title="Pop" value="200k" name="hub-population" />
+            </ui:VisualElement>
+            <ui:VisualElement name="slots" class="flex-gap flex-row" style="flex-grow: 1; justify-content: flex-start;">
+                <YAPCG.Resources.View.Custom.SlotControl title="L" value="1" hue="#FF0000" name="slots-l" />
+                <YAPCG.Resources.View.Custom.SlotControl title="M" value="2" hue="#00FF55" name="slots-m" />
+                <YAPCG.Resources.View.Custom.SlotControl title="S" value="10" hue="#00AAFF" name="slots-s" />
+            </ui:VisualElement>
+            <YAPCG.Resources.View.Custom.ProgressBarControl title="Discovery" name="discovery" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="top" class="flex-center" style="position: absolute; top: 100px;">
+        <ui:Label name="speed" text="200" class="section text-3xl px-4 " />
+    </ui:VisualElement>
 </ui:UXML>

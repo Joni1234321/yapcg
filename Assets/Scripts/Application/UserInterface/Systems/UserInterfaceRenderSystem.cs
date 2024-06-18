@@ -3,23 +3,25 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using YAPCG.Application.UserInterface.Components;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
+using YAPCG.Engine.Time.Components;
 using YAPCG.Resources.View.Custom.Util;
-using YAPCG.UI.Components;
-using Position = YAPCG.Engine.Components.Position;
 
 namespace YAPCG.Application.UserInterface.Systems
 {
     [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
     [UpdateInGroup(typeof(RenderSystemGroup))]
-    public partial struct UserInterfaceRenderer : ISystem
+    public partial struct UserInterfaceRenderSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<TickSpeed>();
+            state.RequireForUpdate<TickSpeedLevel>();
             state.RequireForUpdate<FocusedBody>();
             state.RequireForUpdate<HUD.HUDReady>();
         }
@@ -31,6 +33,7 @@ namespace YAPCG.Application.UserInterface.Systems
             Entity selected = SystemAPI.GetSingleton<FocusedBody>().Selected;
            
             HUD.Instance.MainUserInterface.UpdateBodyUI(state.EntityManager, selected); 
+            HUD.Instance.MainUserInterface.UpdateSpeed(SystemAPI.GetSingleton<TickSpeed>(), SystemAPI.GetSingleton<TickSpeedLevel>()); 
             
             Camera camera = Camera.main;
             NativeArray<Entity> entities = bodyQuery.ToEntityArray(state.WorldUpdateAllocator);

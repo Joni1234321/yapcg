@@ -55,11 +55,9 @@
     <Compile Include="Assets\Resources\View\Custom\Util\StyleClasses.cs" />
     <Compile Include="Assets\Resources\View\Custom\ProgressBarControl.cs" />
     <None Include="Assets\Resources\View\Custom\progressbar.uxml" />
-    <None Include="Assets\Resources\View\Custom\hubmenu.uxml" />
     <None Include="Assets\Resources\View\Custom\worldplanet.uxml" />
     <None Include="Assets\Resources\View\Custom\screen.uxml" />
     <None Include="Assets\Resources\View\Custom\slots.uxml" />
-    <None Include="Assets\Resources\View\Custom\hubitem.uxml" />
     <None Include="Assets\Resources\View\Custom\numberlabel.uxml" />
     <None Include="Assets\Resources\View\Custom\YAPCG.Resources.View.Custom.asmdef" />
     <Reference Include="UnityEngine">

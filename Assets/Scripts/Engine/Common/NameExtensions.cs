@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Unity.Collections;
 
 namespace YAPCG.Engine.Common
@@ -40,5 +41,22 @@ namespace YAPCG.Engine.Common
             return romans;
 
         } 
+        public static string ToSuperscript(this string s) => $"<sup>{s}</sup>";
+        public static string ToSubscript(this string s) => $"<sub>{s}</sub>";
+
+        public static string ToScientific(this float value, string postfix = "")
+        {
+            // Convert the value to scientific notation with three decimal places
+            string scientificString = value.ToString("0.###E0", CultureInfo.CurrentCulture);
+
+            // Split the scientific notation into base and exponent
+            string[] parts = scientificString.Split('E');
+
+            // Format the string as "base x 10^exponent"
+            string formattedString = $"{parts[0]}\u00d710{parts[1].ToSuperscript()} {postfix}";
+
+            return formattedString;
+        }
+
     }
 }
