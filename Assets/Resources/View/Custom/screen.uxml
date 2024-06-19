@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Resources/View/main.uss?fileID=7433441132597879392&amp;guid=c8c56bc5dabe31f49a1cbc1a34332ed1&amp;type=3#main" />
     <ui:VisualElement name="body-menu" class="border-light border-2" style="position: absolute; bottom: 4px; left: 4px; width: 300px;">
-        <ui:Button text="CLAIM" name="claim" class="text-2xl py-2 bg-color-orange margin-0-hover"  />
+        <ui:Button text="CLAIM" name="claim" class="text-2xl py-2 bg-color-orange margin-0-hover"/>
         <ui:VisualElement name="facts">
             <ui:VisualElement class="flex-row flex-wrap underlined border-light bg-color-grey">
                 <ui:VisualElement class="flex-row flex-wrap">

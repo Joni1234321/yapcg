@@ -3,6 +3,7 @@ using Unity.Entities.Content;
 using UnityEngine;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.DOTSExtension.THPS.Singletons;
 
 namespace YAPCG.Engine
 {
@@ -18,6 +19,8 @@ namespace YAPCG.Engine
 
                 Entity e = GetEntity(TransformUsageFlags.None);
                 AddComponent(e, new SharedRandom { Random = Unity.Mathematics.Random.CreateFromIndex(authoring.Seed) });
+                
+                SingletonUtilities.Setup(World.DefaultGameObjectInjectionWorld.EntityManager);
             }
         }
         

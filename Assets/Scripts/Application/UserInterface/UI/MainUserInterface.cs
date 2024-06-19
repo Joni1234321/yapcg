@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine.UIElements;
@@ -6,6 +7,7 @@ using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
+using YAPCG.Engine.DOTSExtension.THPS.Singletons;
 using YAPCG.Engine.Time.Components;
 using YAPCG.Resources.View.Custom;
 using YAPCG.Resources.View.Custom.Util;
@@ -19,20 +21,24 @@ namespace YAPCG.Application.UserInterface.UI
         public VisualElement Root, BodyMenu;
         
         public SlotControl SlotControlS, SlotControlM, SlotControlL;
-        public Label HubNameLabel;
+        public Label NameLabel;
 
         public Label SpeedLabel;
         public ProgressBarControl DiscoveryProgress;
 
-        public NumberLabel Gravity, Escape, Radius, Mass, Distance, Sidereal, Mu;
+        public Button ClaimButton;
 
+        public NumberLabel Gravity, Escape, Radius, Mass, Distance, Sidereal, Mu;
+        private Entity _selected;
+
+        private EntityQuery _actionClaimQuery;
         public MainUserInterface(VisualElement root)
         {
             Root = root;
             SpeedLabel = root.Q<Label>("speed");
             BodyMenu = root.Q<VisualElement>("body-menu");
             
-            HubNameLabel = BodyMenu.Q<Label>("name");
+            NameLabel = BodyMenu.Q<Label>("name");
 
             SlotControlS = BodyMenu.Q<SlotControl>("slots-s");
             SlotControlM = BodyMenu.Q<SlotControl>("slots-m");
@@ -40,6 +46,8 @@ namespace YAPCG.Application.UserInterface.UI
 
             DiscoveryProgress = BodyMenu.Q<ProgressBarControl>("discovery");
 
+            ClaimButton = BodyMenu.Q<Button>("claim");
+            
             Gravity = BodyMenu.Q<NumberLabel>("gravity");
             Escape = BodyMenu.Q<NumberLabel>("escape");
             Radius = BodyMenu.Q<NumberLabel>("radius");
@@ -47,6 +55,15 @@ namespace YAPCG.Application.UserInterface.UI
             Distance = BodyMenu.Q<NumberLabel>("distance");
             Sidereal = BodyMenu.Q<NumberLabel>("sidereal");
             Mu = BodyMenu.Q<NumberLabel>("mu");
+
+            _actionClaimQuery = new EntityQueryBuilder(Allocator.Temp).WithAllRW<Body.ActionClaim>().Build(World.DefaultGameObjectInjectionWorld.EntityManager);
+            ClaimButton.clickable.clicked += () =>
+            {
+                if (_selected == Entity.Null)
+                    return;
+                Body.ActionClaim actionClaim = new Body.ActionClaim { Body = _selected, OwnerID = Body.Owner.YOU_OWNER_ID };
+                _actionClaimQuery.SetSingleton(actionClaim);
+            };
         }
 
         public void UpdateSpeed(in TickSpeed speed, in TickSpeedLevel tickSpeedLevel)
@@ -64,22 +81,31 @@ namespace YAPCG.Application.UserInterface.UI
                 SpeedLabel.schedule.Execute(() => SpeedLabel.style.opacity = 0.0f).ExecuteLater(0);
             }).ExecuteLater(2500);
         }
-        
         public void UpdateBodyUI(EntityManager _, Entity body)
         {
+            _selected = body;
             if (body == Entity.Null)
             {
                 BodyMenu.visible = false;
+                ClaimButton.style.display = DisplayStyle.None;
                 return;
             }
 
-            BodyMenu.visible = true;
+            
             FixedString64Bytes bodyName = _.GetComponentData<Name>(body).Value;
             DiscoverProgress discovery  = _.GetComponentData<DiscoverProgress>(body);
             Body.BodyInfo info          = _.GetComponentData<Body.BodyInfo>(body);
-            
-            HubNameLabel.text = bodyName.ToString();
+            Body.Owner owner            = _.GetComponentData<Body.Owner>(body);
 
+            BodyMenu.visible = true;
+            ClaimButton.style.display =  owner.ID == Body.Owner.NO_OWNER_ID ? DisplayStyle.Flex : DisplayStyle.None;
+
+            NameLabel.text = bodyName.ToString();
+
+            Body.ActionClaim actionClaim = new Body.ActionClaim { Body = body, OwnerID = Body.Owner.YOU_OWNER_ID };
+           // <Body.ActionClaim>().ValueRW = actionClaim;
+
+            
             DiscoveryProgress.Max    = discovery.MaxValue;
             DiscoveryProgress.Value  = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;
@@ -112,7 +138,7 @@ namespace YAPCG.Application.UserInterface.UI
             DiscoverProgress discovery = _.GetComponentData<DiscoverProgress>(hub);
 
 
-            HubNameLabel.text = hubName.ToString();
+            NameLabel.text = hubName.ToString();
             
             SlotControlS.Value = slotsLeft.Small.ToString();
             SlotControlM.Value = slotsLeft.Medium.ToString();
@@ -122,7 +148,5 @@ namespace YAPCG.Application.UserInterface.UI
             DiscoveryProgress.Value = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;
         }
-        
-        
     }
 }

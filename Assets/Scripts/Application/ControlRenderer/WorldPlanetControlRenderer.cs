@@ -37,7 +37,7 @@ namespace YAPCG.Application.ControlRenderer
                 float w = Controls[i].resolvedStyle.width;
                 float h = Controls[i].resolvedStyle.height;
                 Controls[i].style.left = positions[i].x - w * 0.5f;
-                Controls[i].style.bottom = positions[i].y - h * 0.5f - 50;
+                Controls[i].style.bottom = positions[i].y - h * 0.5f - 50; // TODO: Calculate the visible
             }
         }
 
