@@ -23,7 +23,7 @@ namespace YAPCG.Application.ControlRenderer
         }
 
         private NativeArray<Entity> _bodies;
-        public void Draw(NativeArray<Entity> entities, NativeArray<FixedString64Bytes> names, NativeArray<StyleClasses.BorderColor> borderColors, NativeArray<float3> positions, int detailed = -1)
+        public void Draw(NativeArray<Entity> entities, NativeArray<FixedString64Bytes> names, NativeArray<StyleClasses.BorderColor> borderColors, NativeArray<float3> positions, int detailed = -1, bool claimable = false)
         {
             _bodies = entities;
             int n = names.Length;
@@ -34,6 +34,9 @@ namespace YAPCG.Application.ControlRenderer
                 Controls[i].Title = names[i].ToString();
                 Controls[i].BorderColor = borderColors[i];
                 Controls[i].Detailed = i == detailed ? StyleClasses.Detailed.Detailed : StyleClasses.Detailed.NotDetailed;
+                if (i == detailed)
+                    Controls[i].Claimable = claimable;
+                
                 float w = Controls[i].resolvedStyle.width;
                 float h = Controls[i].resolvedStyle.height;
                 Controls[i].style.left = positions[i].x - w * 0.5f;

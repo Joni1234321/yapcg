@@ -7,6 +7,7 @@ namespace YAPCG.Resources.View.Custom
     public partial class WorldPlanetControl : CustomUI
     {
         private StyleClasses.Detailed _detailed;
+        private bool _claimable;
         private string _title;
         private StyleClasses.BorderColor _borderColor;
 
@@ -64,6 +65,19 @@ namespace YAPCG.Resources.View.Custom
             }
         }
 
+        [UxmlAttribute]
+        public bool Claimable
+        {
+            get => _claimable;
+            set
+            {
+                if (_claimable == value)
+                    return;
+                ClaimButton.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+                _claimable = value;
+            }
+        }
+
         
  
         public WorldPlanetControl() : base("View/Custom/worldplanet")
@@ -75,6 +89,7 @@ namespace YAPCG.Resources.View.Custom
             Detailed = StyleClasses.Detailed.Detailed; Detailed = StyleClasses.Detailed.NotDetailed;
             Title = ""; Title = "SUN";
             BorderColor = StyleClasses.BorderColor.Impossible; BorderColor = StyleClasses.BorderColor.Valid;
+            Claimable = true; Claimable = false;
         }
     }
 }

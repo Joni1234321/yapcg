@@ -50,11 +50,18 @@ namespace YAPCG.Application.UserInterface.Systems
                 borderColors[i] = owners[i].ID == 0 ? StyleClasses.BorderColor.Impossible : StyleClasses.BorderColor.Valid;
 
             int selectedIndex = 0;
+            bool selectedClaimable = false;
             for (; selectedIndex < entities.Length; selectedIndex++)
+            {
                 if (entities[selectedIndex] == selected)
+                {
+                   selectedClaimable = owners[selectedIndex].ID == Body.Owner.NO_OWNER_ID;
                     break;
+                }
+            }
+
             
-            HUD.Instance.WorldUserInterface.WorldPlanetControlRenderer.Draw(entities, names, borderColors, positions, selectedIndex); 
+            HUD.Instance.WorldUserInterface.WorldPlanetControlRenderer.Draw(entities, names, borderColors, positions, selectedIndex, selectedClaimable); 
         }
     }
 }
