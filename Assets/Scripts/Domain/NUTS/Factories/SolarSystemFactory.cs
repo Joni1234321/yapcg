@@ -1,24 +1,27 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 using YAPCG.Domain.Common.Components;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
 using YAPCG.Simulation.OrbitalMechanics;
 using YAPCG.Simulation.Units;
+using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Domain.NUTS.Factories
 {
+    [System.Serializable]
     [InternalBufferCapacity(0)]
-    public struct SolarySystemFactoryParams : IBufferElementData, IFactoryParams
+    public struct SolarSystemFactoryParams : IBufferElementData, IFactoryParams
     {
         public int Planets;
     }
     
-    public struct SolarSystemFactory : IFactory<SolarySystemFactoryParams>
+    public struct SolarSystemFactory : IFactory<SolarSystemFactoryParams>
     {
-        public void Spawn(EntityCommandBuffer ecb, SolarySystemFactoryParams config, ref Random random,
+        public void Spawn(EntityCommandBuffer ecb, SolarSystemFactoryParams config, ref Random random,
             ref NativeList<Entity> spawned)
         {
             // create planet

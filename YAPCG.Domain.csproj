@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\Domain\Common\Systems\ProductionSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Systems\WorldFactorySystem.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Deposit.cs" />
+    <Compile Include="Assets\Scripts\Domain\NUTS\Factories\Samples\SampleWorldAuthoring.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\Body.cs" />
     <Compile Include="Assets\Scripts\Domain\NUTS\ActionsEntity.cs" />
     <None Include="Assets\Scripts\Domain\YAPCG.Domain.asmdef" />
@@ -834,6 +835,9 @@
     </Reference>
     <Reference Include="Unity.Entities">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Entities.Hybrid">
+      <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Entities.Hybrid.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>C:\Active\Unity\YAPCG\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>

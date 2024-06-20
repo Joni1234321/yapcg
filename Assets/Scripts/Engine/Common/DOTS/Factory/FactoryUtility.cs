@@ -1,6 +1,7 @@
-﻿using Unity.Collections;
+﻿using System;
+using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
+using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Engine.Common.DOTS.Factory
 {
@@ -17,6 +18,27 @@ namespace YAPCG.Engine.Common.DOTS.Factory
                 _.SetName(FactoryEntity, "Factory Entity");
             }
             return _.AddBuffer<T>(FactoryEntity);
+        }
+        public static DynamicBuffer<T> InitFactory<T>(this EntityManager _, T data)
+            where T : unmanaged, IFactoryParams
+        {
+            DynamicBuffer<T> buffer = _.InitFactory<T>();
+            buffer.Add(data);
+            return buffer;
+        }
+        public static DynamicBuffer<T> InitFactory<T>(this EntityManager _, NativeArray<T> data)
+            where T : unmanaged, IFactoryParams
+        {
+            DynamicBuffer<T> buffer = _.InitFactory<T>();
+            buffer.AddRange(data);
+            return buffer;
+        }
+        public static DynamicBuffer<T> InitFactory<T>(this EntityManager _, T[] data)
+            where T : unmanaged, IFactoryParams
+        {
+            DynamicBuffer<T> buffer = _.InitFactory<T>();
+            buffer.AddRange(new NativeArray<T>(data, Allocator.Temp));
+            return buffer;
         }
         public static void InitFactoryAndDispose<T>(this EntityManager _, NativeArray<T> data)
             where T : unmanaged, IFactoryParams
@@ -36,13 +58,5 @@ namespace YAPCG.Engine.Common.DOTS.Factory
             
             factoryParams.Clear();
         }
-
-        private static void CreateSingleton(EntityManager _)
-        {
-
-            EntityArchetype arch = _.CreateArchetype();
-            FactoryEntity = _.CreateEntity();
-        }
-
     }
 }

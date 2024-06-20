@@ -4,6 +4,7 @@
     "references": [
         "Unity.Mathematics",
         "Unity.Entities",
+        "Unity.Entities.Hybrid",
         "Unity.Collections",
         "Unity.Burst",
         "YAPCG.Engine",

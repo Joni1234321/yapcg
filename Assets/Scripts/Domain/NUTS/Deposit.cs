@@ -7,6 +7,7 @@ namespace YAPCG.Domain.NUTS
     {
         public struct DepositTag : IComponentData { }
 
+        [System.Serializable]
         [InternalBufferCapacity(0)]
         public struct DepositFactoryParams : IBufferElementData, IFactoryParams
         {

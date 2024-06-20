@@ -8,6 +8,7 @@ namespace YAPCG.Domain.NUTS
     {
         public struct HubTag : IComponentData { }
         
+        [System.Serializable]
         [InternalBufferCapacity(0)]
         public struct HubFactoryParams : IBufferElementData, IFactoryParams
         {
