@@ -29,13 +29,11 @@ namespace YAPCG.Application.UserInterface.Systems
 
         public void OnUpdate(ref SystemState state)
         {
-#if UNITY_EDITOR
-            if (!EditorApplication.isPlaying && SystemAPI.GetSingleton<ApplicationSettings>().DisableUIRender)
+            if (SystemAPI.GetSingleton<ApplicationSettings>().DisableUIRender)
             {
                 HUD.Instance.WorldUserInterface.WorldPlanetControlRenderer.Draw(0); 
                 return;
             }
-#endif
             EntityQuery bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, Body.Owner, ScaleComponent, DiscoverProgress, Name>().Build();
 
             Entity selected = SystemAPI.GetSingleton<FocusedBody>().Selected;

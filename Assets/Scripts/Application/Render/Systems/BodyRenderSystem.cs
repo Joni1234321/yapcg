@@ -36,10 +36,8 @@ namespace YAPCG.Application.Render.Systems
 
         protected override void OnUpdate()
         {
-#if UNITY_EDITOR
-            if (!EditorApplication.isPlaying && SystemAPI.GetSingleton<ApplicationSettings>().DisableBodyRender)
+            if (SystemAPI.GetSingleton<ApplicationSettings>().DisableBodyRender)
                 return;
-#endif
             // OPTIMIZATION: SET COMPONENT FLAG THAT WHENEVER ANOTHER OBJECT SPAWNS, THEN CHANGE COMMAND, OTHERWISE DONT
             RenderPlanets();
             RenderSuns();

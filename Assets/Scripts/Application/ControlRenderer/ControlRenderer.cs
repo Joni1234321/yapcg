@@ -22,16 +22,17 @@ namespace YAPCG.Application.ControlRenderer
         
         public void Draw(int n)
         {
+            if (_visible == n)
+                return;
+
             while (Controls.Count < n)
                 Grow();
             
-            if (_visible < n)
-                for (int i = _visible; i < n; i++)
-                    Controls[i].visible = true;
-            
-            else if (_visible > n)
-                for (int i = _visible; i < Controls.Count; i++)
-                    Controls[i].visible = false;
+            while (_visible < n)
+                Controls[_visible++].visible = true;
+
+            while (_visible > n)
+                Controls[--_visible].visible = false;
         }
 
         private void Grow()

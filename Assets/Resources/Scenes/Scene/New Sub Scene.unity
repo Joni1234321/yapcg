@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ApplicationSettings:
-    DisableUIRender: 0
+    DisableUIRender: 1
     DisableBodyRender: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
