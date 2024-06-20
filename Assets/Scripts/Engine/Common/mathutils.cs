@@ -37,7 +37,7 @@ namespace YAPCG.Engine.Common
         /// </summary>
         /// <param name="random"></param>
         /// <returns></returns>
-        public static float gauss_distribution(Random random)
+        public static float gauss_distribution(ref Random random)
         {
             // https://www.alanzucconi.com/2015/09/16/how-to-sample-from-a-gaussian-distribution/
             float v1, v2, s;
@@ -93,7 +93,7 @@ namespace YAPCG.Engine.Common
     public static class RandomExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float NextGauss(this Random random, float mu, float sigma) => mu + mathutils.gauss_distribution(random) * sigma;
+        public static float NextGauss(this ref Random random, float mu, float sigma) => mu + mathutils.gauss_distribution(ref random) * sigma;
 
         /// <summary>
         /// 68.0% mu +- sigma
@@ -102,7 +102,7 @@ namespace YAPCG.Engine.Common
         /// </summary>
         /// <returns>Gauss between [min, max]</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float NextGauss(this Random random, float mu, float sigma, float min, float max)
+        public static float NextGauss(this ref Random random, float mu, float sigma, float min, float max)
         {
             float x;
             do { x = random.NextGauss(mu, sigma); } while (x < min || x > max);

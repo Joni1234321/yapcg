@@ -225,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PressThisToUpdate: 0
   SolarSystemFactoryParams:
-    Planets: 34
+    Planets: 500
   HubFactoryParams: []
   DepositFactoryParams: []
 --- !u!1 &1765370262
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ApplicationSettings:
-    DisableUIRender: 1
+    DisableUIRender: 0
     DisableBodyRender: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
