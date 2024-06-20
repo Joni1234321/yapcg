@@ -2,6 +2,7 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 using YAPCG.Application.UserInterface.Components;
 using YAPCG.Domain.Common.Components;
@@ -13,7 +14,7 @@ using YAPCG.Resources.View.Custom.Util;
 
 namespace YAPCG.Application.UserInterface.Systems
 {
-    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
+    //[WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
     [UpdateInGroup(typeof(RenderSystemGroup))]
     public partial struct UserInterfaceRenderSystem : ISystem
     {
@@ -28,6 +29,13 @@ namespace YAPCG.Application.UserInterface.Systems
 
         public void OnUpdate(ref SystemState state)
         {
+#if UNITY_EDITOR
+            if (!EditorApplication.isPlaying && SystemAPI.GetSingleton<ApplicationSettings>().DisableUIRender)
+            {
+                HUD.Instance.WorldUserInterface.WorldPlanetControlRenderer.Draw(0); 
+                return;
+            }
+#endif
             EntityQuery bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, Body.Owner, ScaleComponent, DiscoverProgress, Name>().Build();
 
             Entity selected = SystemAPI.GetSingleton<FocusedBody>().Selected;

@@ -188,6 +188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1181414028}
+  - component: {fileID: 1181414029}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -210,6 +211,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1181414029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181414027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2115c95fb7144c3b759df74db6552f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PressThisToUpdate: 0
+  SolarSystemFactoryParams:
+    Planets: 34
+  HubFactoryParams: []
+  DepositFactoryParams: []
 --- !u!1 &1765370262
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +239,7 @@ GameObject:
   - component: {fileID: 1765370265}
   - component: {fileID: 1765370264}
   - component: {fileID: 1765370263}
+  - component: {fileID: 1765370266}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -277,6 +296,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1765370266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765370262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3c59ef6c234078bdbe08478584d044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ApplicationSettings:
+    DisableUIRender: 0
+    DisableBodyRender: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
