@@ -60,8 +60,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\FactoryUtility.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\CLogger.cs" />
-    <Compile Include="Assets\Scripts\Engine\DebugDrawer\DebugDrawer.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\SystemGroup.cs" />
+    <Compile Include="Assets\Scripts\Engine\DebugDrawer\DebugDrawer.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\SphereCollection.cs" />
     <Compile Include="Assets\Scripts\Engine\Render\RenderPositionOnlyTag.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Components\RequiredTimeTicks.cs" />
@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RaySphere.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Globals.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />
+    <Compile Include="Assets\Scripts\Engine\Common\DOTS\BurstDebug.cs" />
     <Compile Include="Assets\Scripts\Engine\DOTSExtension\SingletonUtilities.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Systems\GameTimeSystemGroup.cs" />
     <None Include="Assets\Scripts\Engine\Render\Shaders\PositionAnimationShader.shader" />

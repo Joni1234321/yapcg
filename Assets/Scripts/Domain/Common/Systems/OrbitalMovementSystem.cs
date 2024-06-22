@@ -34,11 +34,10 @@ namespace YAPCG.Domain.Common.Systems
 
             using (RENDER_ORBITS_MARKER.Auto())
             {
-                NativeArray<Body.Orbit> orbits = SystemAPI.QueryBuilder().WithAll<Body.Orbit>().Build()
-                    .ToComponentDataArray<Body.Orbit>(state.WorldUpdateAllocator);
-                NativeArray<float4x4> matricies1 = CollectionHelper.CreateNativeArray<float4x4>(orbits.Length, state.WorldUpdateAllocator,
-                    NativeArrayOptions.UninitializedMemory);
-                GetOrbitMatricies(new float3(0), orbits, ticksF, ref matricies1);
+                NativeArray<Body.Orbit> orbits = SystemAPI.QueryBuilder().WithAll<Body.Orbit>().Build().ToComponentDataArray<Body.Orbit>(state.WorldUpdateAllocator);
+                NativeArray<float4x4> matricies1 = CollectionHelper.CreateNativeArray<float4x4>(orbits.Length, state.WorldUpdateAllocator, NativeArrayOptions.UninitializedMemory);
+                float3 orbit = new float3(0);
+                GetOrbitMatricies(in orbit, in orbits, in ticksF, ref matricies1); 
             }
         }
 
@@ -52,11 +51,11 @@ namespace YAPCG.Domain.Common.Systems
             return b;
         }
         
-        [BurstCompile(FloatMode = FloatMode.Fast,FloatPrecision = FloatPrecision.Low,CompileSynchronously = true)]
-        public static void GetOrbitMatricies(in float3 orbitposition, in NativeArray<Body.Orbit> orbits, float ticksF, ref NativeArray<float4x4> matricies)
+        [BurstCompile]
+        public static void GetOrbitMatricies(in float3 orbitposition, in NativeArray<Body.Orbit> orbits, in float ticksF, ref NativeArray<float4x4> matricies)
         {
             const float MULTIPLIER = consts.DISTANCE_MULTIPLIER * 2 / 0.9f; // 0.9f = shader diameter
-
+ 
             if (IsBurst())
                 Debug.Log("True");
             else

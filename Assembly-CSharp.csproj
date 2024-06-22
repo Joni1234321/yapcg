@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="Assets\Resources\View\world.uxml" />
+    <None Include="Packages\com.singularitygroup.hotreload\package.json" />
     <None Include="Assets\Resources\View\main.uss" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
