@@ -116,7 +116,7 @@ namespace YAPCG.Application.Render.Systems
             RenderParams renderParams = new RenderParams(material)
                 { worldBounds = new Bounds(float3.zero, new float3(1000)) };
 
-//using (RENDER_ORBITS_MARKER.Auto())
+            using (RENDER_ORBITS_MARKER.Auto())
             {
                 NativeArray<Body.Orbit> orbits = _orbitQuery.ToComponentDataArray<Body.Orbit>(WorldUpdateAllocator);
                 NativeArray<Position> positions = _orbitQuery.ToComponentDataArray<Position>(WorldUpdateAllocator);
@@ -127,6 +127,9 @@ namespace YAPCG.Application.Render.Systems
     Graphics.RenderMeshInstanced(renderParams, mesh, 0, matricies1.Reinterpret<Matrix4x4>());
 #else
                 Matrix4x4[] matricies = GetOrbitMatricies(new float3(0), orbits, positions, ticksF);
+                if (matricies.Length == 0) 
+                    return;
+
                 Graphics.RenderMeshInstanced(renderParams, mesh, 0, matricies);
 #endif
             }
@@ -159,6 +162,7 @@ namespace YAPCG.Application.Render.Systems
         }
 
 
+        private static readonly quaternion ADDITIONAL_ROTATION = quaternion.Euler(math.PIHALF, 0, math.PI);
         Matrix4x4[] GetOrbitMatricies(float3 orbitposition, NativeArray<Body.Orbit> orbits,
             NativeArray<Position> positions, float ticksF)
         {
@@ -168,16 +172,13 @@ namespace YAPCG.Application.Render.Systems
             for (int i = 0; i < n; i++)
             {
                 Body.Orbit orbit = orbits[i];
-                float meanAnomaly =
-                    EllipseMechanics.CalculateMeanAnomaly(orbit.Period.Days, orbit.PeriodOffsetTicksF, ticksF);
+#if TRUE
+                float meanAnomaly = EllipseMechanics.CalculateMeanAnomaly(orbit.Period.Days, orbit.PeriodOffsetTicksF, ticksF);
                 float trueAnomaly = EllipseMechanics.MeanAnomalyToTrueAnomaly(meanAnomaly, orbit.Eccentricity);
-#if FALSE
-    quaternion rotation1 = quaternion.LookRotation(positions[i].Value, new float3(0, 1, 0));
+                quaternion rotation = quaternion.Euler(math.PIHALF, 0, math.PIHALF + trueAnomaly);
 #else
-                quaternion rotation1 = quaternion.Euler(math.PIHALF, 0, math.PIHALF + trueAnomaly);
                 quaternion lookRotation = quaternion.LookRotation(positions[i].Value, new float3(0, 1, 0));
-                quaternion additionalRotation = quaternion.Euler(math.PIHALF, 0, math.PI);
-                quaternion rotation = math.mul(lookRotation, additionalRotation);
+                quaternion rotation = math.mul(lookRotation, ADDITIONAL_ROTATION);
 #endif
                 const float MULTIPLIER = consts.DISTANCE_MULTIPLIER * 2 / 0.9f; // 0.9f = shader diameter
                 float scale = orbit.AU * MULTIPLIER;
