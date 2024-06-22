@@ -14,9 +14,7 @@ namespace YAPCG.Engine.Common
                 Info = "Info";
         }
 
-        [BurstDiscard]
         public static void LogLoading(Object c, string m, params object[] o) => Log(LogType.Log, c, Prefixes.Loading, m, o);
-        [BurstDiscard]
         public static void LogLoaded(Object c, string m, params object[] o) => Log(LogType.Log, c, Prefixes.Loaded, m, o);
 
         
@@ -36,9 +34,7 @@ namespace YAPCG.Engine.Common
         private static string FormatMessage(string prefix, string message) => $"[{prefix}] {message}";
         
 
-        [BurstDiscard]
         private static void Log (LogType type, string prefix, string message, params object[] objects) => Debug.LogFormat(type, LogOption.None, null, FormatMessage(prefix, message), objects);
-        [BurstDiscard]
         private static void Log (LogType type, Object context, string prefix, string message, params object[] objects) => Debug.LogFormat(type, LogOption.None, context, FormatMessage(prefix, message), objects);
         #endregion
 

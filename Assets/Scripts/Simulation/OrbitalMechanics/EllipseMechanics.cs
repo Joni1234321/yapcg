@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 
 namespace YAPCG.Simulation.OrbitalMechanics
 {
@@ -129,6 +130,7 @@ namespace YAPCG.Simulation.OrbitalMechanics
         /// <param name="periodTicks"></param>
         /// <param name="offsetPeriodTicks"></param>
         /// <param name="ticksF"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float CalculateMeanAnomaly(float periodTicks, float offsetPeriodTicks, float ticksF)
         {
             float percentage = (ticksF - offsetPeriodTicks) / periodTicks;

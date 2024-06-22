@@ -8,7 +8,6 @@ namespace YAPCG.Engine.DebugDrawer
 {
     public static class DebugDrawer
     {
-        [BurstDiscard]
         public static void DrawTriangles(TriangleCollection triangles)
         {
             int n = triangles.Positions.Length / 3;
@@ -23,7 +22,6 @@ namespace YAPCG.Engine.DebugDrawer
             }
         }
 
-        [BurstDiscard]
         public static void DrawRaycastHit(Raycast.ray ray, Raycast.hit hit, Color color = default)
         {
             if (color == default)

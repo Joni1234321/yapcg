@@ -42,7 +42,6 @@ namespace YAPCG.Application.Render.Systems
             _alternativeColorRatios.Dispose();
         }
 
-        [BurstDiscard]
         private void RenderHubs()
         {
             var meshes = SystemAPI.GetSingleton<MeshesSingleton>();

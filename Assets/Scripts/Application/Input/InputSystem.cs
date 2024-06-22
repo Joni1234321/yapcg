@@ -16,7 +16,6 @@ namespace YAPCG.Application.Input
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            state.EntityManager.CreateSingleton<MouseInput>();
             state.EntityManager.CreateSingleton<ActionInput>();
             state.EntityManager.CreateSingleton<SharedRays>();
             state.RequireForUpdate<HUD.HUDReady>();
@@ -24,11 +23,6 @@ namespace YAPCG.Application.Input
 
         public void OnUpdate(ref SystemState state)
         {
-            SystemAPI.SetSingleton(new MouseInput
-            {
-                Left = Mouse.current.leftButton.wasPressedThisFrame
-            });
-
             bool mouseOverUI = HUD.Instance.IsOverUserInterface(Mouse.current.position.value);
             
             SystemAPI.SetSingleton(new ActionInput
@@ -47,7 +41,6 @@ namespace YAPCG.Application.Input
             SetCameraRay();
         }
 
-        [BurstDiscard]
         void SetCameraRay()
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.value);

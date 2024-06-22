@@ -95,7 +95,7 @@ namespace YAPCG.Domain.Common.Systems
         unsafe void Execute(ref Labor labor, ref LaborExtras extras)
         {
             float growth = Random->NextFloat(MinGrowth, MaxGrowth);
-            float housing = mathutils.tanh_diff((float)labor.Population / labor.Ceiling);
+            float housing = randomutils.tanh_diff((float)labor.Population / labor.Ceiling);
             
             extras.HousingModifier = housing;
             extras.LaborDifference = (long)math.ceil(labor.Population * growth * housing);

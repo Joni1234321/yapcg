@@ -179,55 +179,6 @@ MonoBehaviour:
     mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   sharedSizes:
     HubRadius: 2
---- !u!1 &1181414027
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1181414028}
-  - component: {fileID: 1181414029}
-  m_Layer: 0
-  m_Name: Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1181414028
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181414027}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1181414029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181414027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2115c95fb7144c3b759df74db6552f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PressThisToUpdate: 0
-  SolarSystemFactoryParams:
-    Planets: 500
-  HubFactoryParams: []
-  DepositFactoryParams: []
 --- !u!1 &1765370262
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +191,7 @@ GameObject:
   - component: {fileID: 1765370264}
   - component: {fileID: 1765370263}
   - component: {fileID: 1765370266}
+  - component: {fileID: 1765370267}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -309,12 +261,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ApplicationSettings:
-    DisableUIRender: 0
+    DisableUIRender: 1
     DisableBodyRender: 0
+--- !u!114 &1765370267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765370262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2115c95fb7144c3b759df74db6552f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PressThisToUpdate: 0
+  SolarSystemFactoryParams:
+    Planets: 5000
+  HubFactoryParams: []
+  DepositFactoryParams: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1119058871}
   - {fileID: 1765370265}
-  - {fileID: 1181414028}

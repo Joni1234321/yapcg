@@ -15,7 +15,7 @@ namespace YAPCG.Simulation.OrbitalMechanics
         public static float3 CalculatePositionOnOrbit(OrbitData orbitData, float trueAnomaly)
         {
             float2 point = EllipseMechanics.GetPoint(orbitData.SemiMajorAxis, orbitData.SemiMinorAxis, trueAnomaly);
-            float2 rotated = mathutils.rotate(point, orbitData.Rotation);
+            float2 rotated = randomutils.rotate(point, orbitData.Rotation);
 
             return new float3(rotated + orbitData.Center, 0).xzy;
         }

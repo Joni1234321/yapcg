@@ -68,7 +68,7 @@
     <Compile Include="Assets\Scripts\Engine\Components\Position.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RayTriangle.cs" />
     <Compile Include="Assets\Scripts\Engine\SystemGroups\RenderSystemGroup.cs" />
-    <Compile Include="Assets\Scripts\Engine\Input\MouseInput.cs" />
+    <Compile Include="Assets\Scripts\Engine\Common\randomutils.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\NameExtensions.cs" />
     <Compile Include="Assets\Scripts\Engine\Input\InputSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Time\Systems\TickWeeklyGroup.cs" />
@@ -85,7 +85,6 @@
     <Compile Include="Assets\Scripts\Engine\SystemGroups\SpawningSystemGroup.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Factory\IFactoryParams.cs" />
     <Compile Include="Assets\Scripts\Engine\Components\UnityComponents.cs" />
-    <Compile Include="Assets\Scripts\Engine\Common\mathutils.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\RaySphere.cs" />
     <Compile Include="Assets\Scripts\Engine\Common\DOTS\Globals.cs" />
     <Compile Include="Assets\Scripts\Engine\Physics\Collisions\Raycast.cs" />
