@@ -71,3 +71,8 @@ crashlytics-build.properties
 [Aa]ssets[Ss]treamingAssetsaa.meta
 [Aa]ssets[Ss]treamingAssetsaa
 
+
+com.singularitygroup.hotreload
+**/SingularityGroup.HotReload.Editor.csproj
+**/SingularityGroup.HotReload.Runtime.csproj
+**/SingularityGroup.HotReload.Runtime.Public.csproj
