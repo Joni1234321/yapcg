@@ -2,6 +2,7 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Profiling;
 using UnityEditor;
 using UnityEngine;
 using YAPCG.Application.UserInterface;
@@ -21,7 +22,7 @@ namespace YAPCG.Application.Render.Systems
     {
         private EntityQuery _planetQuery, _sunQuery, _orbitQuery;
         private RenderUtils.PositionScaleAlternativeMaterialRender _planetRenderer, _sunRenderer;
-        [BurstCompile]
+
         protected override void OnCreate()
         {
             _planetQuery = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.PlanetTag>().Build();
@@ -44,15 +45,13 @@ namespace YAPCG.Application.Render.Systems
             RenderOrbits();
         }
 
-        
-        [BurstCompile]
+
         protected override void OnDestroy()
         {
             _planetRenderer.Dispose();
             _sunRenderer.Dispose();
         }
 
-        [BurstDiscard]
         private void RenderPlanets()
         {
             var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
@@ -71,7 +70,6 @@ namespace YAPCG.Application.Render.Systems
         }
         
         
-        [BurstDiscard]
         private void RenderSuns()
         {
             var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
@@ -88,8 +86,9 @@ namespace YAPCG.Application.Render.Systems
 
             _sunRenderer.Render(_sunQuery, meshes.Sun.Mesh.Result, meshes.Sun.Material.Result, WorldUpdateAllocator);
         }
+        private static readonly ProfilerMarker RENDER_ORBITS_MARKER = new ("Render Orbits");
 
-        [BurstDiscard]
+
         private void RenderOrbits()
         {
             var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
@@ -108,14 +107,54 @@ namespace YAPCG.Application.Render.Systems
             Mesh mesh = meshes.Orbit.Mesh.Result;
             Material material = meshes.Orbit.Material.Result;
             RenderParams renderParams = new RenderParams(material) { worldBounds = new Bounds(float3.zero, new float3(1000))};
+            using (RENDER_ORBITS_MARKER.Auto())
+            {
+                NativeArray<Body.Orbit> orbits = _orbitQuery.ToComponentDataArray<Body.Orbit>(WorldUpdateAllocator);
+#if FALSE   
+                NativeArray<float4x4> matricies1 = new NativeArray<float4x4>(orbits.Length, Allocator.Temp, NativeArrayOptions.UninitializedMemory);
+                GetOrbitMatricies(new float3(0), orbits, ticksF, matricies1);
+                Graphics.RenderMeshInstanced(renderParams, mesh, 0, matricies1.Reinterpret<Matrix4x4>());
+                #else
+                Matrix4x4[] matricies = GetOrbitMatricies(new float3(0), orbits, ticksF);
+                Graphics.RenderMeshInstanced(renderParams, mesh, 0, matricies);
+#endif
 
-            NativeArray<Body.Orbit> orbits = _orbitQuery.ToComponentDataArray<Body.Orbit>(Allocator.Temp);
-            Matrix4x4[] matricies = GetOrbitMatricies(new float3(0), orbits, ticksF);
-
-            foreach (var matrix in matricies)
-                Graphics.RenderMesh(renderParams, mesh, 0, matrix);
+            }
         }
+        [BurstDiscard]
+        private static void SetIfManaged(ref bool b) => b = false;
 
+        private static bool IsBurst()
+        {
+            var b = true;
+            SetIfManaged(ref b);
+            return b;
+        }
+        
+        [BurstCompile(FloatMode = FloatMode.Fast,FloatPrecision = FloatPrecision.Low,CompileSynchronously = true)]
+        public static void GetOrbitMatricies(float3 orbitposition, NativeArray<Body.Orbit> orbits, float ticksF, NativeArray<float4x4> matricies)
+        {
+            const float MULTIPLIER = consts.DISTANCE_MULTIPLIER * 2 / 0.9f; // 0.9f = shader diameter
+
+            if (IsBurst())
+                Debug.Log("True");
+            else
+                Debug.Log("False");
+            
+            int n = orbits.Length;
+            for (int i = 0; i < n; i++)
+            {
+                Body.Orbit orbit = orbits[i];
+                float meanAnomaly = EllipseMechanics.CalculateMeanAnomaly(orbit.Period.Days, orbit.PeriodOffsetTicksF, ticksF);
+                float trueAnomaly = EllipseMechanics.MeanAnomalyToTrueAnomaly(meanAnomaly, orbit.Eccentricity);
+
+                quaternion rotation = quaternion.Euler(math.PIHALF, 0, math.PIHALF + trueAnomaly);
+                float scale = orbit.AU * MULTIPLIER;
+                matricies[i] = float4x4.TRS(orbitposition, rotation, new float3(scale));
+            }
+        }
+        
+        
         Matrix4x4[] GetOrbitMatricies(float3 orbitposition, NativeArray<Body.Orbit> orbits, float ticksF)
         {
             int n = orbits.Length;
@@ -127,15 +166,23 @@ namespace YAPCG.Application.Render.Systems
                 float meanAnomaly = EllipseMechanics.CalculateMeanAnomaly(orbit.Period.Days, orbit.PeriodOffsetTicksF, ticksF);
                 float trueAnomaly = EllipseMechanics.MeanAnomalyToTrueAnomaly(meanAnomaly, orbit.Eccentricity);
 
-                Quaternion rotation = Quaternion.Euler(90, 0, (math.PIHALF + trueAnomaly) * math.TODEGREES);
+                quaternion rotation = quaternion.Euler(math.PIHALF, 0, math.PIHALF + trueAnomaly);
                 const float MULTIPLIER = consts.DISTANCE_MULTIPLIER * 2 / 0.9f; // 0.9f = shader diameter
                 float scale = orbit.AU * MULTIPLIER;
                 matricies[i] = Matrix4x4.TRS(orbitposition, rotation, new float3(scale));
             }
 
             return matricies;
-
         }
-
+        /*
+        [BurstCompile]
+        public partial struct OrbitMatricesJob : IJobEntity
+        {
+            [WriteOnly][NativeDisableParallelForRestriction] public NativeArray<float4x4> Matricies;    
+            public void Execute(int i, in Body.Orbit orbit)
+            {
+                
+            }
+        }*/
     }
 }

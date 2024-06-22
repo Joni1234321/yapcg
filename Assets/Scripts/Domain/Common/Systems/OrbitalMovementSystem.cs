@@ -2,6 +2,8 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Profiling;
+using UnityEngine;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
@@ -19,6 +21,7 @@ namespace YAPCG.Domain.Common.Systems
         {
             state.RequireForUpdate<Tick>();
         }
+        private static readonly ProfilerMarker RENDER_ORBITS_MARKER = new ("Render Orbits FAST");
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
@@ -28,8 +31,50 @@ namespace YAPCG.Domain.Common.Systems
             {
                 TicksF = ticksF
             }.Run();
+
+            using (RENDER_ORBITS_MARKER.Auto())
+            {
+                NativeArray<Body.Orbit> orbits = SystemAPI.QueryBuilder().WithAll<Body.Orbit>().Build()
+                    .ToComponentDataArray<Body.Orbit>(state.WorldUpdateAllocator);
+                NativeArray<float4x4> matricies1 = CollectionHelper.CreateNativeArray<float4x4>(orbits.Length, state.WorldUpdateAllocator,
+                    NativeArrayOptions.UninitializedMemory);
+                GetOrbitMatricies(new float3(0), orbits, ticksF, ref matricies1);
+            }
         }
 
+        [BurstDiscard]
+        private static void SetIfManaged(ref bool b) => b = false;
+
+        private static bool IsBurst()
+        {
+            var b = true;
+            SetIfManaged(ref b);
+            return b;
+        }
+        
+        [BurstCompile(FloatMode = FloatMode.Fast,FloatPrecision = FloatPrecision.Low,CompileSynchronously = true)]
+        public static void GetOrbitMatricies(in float3 orbitposition, in NativeArray<Body.Orbit> orbits, float ticksF, ref NativeArray<float4x4> matricies)
+        {
+            const float MULTIPLIER = consts.DISTANCE_MULTIPLIER * 2 / 0.9f; // 0.9f = shader diameter
+
+            if (IsBurst())
+                Debug.Log("True");
+            else
+                Debug.Log("False");
+            
+            int n = orbits.Length;
+            for (int i = 0; i < n; i++)
+            {
+                Body.Orbit orbit = orbits[i];
+                float meanAnomaly = EllipseMechanics.CalculateMeanAnomaly(orbit.Period.Days, orbit.PeriodOffsetTicksF, ticksF);
+                float trueAnomaly = EllipseMechanics.MeanAnomalyToTrueAnomaly(meanAnomaly, orbit.Eccentricity);
+ 
+                quaternion rotation = quaternion.Euler(math.PIHALF, 0, math.PIHALF + trueAnomaly);
+                float scale = orbit.AU * MULTIPLIER;
+                matricies[i] = float4x4.TRS(orbitposition, rotation, new float3(scale));
+            }
+        }
+        
         [BurstCompile]
         partial struct OrbitMovement : IJobEntity
         {
