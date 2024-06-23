@@ -12,6 +12,7 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
     {
         public void Setup(ref SystemState state)
         {
+            state.RequireForUpdate<FactoryUtility.FactoryReadyTag>();
         }
 
         public void Spawn(ref EntityCommandBuffer ecb, ref SystemState state, ref Random random)

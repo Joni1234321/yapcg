@@ -8,13 +8,14 @@ namespace YAPCG.Engine.Common.DOTS.Factory
     public static class FactoryUtility
     {
         public static Entity FactoryEntity = Entity.Null;
-
+        public struct FactoryReadyTag : IComponentData {}
         public static DynamicBuffer<T> InitFactory<T>(this EntityManager _)
             where T : unmanaged, IFactoryParams
         {
             if (!_.Exists(FactoryEntity))
             {
                 FactoryEntity = _.CreateEntity();
+                _.AddComponent<FactoryReadyTag>(FactoryEntity);
                 _.SetName(FactoryEntity, "Factory Entity");
             }
             return _.AddBuffer<T>(FactoryEntity);
