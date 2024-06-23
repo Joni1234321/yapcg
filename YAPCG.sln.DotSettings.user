@@ -4,6 +4,7 @@
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/FiltersState/=SpellingFilter/@EntryIndexedValue">On</s:String>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Active\Unity\YAPCG\Library\ScriptAssemblies\YAPCG.Engine.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Active\Unity\YAPCG\Library\PackageCache\com.unity.ext.nunit\net40\unity-custom\nunit.framework.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	
 	

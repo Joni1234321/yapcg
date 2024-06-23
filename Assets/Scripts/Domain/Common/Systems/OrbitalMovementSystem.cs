@@ -67,7 +67,6 @@ namespace YAPCG.Domain.Common.Systems
                 Body.Orbit orbit = orbits[i];
                 float meanAnomaly = EllipseMechanics.CalculateMeanAnomaly(orbit.Period.Days, orbit.PeriodOffsetTicksF, ticksF);
                 float trueAnomaly = EllipseMechanics.MeanAnomalyToTrueAnomaly(meanAnomaly, orbit.Eccentricity);
- 
                 quaternion rotation = quaternion.Euler(math.PIHALF, 0, math.PIHALF + trueAnomaly);
                 float scale = orbit.AU * MULTIPLIER;
                 matricies[i] = float4x4.TRS(orbitposition, rotation, new float3(scale));

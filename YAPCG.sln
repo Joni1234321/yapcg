@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingularityGroup.HotReload.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Engine.Editor", "YAPCG.Engine.Editor.csproj", "{b0470047-00cd-a72c-103f-c5e59d632e07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Benchmarks.Test", "YAPCG.Benchmarks.Test.csproj", "{14386e3f-e666-459d-dc7a-e71676284efa}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAPCG.Resources.View.Custom", "YAPCG.Resources.View.Custom.csproj", "{2f569eb6-9cbd-7395-1f5d-263c82b42378}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}"
@@ -46,6 +48,8 @@ Global
 		{e99a78fb-244e-7345-86e3-a3752b6779fa}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{b0470047-00cd-a72c-103f-c5e59d632e07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{b0470047-00cd-a72c-103f-c5e59d632e07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14386e3f-e666-459d-dc7a-e71676284efa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14386e3f-e666-459d-dc7a-e71676284efa}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2f569eb6-9cbd-7395-1f5d-263c82b42378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2f569eb6-9cbd-7395-1f5d-263c82b42378}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3bf7ac5b-c84a-faf3-f7a2-b96c778d1b6c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

@@ -1,0 +1,21 @@
+{
+    "rootNamespace": "YAPCG",
+    "references": [
+        "Unity.PerformanceTesting",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Entities",
+        "UnityEngine",
+        "Unity.Mathematics",
+        "YAPCG.Domain",
+        "YAPCG.Simulation",
+        "YAPCG.Engine"
+    ],
+    "name": "YAPCG.Benchmarks.Test",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}
