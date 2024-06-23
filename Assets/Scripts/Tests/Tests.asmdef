@@ -1,0 +1,9 @@
+{
+    "references": [
+        "Unity.PerformanceTesting"
+    ],
+    "name": "Tests",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}
