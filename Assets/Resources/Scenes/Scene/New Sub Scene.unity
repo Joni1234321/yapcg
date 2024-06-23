@@ -163,20 +163,140 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deposit:
-    material: {fileID: 2100000, guid: 39def2a9befff614faec4598cb713e69, type: 2}
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    Mesh:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 10202
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 0
+              y: 0
+              z: 14
+              w: 0
+          IdentifierType: 4
+        GenerationType: 1
+    Material:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 2100000
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 2586832275
+              y: 1097859051
+              z: 2304036527
+              w: 2531465148
+          IdentifierType: 3
+        GenerationType: 1
   hub:
-    material: {fileID: 2100000, guid: 04ad5ed2d9111624e823ee2f3f69f2d2, type: 2}
-    mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+    Mesh:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 10208
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 0
+              y: 0
+              z: 14
+              w: 0
+          IdentifierType: 4
+        GenerationType: 1
+    Material:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 2100000
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 770038336
+              y: 1113657757
+              z: 4075696782
+              w: 758093555
+          IdentifierType: 3
+        GenerationType: 1
   body:
-    material: {fileID: 2100000, guid: e8e4d7b5ac78e524ca37270a10f2b948, type: 2}
-    mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    Mesh:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 10207
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 0
+              y: 0
+              z: 14
+              w: 0
+          IdentifierType: 4
+        GenerationType: 1
+    Material:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 2100000
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 1534938766
+              y: 1113491402
+              z: 2691855276
+              w: 2224762625
+          IdentifierType: 3
+        GenerationType: 1
   sun:
-    material: {fileID: 2100000, guid: 34ea18ec737bf3846aa6cd2d29cf6148, type: 2}
-    mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    Mesh:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 10207
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 0
+              y: 0
+              z: 14
+              w: 0
+          IdentifierType: 4
+        GenerationType: 1
+    Material:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 2100000
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 3464605251
+              y: 1212135223
+              z: 3537660582
+              w: 2216098962
+          IdentifierType: 3
+        GenerationType: 1
   orbit:
-    material: {fileID: 2100000, guid: 887b36e385138b74795a007947fc9df2, type: 2}
-    mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+    Mesh:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 10210
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 0
+              y: 0
+              z: 14
+              w: 0
+          IdentifierType: 4
+        GenerationType: 1
+    Material:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 2100000
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 1046722440
+              y: 1203253592
+              z: 2533402007
+              w: 802803572
+          IdentifierType: 3
+        GenerationType: 1
   sharedSizes:
     HubRadius: 2
 --- !u!1 &1765370262

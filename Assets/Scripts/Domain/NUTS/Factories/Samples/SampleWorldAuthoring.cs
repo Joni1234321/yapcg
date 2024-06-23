@@ -28,6 +28,7 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
             {
                 EntityManager _ = World.DefaultGameObjectInjectionWorld.EntityManager;
 
+                #if UNITY_EDITOR
                 if (!EditorApplication.isPlaying && !authoring.PressThisToUpdate)
                 {
                     _.InitFactory<Factories.SolarSystemFactoryParams>();
@@ -35,6 +36,7 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
                     _.InitFactory<Deposit.DepositFactoryParams>();
                     return;
                 }
+                #endif
                 
                 authoring.PressThisToUpdate = false;
                 Entity e = GetEntity(TransformUsageFlags.None);

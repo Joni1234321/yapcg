@@ -1,9 +1,10 @@
 {
     "name": "YAPCG.Engine.Editor",
     "rootNamespace": "YAPCG",
-    "references": [
+    "references": [],
+    "includePlatforms": [
+        "Editor"
     ],
-    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

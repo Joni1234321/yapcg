@@ -1,13 +1,12 @@
 using System.Collections;
 using NUnit.Framework;
 using Unity.PerformanceTesting;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-namespace YAPCG
+namespace YAPCG.Benchmarks.Test
 {
-    public class RuntimerTest
+    public class RuntimeTest
     {
         // A Test behaves as an ordinary method
         [Test]
@@ -27,7 +26,7 @@ namespace YAPCG
         }
         
         [UnityTest, Performance]
-        public IEnumerator Rendering_SampleScene()
+        public IEnumerator Rendering_SampleScene2()
         {
             using(Measure.Scope("LoadScene"))
             {
@@ -36,7 +35,7 @@ namespace YAPCG
             }
             yield return null;
 
-            yield return Measure.Frames().Run();
+            yield return Measure.Frames().MeasurementCount(1000).Run();
         }
     }
 }

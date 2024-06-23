@@ -1,4 +1,5 @@
 {
+    "name": "YAPCG.Benchmarks.Test",
     "rootNamespace": "YAPCG",
     "references": [
         "Unity.PerformanceTesting",
@@ -8,13 +9,21 @@
         "Unity.Mathematics",
         "YAPCG.Domain",
         "YAPCG.Simulation",
-        "YAPCG.Engine"
+        "YAPCG.Engine",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
     ],
-    "name": "YAPCG.Benchmarks.Test",
-    "optionalUnityReferences": [
-        "TestAssemblies"
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
     ],
-    "includePlatforms": [
-        "Editor"
-    ]
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
