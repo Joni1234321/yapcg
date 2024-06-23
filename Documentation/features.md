@@ -5,6 +5,7 @@ The game is a tickbased planet simulator where each planet gains point every tic
 - Fast rendering using indirect rendering
 - UI systems using Unity Toolkit
 - Calculated with Unity DOTS ECS
+- Benchmark tests, that will measure performance of methods and application.
 
 # Architecture
 This section describes the Projects in this system and how they interact with each other 
@@ -19,6 +20,8 @@ The **Engine** shares commonly used tools that are not domain specific. Such as 
 
 ![architecture](diagrams/architecture.png | width=300px)
 
+## Other projects
+The **Benchmark.Test** contains performance tests of methods and applications, so the method of recording is streamlined between iterations, and performance of the application can be compared.
 
 ## Engine
 - Physics spherecollider
@@ -36,14 +39,4 @@ The **Engine** shares commonly used tools that are not domain specific. Such as 
 - Orbitalmechanics
 - Ellipsemechanics, math related to ellipse 
 - Circlemechanics, math releated to circles
-
-
-## Known bottlenecks
-5k - only bodies 15 ms
-
-Update 5.71, Orbits 5.46, Bodies 0.13  
-In orbits
-3.00 - 5.00 GetOrbitMatricies
-0.92 Rendermesh
-The RenderMeshInstanced got it down to 0.01 ms
 

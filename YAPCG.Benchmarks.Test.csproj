@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Benchmarks.Test\NewTestScript.cs" />
     <Compile Include="Assets\Scripts\Benchmarks.Test\OrbitObjectMatrix.cs" />
+    <Compile Include="Assets\Scripts\Benchmarks.Test\NewTestScript2.cs" />
+    <Compile Include="Assets\Scripts\Benchmarks.Test\NewTestScript1.cs" />
     <None Include="Assets\Scripts\Benchmarks.Test\YAPCG.Benchmarks.Test.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

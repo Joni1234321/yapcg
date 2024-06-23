@@ -3,6 +3,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.PerformanceTesting;
 using Unity.Mathematics;
+using Unity.Profiling;
 using UnityEngine;
 using YAPCG.Domain;
 using YAPCG.Domain.NUTS;
@@ -16,10 +17,14 @@ namespace YAPCG.Benchmarks.Test
     public class OrbitObjectMatrix : MonoBehaviour
     {
         private const int N = 5000;
+        private float[] anomalies = new float[N];
         private Body.Orbit[] orbits = new Body.Orbit[N];
         private Position[] positions = new Position[N];
         private float ticksF;
-        private static readonly quaternion ADDITIONAL_ROTATION = quaternion.Euler(math.PIHALF, 0, math.PI);
+        private SampleGroup sg = new SampleGroup("Name", SampleUnit.Microsecond);
+
+        private static readonly float3 ROTATION_ANGLE = new float3(math.PIHALF, 0, math.PI);
+        private static readonly quaternion ADDITIONAL_ROTATION = quaternion.Euler(ROTATION_ANGLE);
 
         [SetUp]
         public void SetUp()
@@ -36,6 +41,7 @@ namespace YAPCG.Benchmarks.Test
                     Period = new SiTime(3_556_952 * i)
                 };
                 positions[i] = new Position() { Value = new float3(0, i, 2*i)};
+                anomalies[i] = i * 2 / math.PI;
             }
         }
         
@@ -46,16 +52,27 @@ namespace YAPCG.Benchmarks.Test
             Measure.Method(() =>
                 {
                     for (int i = 0; i < orbits.Length; i++)
-                        OrbitToMatrixLookAt(positions[i], orbits[i], ticksF);
+                        OrbitToMatrixLookAt(positions[i], orbits[i]);
                 })
                 .WarmupCount(20)
                 .MeasurementCount(100)
+                .SampleGroup(sg)
+                .Run();
+            Measure.Method(() =>
+                {
+                    for (int i = 0; i < orbits.Length; i++)
+                        OrbitToMatrixLookAtFast(positions[i], orbits[i]);
+                })
+                .WarmupCount(20)
+                .MeasurementCount(100)
+                .SampleGroup(sg)
                 .Run();
         }
         [Test, Performance]
         public void Rotation_Anomaly_Calculation()
         {
-
+            var sgMarker = new ProfilerMarker("Hej med dig");
+                
             Measure.Method(() =>
                 {
                     for (int i = 0; i < orbits.Length; i++)
@@ -63,13 +80,66 @@ namespace YAPCG.Benchmarks.Test
                 })
                 .WarmupCount(20)
                 .MeasurementCount(100)
+                .SampleGroup(sg)
+                .ProfilerMarkers("fish")
+                .Run();
+            Measure.Method(() =>
+                {
+                    for (int i = 0; i < orbits.Length; i++)
+                        OrbitToMatrixAnomaly(orbits[i], ticksF * 2);
+                })
+                .WarmupCount(20)
+                .MeasurementCount(100)
+                .SampleGroup(sg)
+                .ProfilerMarkers("fish")
+
+                .Run();
+            Measure.Method(() =>
+                {
+                    for (int i = 0; i < orbits.Length; i++)
+                        OrbitToMatrixAnomaly(orbits[i], 2);
+                })
+                .WarmupCount(20)
+                .MeasurementCount(100)
+                .SampleGroup(sg)
+                .ProfilerMarkers("fish")
+
+                .Run();
+        }
+        
+        [Test, Performance]
+        public void Rotation_WithGivenAnomaly_Calculation()
+        {
+
+            Measure.Method(() =>
+                {
+                    for (int i = 0; i < orbits.Length; i++)
+                    {
+                        float scale = orbits[i].AU * MULTIPLIER;
+                        quaternion rotation = quaternion.Euler(ROTATION_ANGLE + new float3(anomalies[i]));
+                        float4x4.TRS(new float3(0), rotation, new float3(scale));
+                    }
+                })
+                .WarmupCount(20)
+                .MeasurementCount(100)
+                .SampleGroup(sg)
+
                 .Run();
         }
         
         const float MULTIPLIER = 4;
 
         [BurstCompile]
-        public static Matrix4x4 OrbitToMatrixLookAt(Position position, Body.Orbit orbit, float ticksF)
+        public static Matrix4x4 OrbitToMatrixLookAt(Position position, Body.Orbit orbit)
+        {
+            quaternion lookRotation = quaternion.LookRotation(position.Value, new float3(0, 1, 0));
+            quaternion rotation = math.mul(lookRotation, ADDITIONAL_ROTATION);
+            float scale = orbit.AU * MULTIPLIER;
+            return float4x4.TRS(new float3(0), rotation, new float3(scale));
+        } 
+        
+        [BurstCompile]
+        public static float4x4 OrbitToMatrixLookAtFast(Position position, Body.Orbit orbit)
         {
             quaternion lookRotation = quaternion.LookRotation(position.Value, new float3(0, 1, 0));
             quaternion rotation = math.mul(lookRotation, ADDITIONAL_ROTATION);

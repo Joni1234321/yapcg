@@ -55,11 +55,6 @@ namespace YAPCG.Domain.Common.Systems
         public static void GetOrbitMatricies(in float3 orbitposition, in NativeArray<Body.Orbit> orbits, in float ticksF, ref NativeArray<float4x4> matricies)
         {
             const float MULTIPLIER = consts.DISTANCE_MULTIPLIER * 2 / 0.9f; // 0.9f = shader diameter
- 
-            if (IsBurst())
-                Debug.Log("True");
-            else
-                Debug.Log("False");
             
             int n = orbits.Length;
             for (int i = 0; i < n; i++)
