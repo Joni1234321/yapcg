@@ -51,6 +51,7 @@ namespace YAPCG.Domain.NUTS.Factories
             
             // Render
             _.AddComponent(e, new Position { Value = new float3(0) });
+            _.AddComponent(e, new Body.TrueAnomaly { Value = 0 });
             _.AddComponent(e, new ScaleComponent { Value = earthRadius / 20f });
             _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
             _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
@@ -114,6 +115,7 @@ namespace YAPCG.Domain.NUTS.Factories
             
             // Render
             _.AddComponent(e, new Position { Value = new float3(au, 0, 0) });
+            _.AddComponent(e, new Body.TrueAnomaly { Value = 0 });
             _.AddComponent(e, new ScaleComponent { Value = earthRadius / 5f });
             _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
             _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );

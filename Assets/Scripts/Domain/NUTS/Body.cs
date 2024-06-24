@@ -18,6 +18,11 @@ namespace YAPCG.Domain.NUTS
             public float PeriodOffsetTicksF;
         }
 
+        public struct TrueAnomaly : IComponentData
+        {
+            public float Value;
+        }
+
         public struct BodyInfo : IComponentData
         {
             public float Mu;
