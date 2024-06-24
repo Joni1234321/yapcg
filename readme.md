@@ -1,3 +1,5 @@
+# What is this
+This is a simulation of planets using DOTS ECS Unity UI Toolkit and graphicsbuffers.
 # Features
 The game is a tickbased planet simulator where each planet gains point every tick.
 - Solar System
@@ -8,7 +10,8 @@ The game is a tickbased planet simulator where each planet gains point every tic
 - Benchmark tests, that will measure performance of methods and application.
 
 # Architecture
-This section describes the Projects in this system and how they interact with each other 
+This section describes the Projects in this system and how they interact with each other.
+Each project is found in the Assets/scripts folder.
 
 The **Application** handles all end user interactions to the domain and rendering of domain objects, interacts with all the other.
 
@@ -18,7 +21,7 @@ The **Simulation** contains mathematical complex formulas and equations used in 
 
 The **Engine** shares commonly used tools that are not domain specific. Such as a physics raycast. Rendering helper scripts. And system groups like time systems for ticks
 
-![architecture](diagrams/architecture.png)
+![architecture](Documentation/diagrams/architecture.png)
 
 ## Other projects
 The **Benchmark.Test** contains performance tests of methods and applications, so the method of recording is streamlined between iterations, and performance of the application can be compared.
@@ -32,7 +35,7 @@ The **Benchmark.Test** contains performance tests of methods and applications, s
 - Solar system
 
 Looks like this 
-![alt text](gameplay/render9.png)
+![alt text](Documentation/gameplay/render9.png)
 
 ## Rendering
 Custom fast rendering shaders 
