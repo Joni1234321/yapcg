@@ -24,13 +24,7 @@ namespace YAPCG.Benchmarks.Test
 
         private static readonly float3 ROTATION_ANGLE = new float3(math.PIHALF, 0, math.PI);
         private static readonly quaternion ADDITIONAL_ROTATION = quaternion.Euler(ROTATION_ANGLE);
-        string[] markers =
-        {
-            "Instantiate",
-            "Instantiate.Copy",
-            "Instantiate.Produce",
-            "Instantiate.Awake"
-        };
+
         [SetUp]
         public void SetUp()
         {
@@ -78,71 +72,19 @@ namespace YAPCG.Benchmarks.Test
                 .Run();
         }
 
-        private string[] markers2 = new[]
-        {
-            "fish",
-            "fish1",
-            "fish2",
-            "EllipseMechanics.CalculateMeanAnomaly",
-            "MeanAnomalyToTrueAnomaly",
-            "euler"
-        };
         [Test, Performance]
         public void Rotation_Anomaly_Calculation()
         {
-            Measure.ProfilerMarkers("MainProfilerMarker");
-            using (Measure.ProfilerMarkers(markers2))
-            {
-                using (Measure.Scope())
+            Measure.Method(() =>
                 {
-                    Measure.Method(() =>
-                        {
-                            for (int i = 0; i < orbits.Length; i++)
-                                OrbitToMatrixAnomaly(orbits[i], ticksF);
-                        })
-                        .MeasurementCount(10)
-                        .ProfilerMarkers("fish")
-                        .Run();
-                    Measure.Method(() =>
-                        {
-                            for (int i = 0; i < orbits.Length; i++)
-                                OrbitToMatrixAnomaly(orbits[i], ticksF * 2);
-                        })
-                        .MeasurementCount(10)
-                        .ProfilerMarkers("fish1")
-
-                        .Run();
-                    Measure.Method(() =>
-                        {
-                            for (int i = 0; i < orbits.Length; i++)
-                                OrbitToMatrixAnomaly(orbits[i], 2);
-                        })
-                        .MeasurementCount(10)
-                        .ProfilerMarkers("fish2")
-
-                        .Run();
-                }
-            }
+                    for (int i = 0; i < orbits.Length; i++)
+                        OrbitToMatrixAnomaly(orbits[i], ticksF);
+                })
+                .MeasurementCount(10)
+                .ProfilerMarkers("fish")
+                .Run();
         }
 
-
-        [Test, Performance]
-        public void Instantiate_CreateCubes()
-        {
-            using (Measure.ProfilerMarkers(markers))
-            {
-                using(Measure.Scope())
-                {
-                    var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    for (var i = 0; i < 5000; i++)
-                    {
-                        UnityEngine.Object.Instantiate(cube);
-                    }
-                }
-            }
-        }
-
-        
         [Test, Performance]
         public void Rotation_WithGivenAnomaly_Calculation()
         {
