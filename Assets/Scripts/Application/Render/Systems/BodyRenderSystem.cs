@@ -3,7 +3,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Profiling;
-using UnityEditor;
 using UnityEngine;
 using YAPCG.Application.UserInterface;
 using YAPCG.Domain.NUTS;

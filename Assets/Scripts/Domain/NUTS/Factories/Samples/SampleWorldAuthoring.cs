@@ -27,7 +27,6 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
             public override void Bake(SampleWorldAuthoring authoring)
             {
                 EntityManager _ = World.DefaultGameObjectInjectionWorld.EntityManager;
-
                 #if UNITY_EDITOR
                 if (!EditorApplication.isPlaying && !authoring.PressThisToUpdate)
                 {
@@ -41,8 +40,8 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
                 authoring.PressThisToUpdate = false;
                 Entity e = GetEntity(TransformUsageFlags.None);
                 _.DestroyEntity(_.CreateEntityQuery(ComponentType.ReadOnly<Body.BodyTag>()));
-                //_.DestroyEntity(_.CreateEntityQuery(ComponentType.ReadOnly<Hub.HubTag>()));
-                //_.DestroyEntity(_.CreateEntityQuery(ComponentType.ReadOnly<Deposit.DepositTag>()));
+                _.DestroyEntity(_.CreateEntityQuery(ComponentType.ReadOnly<Hub.HubTag>()));
+                _.DestroyEntity(_.CreateEntityQuery(ComponentType.ReadOnly<Deposit.DepositTag>()));
                 _.InitFactory(authoring.SolarSystemFactoryParams);
                 _.InitFactory(authoring.HubFactoryParams);
                 _.InitFactory(authoring.DepositFactoryParams);

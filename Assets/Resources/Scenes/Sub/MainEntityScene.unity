@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ApplicationSettings:
-    DisableUIRender: 1
+    DisableUIRender: 0
     DisableBodyRender: 0
 --- !u!114 &1765370267
 MonoBehaviour:

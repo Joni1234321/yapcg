@@ -19,8 +19,6 @@ namespace YAPCG.Engine
 
                 Entity e = GetEntity(TransformUsageFlags.None);
                 AddComponent(e, new SharedRandom { Random = Unity.Mathematics.Random.CreateFromIndex(authoring.Seed) });
-                
-                SingletonUtilities.Setup(World.DefaultGameObjectInjectionWorld.EntityManager);
             }
         }
         
