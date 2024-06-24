@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/Resources/View/main.uss" />
+    <Style src="project://database/Assets/Resources/View/main.uss?fileID=7433441132597879392&amp;guid=c8c56bc5dabe31f49a1cbc1a34332ed1&amp;type=3#main" />
     <ui:VisualElement name="progressbar" style="flex-direction: row;">
         <ui:Label name="title" text="Discovery" />
         <ui:ProgressBar value="22" title="70 / 90" style="flex-grow: 1;" />
-        <ui:Label name="change" text="+ 1"  style="width: 30px; -unity-text-align: upper-right;" />
+        <ui:Label name="change" text="+ 1" style="width: 30px; -unity-text-align: middle-right;" />
     </ui:VisualElement>
 </ui:UXML>

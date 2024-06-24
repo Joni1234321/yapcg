@@ -53,6 +53,14 @@ Button:active {
     transition-duration: 0.1s;
 }
 
+.unity-progress-bar__progress {
+    background-color: var(--color-background-grey);
+}
+.unity-progress-bar__background {
+    background-color: rgba(0,0,0,0);
+    border-width: 2px;
+}
+
 
 .not-detailed {
     border-color: rgba(0,0,0,0);
