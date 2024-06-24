@@ -1,6 +1,6 @@
 using System;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.CompileChecker {
     interface ICompileChecker {
         event Action onCompilationFinished;
     }

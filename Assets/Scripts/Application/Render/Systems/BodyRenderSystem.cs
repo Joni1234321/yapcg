@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.Profiling;
 using UnityEngine;
 using YAPCG.Application.UserInterface;
+using YAPCG.Domain;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Common.DOTS;
 using YAPCG.Engine.Components;

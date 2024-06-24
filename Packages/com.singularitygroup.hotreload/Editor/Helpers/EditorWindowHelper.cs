@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Text.RegularExpressions;
-using UnityEngine;
-using System.Threading.Tasks;
-using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
     internal static class EditorWindowHelper {
         #if UNITY_2020_1_OR_NEWER
         public static bool supportsNotifications = true;

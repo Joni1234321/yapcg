@@ -2,15 +2,10 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.CLI;
 using SingularityGroup.HotReload.RuntimeDependencies;
-using UnityEditor;
-#if UNITY_EDITOR_WIN
-using System.Diagnostics;
-using Debug = UnityEngine.Debug;
-#endif
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Installation {
     static class UpdateUtility {
         public static async Task<string> Update(string version, IProgress<float> progress, CancellationToken cancellationToken) {
             await ThreadUtility.SwitchToThreadPool();

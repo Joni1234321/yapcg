@@ -1,4 +1,4 @@
-namespace SingularityGroup.HotReload {
+namespace Public {
     /// <summary>
     /// Utility class to set the log level of the Hot Reload package
     /// </summary>

@@ -1,4 +1,4 @@
-namespace SingularityGroup.HotReload {
+namespace Public {
     /// <summary>
     /// The log level enumeration for the Hot Reload package
     /// Used in <see cref="HotReloadLogging.SetLogLevel"/> to set the log level.

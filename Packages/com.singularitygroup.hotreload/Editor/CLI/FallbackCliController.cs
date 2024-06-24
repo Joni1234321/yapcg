@@ -1,7 +1,7 @@
 
 using System.Threading.Tasks;
 
-namespace SingularityGroup.HotReload.Editor.Cli {
+namespace SingularityGroup.HotReload.Editor.CLI {
     class FallbackCliController : ICliController {
         public string BinaryFileName => "";
         public string PlatformName => "";

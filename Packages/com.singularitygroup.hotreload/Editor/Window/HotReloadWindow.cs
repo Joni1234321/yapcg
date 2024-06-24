@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,15 +6,23 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using SingularityGroup.HotReload.DTO;
-using SingularityGroup.HotReload.Editor.Cli;
-using SingularityGroup.HotReload.Editor.Semver;
+using SingularityGroup.HotReload.Editor.CLI;
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.Installation;
+using SingularityGroup.HotReload.Editor.RequiredSettings;
+using SingularityGroup.HotReload.Editor.Versioning;
+using SingularityGroup.HotReload.Editor.Window.GUI;
+using SingularityGroup.HotReload.Editor.Window.GUI.Buttons;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Base;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Helpers;
+using SingularityGroup.HotReload.Editor.Window.Styles;
 using UnityEditor;
-using UnityEditor.Compilation;
 using UnityEngine;
 
 [assembly: InternalsVisibleTo("SingularityGroup.HotReload.EditorSamples")]
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window {
     class HotReloadWindow : EditorWindow {
         public static HotReloadWindow Current { get; private set; }
 
@@ -144,7 +151,7 @@ namespace SingularityGroup.HotReload.Editor {
                 File.Delete(EditorCodePatcher.serverDownloader.GetExecutablePath(HotReloadCli.controller));
                 InstallUtility.DebugClearInstallState();
                 InstallUtility.CheckForNewInstall();
-                EditorPrefs.DeleteKey(Attribution.LastLoginKey);
+                EditorPrefs.DeleteKey(Attribution.Attribution.LastLoginKey);
                 File.Delete(RedeemLicenseHelper.registerOutcomePath);
 
                 CompileMethodDetourer.Reset();
@@ -168,9 +175,9 @@ namespace SingularityGroup.HotReload.Editor {
             var backgroundRect = GUILayoutUtility.GetRect(targetWidth + padding, targetHeight + padding, HotReloadWindowStyles.LogoStyle);
             // draw the texture into that reserved space. First the bg then the logo.
             if (isDarkMode) {
-                GUI.DrawTexture(backgroundRect, EditorTextures.DarkGray17, ScaleMode.StretchToFill);
+                UnityEngine.GUI.DrawTexture(backgroundRect, EditorTextures.DarkGray17, ScaleMode.StretchToFill);
             } else {
-                GUI.DrawTexture(backgroundRect, EditorTextures.LightGray238, ScaleMode.StretchToFill);
+                UnityEngine.GUI.DrawTexture(backgroundRect, EditorTextures.LightGray238, ScaleMode.StretchToFill);
             }
             
             var foregroundRect = backgroundRect;
@@ -178,7 +185,7 @@ namespace SingularityGroup.HotReload.Editor {
             foregroundRect.yMax -= padding;
             // during player build (EditorWindow still visible), Resources.Load returns null
             if (tex) {
-                GUI.DrawTexture(foregroundRect, tex, ScaleMode.ScaleToFit);
+                UnityEngine.GUI.DrawTexture(foregroundRect, tex, ScaleMode.ScaleToFit);
             }
         }
 
@@ -233,7 +240,7 @@ namespace SingularityGroup.HotReload.Editor {
         }
 
         static GUIStyle _renderAppBoxStyle;
-        static GUIStyle renderAppBoxStyle => _renderAppBoxStyle ?? (_renderAppBoxStyle = new GUIStyle(GUI.skin.box) {
+        static GUIStyle renderAppBoxStyle => _renderAppBoxStyle ?? (_renderAppBoxStyle = new GUIStyle(UnityEngine.GUI.skin.box) {
             padding = new RectOffset(10, 10, 0, 0)
         });
         

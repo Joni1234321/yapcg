@@ -4,13 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using Public;
 using SingularityGroup.HotReload.DTO;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
+using SingularityGroup.HotReload.Editor.Window.Styles;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
-
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
     internal enum TimelineType {
         Suggestions,
         Timeline,

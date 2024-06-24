@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Public;
+using SingularityGroup.HotReload.Editor.Installation;
+using SingularityGroup.HotReload.Editor.Versioning;
+using SingularityGroup.HotReload.Editor.Window.GUI.Buttons;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Base;
+using SingularityGroup.HotReload.Editor.Window.Styles;
+using SingularityGroup.HotReload.EditorDependencies;
+using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-using System.Threading.Tasks;
-using System.IO;
-using SingularityGroup.HotReload.Newtonsoft.Json;
-using SingularityGroup.HotReload.EditorDependencies;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Tabs {
     internal struct HotReloadAboutTabState {
         public readonly bool logsFodlerExists;
         public readonly IReadOnlyList<ChangelogVersion> changelog;
@@ -214,7 +220,7 @@ namespace SingularityGroup.HotReload.Editor {
                     hasPayedLicense: _window.RunTab.HasPayedLicense
                 );
             }
-            using (var scope = new EditorGUILayout.ScrollViewScope(_aboutTabScrollPos, GUI.skin.horizontalScrollbar, GUI.skin.verticalScrollbar, GUILayout.MaxHeight(Math.Max(HotReloadWindowStyles.windowScreenHeight, 800)), GUILayout.MaxWidth(Math.Max(HotReloadWindowStyles.windowScreenWidth, 800)))) {
+            using (var scope = new EditorGUILayout.ScrollViewScope(_aboutTabScrollPos, UnityEngine.GUI.skin.horizontalScrollbar, UnityEngine.GUI.skin.verticalScrollbar, GUILayout.MaxHeight(Math.Max(HotReloadWindowStyles.windowScreenHeight, 800)), GUILayout.MaxWidth(Math.Max(HotReloadWindowStyles.windowScreenWidth, 800)))) {
                 _aboutTabScrollPos.x = scope.scrollPosition.x;
                 _aboutTabScrollPos.y = scope.scrollPosition.y;
 

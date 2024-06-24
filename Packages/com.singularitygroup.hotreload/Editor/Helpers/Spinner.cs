@@ -1,7 +1,8 @@
 using System;
+using SingularityGroup.HotReload.Editor.Window.Styles;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
     internal class Spinner {
         internal static string SpinnerIconPath => "icon_loading_star_light_mode_96";
         internal static Texture2D spinnerTexture => GUIHelper.GetInvertibleIcon(InvertibleIcon.Spinner);

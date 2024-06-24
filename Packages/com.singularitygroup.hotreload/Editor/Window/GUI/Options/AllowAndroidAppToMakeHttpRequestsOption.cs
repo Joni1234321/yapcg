@@ -1,6 +1,8 @@
-﻿using UnityEditor;
+﻿using SingularityGroup.HotReload.Editor.Window.GUI.Options.Base;
+using SingularityGroup.HotReload.Editor.Window.Styles;
+using UnityEditor;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Options {
     internal class AllowAndroidAppToMakeHttpRequestsOption : ProjectOptionBase {
         public override string ShortSummary {
             get {

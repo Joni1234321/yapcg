@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SingularityGroup.HotReload.Editor.Cli {
+namespace SingularityGroup.HotReload.Editor.CLI {
     class WindowsCliController : ICliController {
         Process process;
 

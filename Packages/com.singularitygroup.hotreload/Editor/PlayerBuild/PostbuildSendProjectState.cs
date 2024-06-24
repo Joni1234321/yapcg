@@ -1,9 +1,10 @@
 using System;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.CLI;
+using SingularityGroup.HotReload.Editor.Helpers;
 using UnityEditor;
 using UnityEditor.Build;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.PlayerBuild {
 #pragma warning disable CS0618
     class PostbuildSendProjectState : IPostprocessBuild {
 #pragma warning restore CS0618

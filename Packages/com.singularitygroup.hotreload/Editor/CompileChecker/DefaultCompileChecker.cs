@@ -2,11 +2,11 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Public;
 using UnityEditor;
 using UnityEditor.Compilation;
-using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.CompileChecker {
     class DefaultCompileChecker : ICompileChecker {
         const string recompileFilePath = PackageConst.LibraryCachePath + "/recompile.txt";
         bool hasCompileErrors;

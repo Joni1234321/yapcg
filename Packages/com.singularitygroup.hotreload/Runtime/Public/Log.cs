@@ -1,11 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-#if (UNITY_2019_4_OR_NEWER)
 using UnityEngine;
-#endif
 
-namespace SingularityGroup.HotReload {
+namespace Public {
     public static class Log {
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Global")]
         public static LogLevel minLevel = LogLevel.Info;

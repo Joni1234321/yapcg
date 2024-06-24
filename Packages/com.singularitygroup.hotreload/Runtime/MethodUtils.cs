@@ -7,11 +7,11 @@ namespace SingularityGroup.HotReload {
 #if ENABLE_MONO
         public static unsafe void DisableVisibilityChecks(MethodBase method) {
             if(IntPtr.Size == sizeof(long)) {
-                var ptr = (Interop.MonoMethod64*)method.MethodHandle.Value.ToPointer();
-                ptr->monoMethodFlags |= Interop.MonoMethodFlags.skip_visibility;
+                var ptr = (MonoMethod64*)method.MethodHandle.Value.ToPointer();
+                ptr->monoMethodFlags |= MonoMethodFlags.skip_visibility;
             } else {
-                var ptr = (Interop.MonoMethod32*)method.MethodHandle.Value.ToPointer();
-                ptr->monoMethodFlags |= Interop.MonoMethodFlags.skip_visibility;
+                var ptr = (MonoMethod32*)method.MethodHandle.Value.ToPointer();
+                ptr->monoMethodFlags |= MonoMethodFlags.skip_visibility;
             }
         }
 #else

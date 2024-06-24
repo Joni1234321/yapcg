@@ -1,8 +1,9 @@
 using System;
-using System.IO;
+using SingularityGroup.HotReload.Editor.Window.GUI.Options.Base;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
 using UnityEditor;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.PlayerBuild {
     internal static class HotReloadBuildHelper {
         /// <summary>
         /// Should HotReload runtime be included in the current build?

@@ -1,7 +1,7 @@
 using System.Globalization;
 using UnityEngine;
 
-namespace YAPCG
+namespace YAPCG.Editor
 {
     [ExecuteAlways]
     public class FormatTeest : MonoBehaviour

@@ -2,9 +2,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Debug = UnityEngine.Debug;
 
-namespace SingularityGroup.HotReload.Editor.Cli {
+namespace SingularityGroup.HotReload.Editor.CLI {
 
     class LinuxCliController : ICliController {
         Process process;

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Security;
 using System.Text;
-using SingularityGroup.HotReload.Editor.Util;
+using SingularityGroup.HotReload.Editor.ProjectGeneration.Util;
 
 namespace SingularityGroup.HotReload.Editor.ProjectGeneration {
   class FileIOProvider : IFileIO

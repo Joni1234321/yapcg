@@ -1,9 +1,10 @@
 using System;
+using SingularityGroup.HotReload.Editor.Window.GUI.Options;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.PlayerBuild {
     /// <summary>Includes HotReload Resources only in development builds</summary>
     /// <remarks>
     /// This build script ensures that HotReload Resources are not included in release builds.

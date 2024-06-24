@@ -1,6 +1,9 @@
 #if UNITY_2021_2_OR_NEWER
 using System;
 using System.Collections.Generic;
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.Window;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
 using UnityEditor.Overlays;
 using UnityEngine.UIElements;
 using UnityEditor;

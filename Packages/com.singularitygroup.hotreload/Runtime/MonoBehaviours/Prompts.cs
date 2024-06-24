@@ -2,10 +2,11 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Public;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SingularityGroup.HotReload {
+namespace SingularityGroup.HotReload.MonoBehaviours {
     internal class Prompts : MonoBehaviour {
         public GameObject retryPrompt;
         public GameObject connectedPrompt;

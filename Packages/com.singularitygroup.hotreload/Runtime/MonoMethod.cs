@@ -2,8 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-
-namespace SingularityGroup.HotReload.Interop {
+namespace SingularityGroup.HotReload {
     //see _MonoMethod struct in class-internals.h
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto, Size = 8 + sizeof(long) * 3 + 4)]
     internal unsafe struct MonoMethod64 {

@@ -1,7 +1,7 @@
 ﻿#if ENABLE_MONO && (DEVELOPMENT_BUILD || UNITY_EDITOR)
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Demo {
+namespace SingularityGroup.HotReload.Demo.Scripts {
     public interface IDemo {
         bool IsServerRunning();
         void OpenHotReloadWindow();

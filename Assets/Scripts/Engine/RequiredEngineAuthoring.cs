@@ -3,7 +3,6 @@ using Unity.Entities.Content;
 using UnityEngine;
 using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
-using YAPCG.Engine.DOTSExtension.THPS.Singletons;
 
 namespace YAPCG.Engine
 {

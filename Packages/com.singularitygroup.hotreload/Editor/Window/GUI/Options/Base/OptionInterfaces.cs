@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Options.Base {
     public interface IOption {
         string ShortSummary { get; }
         string Summary { get; }

@@ -1,12 +1,20 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Public;
 using SingularityGroup.HotReload.DTO;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.CLI;
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.PlayerBuild;
+using SingularityGroup.HotReload.Editor.Window.GUI.Options;
+using SingularityGroup.HotReload.Editor.Window.GUI.Options.Base;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Base;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Helpers;
+using SingularityGroup.HotReload.Editor.Window.Styles;
 using UnityEditor;
 using UnityEngine;
 using EditorGUI = UnityEditor.EditorGUI;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Tabs {
     internal struct HotReloadSettingsTabState {
         public readonly bool running;
         public readonly bool trialLicense;
@@ -75,7 +83,7 @@ namespace SingularityGroup.HotReload.Editor {
                     registrationRequired: RedeemLicenseHelper.I.RegistrationRequired
                 );
             }
-            using (var scope = new EditorGUILayout.ScrollViewScope(_settingsTabScrollPos, GUI.skin.horizontalScrollbar, GUI.skin.verticalScrollbar, GUILayout.MaxHeight(Math.Max(HotReloadWindowStyles.windowScreenHeight, 800)), GUILayout.MaxWidth(Math.Max(HotReloadWindowStyles.windowScreenWidth, 800)))) {
+            using (var scope = new EditorGUILayout.ScrollViewScope(_settingsTabScrollPos, UnityEngine.GUI.skin.horizontalScrollbar, UnityEngine.GUI.skin.verticalScrollbar, GUILayout.MaxHeight(Math.Max(HotReloadWindowStyles.windowScreenHeight, 800)), GUILayout.MaxWidth(Math.Max(HotReloadWindowStyles.windowScreenWidth, 800)))) {
                 _settingsTabScrollPos.x = scope.scrollPosition.x;
                 _settingsTabScrollPos.y = scope.scrollPosition.y;
                 using (new EditorGUILayout.VerticalScope(HotReloadWindowStyles.DynamicSectionHelpTab)) {
@@ -375,7 +383,7 @@ namespace SingularityGroup.HotReload.Editor {
             {
                 if (headlineStyle == null) {
                     // start with textArea for the background and border colors
-                    headlineStyle = new GUIStyle(GUI.skin.label) {
+                    headlineStyle = new GUIStyle(UnityEngine.GUI.skin.label) {
                         fontStyle = FontStyle.Bold,
                         alignment = TextAnchor.MiddleLeft
                     };
@@ -644,11 +652,11 @@ namespace SingularityGroup.HotReload.Editor {
                 Mathf.CeilToInt(iconRect.height));
             var text = condition ? okText : notOkText;
             var icon = condition ? iconCheck : iconWarning;
-            if (GUI.enabled) {
+            if (UnityEngine.GUI.enabled) {
                 DrawBlackCircle(iconRect);
                 // resource can be null when building player (Editor Resources not available)
                 if (icon) {
-                    GUI.DrawTexture(iconRect, icon, ScaleMode.ScaleToFit);
+                    UnityEngine.GUI.DrawTexture(iconRect, icon, ScaleMode.ScaleToFit);
                 }
             } else {
                 // show something (instead of hiding) so that layout stays same size
@@ -682,12 +690,12 @@ namespace SingularityGroup.HotReload.Editor {
             // Note: drawing texture from resources is pixelated on the edges, so it has some transperancy around the edges.
             // While building for Android, Resources.Load returns null for our editor Resources. 
             if (circleIcon != null) {
-                GUI.DrawTexture(rect, circleIcon, ScaleMode.ScaleToFit);
+                UnityEngine.GUI.DrawTexture(rect, circleIcon, ScaleMode.ScaleToFit);
             }
             
             // Draw smooth circle border
             const float borderWidth = 2f;
-            GUI.DrawTexture(rect, EditorTextures.White, ScaleMode.ScaleToFit, true,
+            UnityEngine.GUI.DrawTexture(rect, EditorTextures.White, ScaleMode.ScaleToFit, true,
                 0f,
                 borderColor,
                 new Vector4(borderWidth, borderWidth, borderWidth, borderWidth),

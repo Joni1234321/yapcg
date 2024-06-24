@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SingularityGroup.HotReload {
+namespace Public {
     /// <summary>
     /// Method with this attribute will get invoked when it gets patched
     /// </summary>

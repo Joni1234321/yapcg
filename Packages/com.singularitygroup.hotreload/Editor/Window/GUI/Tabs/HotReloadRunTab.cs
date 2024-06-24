@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SingularityGroup.HotReload.DTO;
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.RequiredSettings;
+using SingularityGroup.HotReload.Editor.Window.GUI.Buttons;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Base;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Helpers;
+using SingularityGroup.HotReload.Editor.Window.Styles;
 using SingularityGroup.HotReload.EditorDependencies;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
 using Color = UnityEngine.Color;
 using Task = System.Threading.Tasks.Task;
-#if UNITY_2019_4_OR_NEWER
-using Unity.CodeEditor;
-#endif
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Tabs {
     internal class ErrorData {
         public string fileName;
         public string error;
@@ -261,7 +264,7 @@ namespace SingularityGroup.HotReload.Editor {
         internal static bool ShouldRenderConsumption(HotReloadRunTabState currentState) => (currentState.running && !currentState.starting && !currentState.stopping && currentState.loginStatus?.isLicensed != true && currentState.loginStatus?.isFree != true && !EditorCodePatcher.LoginNotRequired) && !(currentState.loginStatus == null || currentState.loginStatus.isFree);
         
         void OnGUICore() {
-            using (var scope = new EditorGUILayout.ScrollViewScope(_runTabScrollPos, GUI.skin.horizontalScrollbar, GUI.skin.verticalScrollbar, GUILayout.MaxHeight(Math.Max(HotReloadWindowStyles.windowScreenHeight, 800)), GUILayout.MaxWidth(Math.Max(HotReloadWindowStyles.windowScreenWidth, 800)))) {
+            using (var scope = new EditorGUILayout.ScrollViewScope(_runTabScrollPos, UnityEngine.GUI.skin.horizontalScrollbar, UnityEngine.GUI.skin.verticalScrollbar, GUILayout.MaxHeight(Math.Max(HotReloadWindowStyles.windowScreenHeight, 800)), GUILayout.MaxWidth(Math.Max(HotReloadWindowStyles.windowScreenWidth, 800)))) {
                 _runTabScrollPos.x = scope.scrollPosition.x;
                 _runTabScrollPos.y = scope.scrollPosition.y;
                 using (new EditorGUILayout.VerticalScope(HotReloadWindowStyles.DynamiSection)) {
@@ -387,14 +390,14 @@ namespace SingularityGroup.HotReload.Editor {
                     Rect spaceRect = GUILayoutUtility.GetLastRect();
                     // entry header foldout arrow
                     if (entryType == EntryType.Foldout) {
-                        GUI.Label(new Rect(spaceRect.x + 3, spaceRect.y, 20, 20), new GUIContent(GetFoldoutIcon(alertEntry)));
+                        UnityEngine.GUI.Label(new Rect(spaceRect.x + 3, spaceRect.y, 20, 20), new GUIContent(GetFoldoutIcon(alertEntry)));
                     } else if (entryType == EntryType.Child) {
-                        GUI.Label(new Rect(spaceRect.x + 26, spaceRect.y + 2, 20, 20), new GUIContent(GetFoldoutIcon(alertEntry)));
+                        UnityEngine.GUI.Label(new Rect(spaceRect.x + 26, spaceRect.y + 2, 20, 20), new GUIContent(GetFoldoutIcon(alertEntry)));
                     }
                     // a workaround to limit the width of the label
                     GUILayout.Label(new GUIContent(""), style);
                     startRect = GUILayoutUtility.GetLastRect();
-                    GUI.Label(startRect, new GUIContent(title, icon), style);
+                    UnityEngine.GUI.Label(startRect, new GUIContent(title, icon), style);
                 }
 
                 bool clickableDescription = alertEntry.title == "Unsupported change" || alertEntry.title == "Compile error" || alertEntry.title == "Failed applying patch to method";
@@ -420,7 +423,7 @@ namespace SingularityGroup.HotReload.Editor {
                 
                 // remove button
                 if (timelineType == TimelineType.Suggestions && alertEntry.hasExitButton) {
-                    var isClick = GUI.Button(new Rect(startRect.x + startRect.width - 20, startRect.y + 2, 20, 20), new GUIContent(GUIHelper.GetInvertibleIcon(InvertibleIcon.Close)), HotReloadWindowStyles.RemoveIconStyle);
+                    var isClick = UnityEngine.GUI.Button(new Rect(startRect.x + startRect.width - 20, startRect.y + 2, 20, 20), new GUIContent(GUIHelper.GetInvertibleIcon(InvertibleIcon.Close)), HotReloadWindowStyles.RemoveIconStyle);
                     if (isClick) {
                         HotReloadTimelineHelper.EventsTimeline.Remove(alertEntry);
                         var kind = HotReloadSuggestionsHelper.FindSuggestionKind(alertEntry);
@@ -433,13 +436,13 @@ namespace SingularityGroup.HotReload.Editor {
 
                 // Extend background to whole entry
                 var endRect = GUILayoutUtility.GetLastRect();
-                if (GUI.Button(new Rect(startRect) { height = endRect.y - startRect.y + endRect.height}, new GUIContent(""), HotReloadWindowStyles.BarBackgroundStyle) && (entryType == EntryType.Child || entryType == EntryType.Foldout)) {
+                if (UnityEngine.GUI.Button(new Rect(startRect) { height = endRect.y - startRect.y + endRect.height}, new GUIContent(""), HotReloadWindowStyles.BarBackgroundStyle) && (entryType == EntryType.Child || entryType == EntryType.Foldout)) {
                     ToggleEntry(alertEntry);
                 }
         
                 if (alertEntry.alertType != AlertType.Suggestion && HotReloadWindowStyles.windowScreenWidth > 400 && entryType != EntryType.Child) {
                     using (new EditorGUILayout.HorizontalScope()) {
-                        GUI.Label(new Rect(startRect.x + startRect.width - 60, startRect.y, 80, 20), $"{alertEntry.timestamp.Hour:D2}:{alertEntry.timestamp.Minute:D2}:{alertEntry.timestamp.Second:D2}", HotReloadWindowStyles.TimestampStyle);
+                        UnityEngine.GUI.Label(new Rect(startRect.x + startRect.width - 60, startRect.y, 80, 20), $"{alertEntry.timestamp.Hour:D2}:{alertEntry.timestamp.Minute:D2}:{alertEntry.timestamp.Second:D2}", HotReloadWindowStyles.TimestampStyle);
                     }
                 }
                 
@@ -774,7 +777,7 @@ namespace SingularityGroup.HotReload.Editor {
         }
         
         static GUIStyle _openSettingsStyle;
-        static GUIStyle openSettingsStyle => _openSettingsStyle ?? (_openSettingsStyle = new GUIStyle(GUI.skin.button) {
+        static GUIStyle openSettingsStyle => _openSettingsStyle ?? (_openSettingsStyle = new GUIStyle(UnityEngine.GUI.skin.button) {
             fontStyle = FontStyle.Normal,
             fixedHeight = 25,
         });
@@ -1108,12 +1111,12 @@ namespace SingularityGroup.HotReload.Editor {
 
         internal static void RenderLicenseInnerPanel(HotReloadRunTabState currentState, string overrideActionButton = null, bool renderLogout = true) {
             EditorGUILayout.LabelField("Email");
-            GUI.SetNextControlName("email");
+            UnityEngine.GUI.SetNextControlName("email");
             _pendingEmail = EditorGUILayout.TextField(string.IsNullOrEmpty(_pendingEmail) ? HotReloadPrefs.LicenseEmail : _pendingEmail);
             _pendingEmail = _pendingEmail.Trim();
 
             EditorGUILayout.LabelField("Password");
-            GUI.SetNextControlName("password");
+            UnityEngine.GUI.SetNextControlName("password");
             _pendingPassword = EditorGUILayout.PasswordField(string.IsNullOrEmpty(_pendingPassword) ? HotReloadPrefs.LicensePassword : _pendingPassword);
             
             RenderSwitchAuthMode();
@@ -1125,7 +1128,7 @@ namespace SingularityGroup.HotReload.Editor {
                     btnLabel = "Login";
                 }
                 using (new EditorGUILayout.HorizontalScope()) {
-                    var focusedControl = GUI.GetNameOfFocusedControl();
+                    var focusedControl = UnityEngine.GUI.GetNameOfFocusedControl();
                     if (GUILayout.Button(btnLabel, bigButtonHeight)
                         || (focusedControl == "email" 
                             || focusedControl == "password") 
@@ -1249,7 +1252,7 @@ namespace SingularityGroup.HotReload.Editor {
                         using (new EditorGUILayout.HorizontalScope()) {
                             progress = EditorCodePatcher.DownloadProgress;
                             EditorGUI.ProgressBar(barRect, Mathf.Clamp(progress, 0f, 1f), "");
-                            if (GUI.Button(new Rect(barRect) { x = barRect.x + barRect.width + 5, height = barRect.height, width = 60 }, new GUIContent(" Info", GUIHelper.GetLocalIcon("alert_info")))) {
+                            if (UnityEngine.GUI.Button(new Rect(barRect) { x = barRect.x + barRect.width + 5, height = barRect.height, width = 60 }, new GUIContent(" Info", GUIHelper.GetLocalIcon("alert_info")))) {
                                 Application.OpenURL(Constants.AdditionalContentURL);
                             }
                         }

@@ -1,7 +1,8 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine.Analytics;
 
-namespace UnityEditor.VSAttribution.HotReload
+namespace SingularityGroup.HotReload.Editor.Attribution
 {
 	internal static class VSAttribution
 	{

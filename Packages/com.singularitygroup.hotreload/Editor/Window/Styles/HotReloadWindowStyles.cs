@@ -1,8 +1,9 @@
-﻿using UnityEditor;
+﻿using System.Reflection;
+using SingularityGroup.HotReload.Editor.Helpers;
+using UnityEditor;
 using UnityEngine;
-using System.Reflection;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.Styles {
     internal static class HotReloadWindowStyles {
         private static GUIStyle h1TitleStyle;
         private static GUIStyle h1TitleCenteredStyle;
@@ -203,7 +204,7 @@ namespace SingularityGroup.HotReload.Editor {
             get {
                 if (boxStyle == null) {
                     boxStyle = new GUIStyle(EditorStyles.helpBox);
-                    boxStyle.normal.textColor = GUI.skin.label.normal.textColor;
+                    boxStyle.normal.textColor = UnityEngine.GUI.skin.label.normal.textColor;
                     boxStyle.fontStyle = FontStyle.Bold;
                     boxStyle.alignment = TextAnchor.UpperLeft;
                 }
@@ -229,7 +230,7 @@ namespace SingularityGroup.HotReload.Editor {
             get {
                 if (noPaddingMiddleLeftStyle == null) {
                     noPaddingMiddleLeftStyle = new GUIStyle(EditorStyles.label);
-                    noPaddingMiddleLeftStyle.normal.textColor = GUI.skin.label.normal.textColor;
+                    noPaddingMiddleLeftStyle.normal.textColor = UnityEngine.GUI.skin.label.normal.textColor;
                     noPaddingMiddleLeftStyle.padding = new RectOffset();
                     noPaddingMiddleLeftStyle.margin = new RectOffset();
                     noPaddingMiddleLeftStyle.alignment = TextAnchor.MiddleLeft;
@@ -287,7 +288,7 @@ namespace SingularityGroup.HotReload.Editor {
             get {
                 if (foldoutStyle == null) {
                     foldoutStyle = new GUIStyle(EditorStyles.foldout);
-                    foldoutStyle.normal.textColor = GUI.skin.label.normal.textColor;
+                    foldoutStyle.normal.textColor = UnityEngine.GUI.skin.label.normal.textColor;
                     foldoutStyle.alignment = TextAnchor.MiddleLeft;
                     foldoutStyle.fontStyle = FontStyle.Bold;
                     foldoutStyle.fontSize = 12;
@@ -571,7 +572,7 @@ namespace SingularityGroup.HotReload.Editor {
         internal static GUIStyle BarStyle {
             get {
                 if (barStyle == null) {
-                    barStyle = new GUIStyle(GUI.skin.label);
+                    barStyle = new GUIStyle(UnityEngine.GUI.skin.label);
                     barStyle.fontSize = 12;
                     barStyle.alignment = TextAnchor.MiddleLeft;
                     barStyle.fixedHeight = 20;
@@ -617,7 +618,7 @@ namespace SingularityGroup.HotReload.Editor {
         public static GUIStyle TimestampStyle {
             get {
                 if (timestampStyle == null) {
-                    timestampStyle = new GUIStyle(GUI.skin.label);
+                    timestampStyle = new GUIStyle(UnityEngine.GUI.skin.label);
                 }
                 if (IsDarkMode) {
                     timestampStyle.normal.textColor = new Color(0.5f, 0.5f, 0.5f);
@@ -715,7 +716,7 @@ namespace SingularityGroup.HotReload.Editor {
         internal static GUIStyle UpgradeLicenseButtonStyle {
             get {
                 if (upgradeLicenseButtonStyle == null) {
-                    upgradeLicenseButtonStyle = new GUIStyle(GUI.skin.button);
+                    upgradeLicenseButtonStyle = new GUIStyle(UnityEngine.GUI.skin.button);
                     upgradeLicenseButtonStyle.padding = new RectOffset(5, 5, 0, 0);
                 }
                 return upgradeLicenseButtonStyle;
@@ -746,7 +747,7 @@ namespace SingularityGroup.HotReload.Editor {
         internal static GUIStyle HideButtonStyle {
             get {
                 if (hideButtonStyle == null) {
-                    hideButtonStyle = new GUIStyle(GUI.skin.button);
+                    hideButtonStyle = new GUIStyle(UnityEngine.GUI.skin.button);
                 }
                 return hideButtonStyle;
             }
@@ -755,7 +756,7 @@ namespace SingularityGroup.HotReload.Editor {
         internal static GUIStyle HelpTabButton {
             get {
                 if (helpTabButton == null) {
-                    helpTabButton = new GUIStyle(GUI.skin.button);
+                    helpTabButton = new GUIStyle(UnityEngine.GUI.skin.button);
                     helpTabButton.alignment = TextAnchor.MiddleLeft;
                     helpTabButton.padding.left = 10;
                 }

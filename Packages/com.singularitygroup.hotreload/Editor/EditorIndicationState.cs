@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Public;
 using SingularityGroup.HotReload.DTO;
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Helpers;
 
 namespace SingularityGroup.HotReload.Editor {
     internal static class EditorIndicationState {

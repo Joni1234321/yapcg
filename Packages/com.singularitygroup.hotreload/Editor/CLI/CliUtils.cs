@@ -1,12 +1,12 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEngine;
-using System;
 
-namespace SingularityGroup.HotReload.Editor.Cli {
+namespace SingularityGroup.HotReload.Editor.CLI {
     internal static class CliUtils {
         static readonly string projectIdentifier = GetProjectIdentifier();
 

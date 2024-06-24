@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
+using SingularityGroup.HotReload.Editor.Helpers;
 using UnityEditor;
 using UnityEditor.Build;
 
 #pragma warning disable CS0618
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.PlayerBuild {
     public class BuildGenerateBuildInfo : IPreprocessBuild, IPostprocessBuild {
         public int callbackOrder => 10;
 

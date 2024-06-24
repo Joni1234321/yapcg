@@ -1,4 +1,4 @@
-namespace SingularityGroup.HotReload.Editor.Util
+namespace SingularityGroup.HotReload.Editor.ProjectGeneration.Util
 {
   internal static class FileSystemUtil
   {

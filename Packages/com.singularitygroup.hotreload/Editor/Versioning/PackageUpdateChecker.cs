@@ -4,14 +4,16 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using SingularityGroup.HotReload.Editor.Semver;
+using Public;
+using SingularityGroup.HotReload.Editor.Installation;
+using SingularityGroup.HotReload.Editor.RequiredSettings;
+using SingularityGroup.HotReload.Editor.Window;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using SingularityGroup.HotReload.Newtonsoft.Json.Linq;
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.Networking;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Versioning {
     internal class PackageUpdateChecker {
         const string persistedFile = PackageConst.LibraryCachePath + "/updateChecker.json";
         readonly JsonSerializer jsonSerializer = JsonSerializer.CreateDefault();

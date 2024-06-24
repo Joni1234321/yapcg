@@ -2,7 +2,8 @@ using System;
 using System.Globalization;
 using System.IO;
 using JetBrains.Annotations;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.CLI;
+using SingularityGroup.HotReload.Editor.Window;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Options.Base {
     /// <summary>
     /// An option stored inside the current Unity project.
     /// </summary>

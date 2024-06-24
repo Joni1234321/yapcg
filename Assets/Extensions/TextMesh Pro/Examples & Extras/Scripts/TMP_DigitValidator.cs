@@ -1,7 +1,7 @@
 ﻿using System;
+using TMPro;
 
-
-namespace TMPro
+namespace Extensions.TextMesh_Pro.Examples___Extras.Scripts
 {
     /// <summary>
     /// EXample of a Custom Character Input Validator to only allow digits from 0 to 9.
