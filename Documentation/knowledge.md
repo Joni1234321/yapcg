@@ -15,6 +15,11 @@ The `[BurstCompile]` attribute must also be set on the class. Burst first looks 
 Resource: https://forum.unity.com/threads/when-where-and-why-to-put-burstcompile-with-mild-under-the-hood-explanation.1344539/
 
 
+# Unity.Mathematics 
+Mathematics is slower in mono than MathF (up to 10x). With burst its faster, IL2CPP and MONO equally fast, and leagues ahead of mathf.  
+
+Resource: https://www.youtube.com/watch?v=u9DzbBHNwtc
+
 # Rendering
 Mesh       ======================  
 RenderMesh				Renders a mesh with given rendering parameters.
