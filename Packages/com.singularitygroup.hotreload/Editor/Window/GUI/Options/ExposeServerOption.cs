@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.Window.GUI.Options.Base;
+using SingularityGroup.HotReload.Editor.Window.Styles;
 using UnityEditor;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Options {
     internal sealed class ExposeServerOption : ComputerOptionBase {
 
         public override string ShortSummary => "Allow Devices to Connect";

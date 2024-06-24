@@ -1,12 +1,10 @@
 using System;
-#if !NETSTANDARD
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-#endif
 using System.Text.RegularExpressions;
 
-namespace SingularityGroup.HotReload.Editor.Semver
+namespace SingularityGroup.HotReload.Editor.Versioning
 {
     /// <summary>
     /// A semantic version implementation.

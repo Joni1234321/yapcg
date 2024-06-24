@@ -1,4 +1,4 @@
-﻿namespace YAPCG
+﻿namespace YAPCG.Domain
 {
     public struct consts
     {

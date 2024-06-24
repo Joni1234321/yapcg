@@ -3,12 +3,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Threading.Tasks;
+using Public;
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEditor;
 
-namespace SingularityGroup.HotReload.Editor.Cli {
+namespace SingularityGroup.HotReload.Editor.CLI {
     [InitializeOnLoad]
     public static class HotReloadCli {
         internal static readonly ICliController controller;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI {
     /// <summary>
     /// Create a new texture only once. Safe access to generated textures.
     /// </summary>

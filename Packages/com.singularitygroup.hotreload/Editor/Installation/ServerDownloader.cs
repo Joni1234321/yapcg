@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Public;
 using SingularityGroup.HotReload.DTO;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.CLI;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Installation {
     internal class ServerDownloader : IProgress<float> {
         public float Progress {get; private set;}
         public bool Started {get; private set;}

@@ -1,3 +1,7 @@
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.Window;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
+using SingularityGroup.HotReload.Editor.Window.Styles;
 using UnityEngine;
 using UnityEditor;
 

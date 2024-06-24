@@ -18,6 +18,8 @@ using UnityEngine.Networking;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using System.IO;
+using Public;
+using SingularityGroup.HotReload.MonoBehaviours;
 
 namespace SingularityGroup.HotReload {
     // entrypoint for Unity Player builds. Not necessary in Unity Editor.

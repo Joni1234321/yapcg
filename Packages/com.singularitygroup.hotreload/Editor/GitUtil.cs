@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using Public;
 using Debug = UnityEngine.Debug;
 
 namespace SingularityGroup.HotReload.Editor {

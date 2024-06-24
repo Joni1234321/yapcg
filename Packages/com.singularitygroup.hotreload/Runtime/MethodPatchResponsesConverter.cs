@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using SingularityGroup.HotReload.DTO;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 
-namespace SingularityGroup.HotReload.JsonConverters {
+namespace SingularityGroup.HotReload {
     internal class MethodPatchResponsesConverter : JsonConverter {
         public override bool CanConvert(Type objectType) {
             return objectType == typeof(List<MethodPatchResponse>);

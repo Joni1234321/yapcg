@@ -1,7 +1,10 @@
-﻿using UnityEditor;
+﻿using Public;
+using SingularityGroup.HotReload.Editor.Window.GUI.Options.Base;
+using SingularityGroup.HotReload.Editor.Window.Styles;
+using UnityEditor;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Tabs {
     internal class HotReloadOptionsSection {
         /// <remarks>
         /// Opening options tab does not automatically create the settings asset file.

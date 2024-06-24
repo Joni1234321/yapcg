@@ -1,7 +1,6 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Buttons {
     internal class OpenURLButton : IGUIComponent {
         public readonly string text;
         public readonly string url;
@@ -21,7 +20,7 @@ namespace SingularityGroup.HotReload.Editor {
         }
         
         public static void RenderRaw(Rect rect, string text, string url, GUIStyle style = null) {
-            if (GUI.Button(rect, new GUIContent(text.StartsWith(" ") ? text : " " + text), style ?? GUI.skin.button)) {
+            if (UnityEngine.GUI.Button(rect, new GUIContent(text.StartsWith(" ") ? text : " " + text), style ?? UnityEngine.GUI.skin.button)) {
                 Application.OpenURL(url);
             }
         }

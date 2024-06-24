@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using SingularityGroup.HotReload.Editor.Window.GUI.Buttons;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
 
     public enum HotReloadSuggestionKind {
         UnsupportedChanges,

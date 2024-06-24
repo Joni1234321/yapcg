@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SingularityGroup.HotReload {
+namespace SingularityGroup.HotReload.MonoBehaviours {
     internal class ConnectionDialog : MonoBehaviour {
         [Header("UI controls")]
         public Button buttonHide;

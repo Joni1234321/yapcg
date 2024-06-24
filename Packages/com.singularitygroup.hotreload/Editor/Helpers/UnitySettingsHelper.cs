@@ -1,12 +1,12 @@
-using UnityEngine;
-using System.Reflection;
 using System;
 using System.Collections;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 [assembly: InternalsVisibleTo("SingularityGroup.HotReload.Demo")]
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
     internal class UnitySettingsHelper {
         public static UnitySettingsHelper I = new UnitySettingsHelper();
 

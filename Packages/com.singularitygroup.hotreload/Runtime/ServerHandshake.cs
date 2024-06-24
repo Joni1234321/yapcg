@@ -2,6 +2,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Public;
+using SingularityGroup.HotReload.MonoBehaviours;
 using UnityEngine;
 
 namespace SingularityGroup.HotReload {

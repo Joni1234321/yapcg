@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using SingularityGroup.HotReload.Editor.Window.Styles;
+using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
     internal enum InvertibleIcon {
         BugReport,
         Events,

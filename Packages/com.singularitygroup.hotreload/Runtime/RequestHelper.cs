@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Public;
 using SingularityGroup.HotReload.DTO;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEngine;

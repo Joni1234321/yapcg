@@ -1,16 +1,13 @@
 using System;
 using System.IO;
 using SingularityGroup.HotReload.DTO;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.CLI;
+using SingularityGroup.HotReload.Editor.Window;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Helpers;
 using SingularityGroup.HotReload.EditorDependencies;
 using UnityEditor;
-using UnityEngine;
-#if UNITY_2019_4_OR_NEWER
-using System.Reflection;
-using Unity.CodeEditor;
-#endif
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Installation {
     static class InstallUtility {
         const string installFlagPath = PackageConst.LibraryCachePath + "/installFlag.txt";
 

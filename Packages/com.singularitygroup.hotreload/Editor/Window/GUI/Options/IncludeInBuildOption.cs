@@ -1,6 +1,8 @@
-﻿using UnityEditor;
+﻿using SingularityGroup.HotReload.Editor.Window.GUI.Options.Base;
+using SingularityGroup.HotReload.Editor.Window.Styles;
+using UnityEditor;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Options {
     internal class IncludeInBuildOption : ProjectOptionBase, ISerializedProjectOption {
         static IncludeInBuildOption _I;
         public static IncludeInBuildOption I = _I ?? (_I = new IncludeInBuildOption());

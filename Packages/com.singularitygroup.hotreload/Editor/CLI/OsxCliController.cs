@@ -2,10 +2,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using SingularityGroup.HotReload.Editor.Semver;
-using Debug = UnityEngine.Debug;
+using Public;
+using SingularityGroup.HotReload.Editor.Versioning;
 
-namespace SingularityGroup.HotReload.Editor.Cli {
+namespace SingularityGroup.HotReload.Editor.CLI {
     class OsxCliController : ICliController {
         Process process;
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.IO;
 using SingularityGroup.HotReload.Demo;
+using SingularityGroup.HotReload.Demo.Scripts;
+using SingularityGroup.HotReload.Editor.Window;
 using UnityEditor;
 using UnityEngine;
 

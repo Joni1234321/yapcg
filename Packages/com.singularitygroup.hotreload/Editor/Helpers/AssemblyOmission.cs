@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using UnityEditor;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Public;
 using SingularityGroup.HotReload.Newtonsoft.Json;
+using UnityEditor;
 using UnityEditor.Compilation;
 
 [assembly: InternalsVisibleTo("SingularityGroup.HotReload.EditorTests")]
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
     internal static class AssemblyOmission {
         // [MenuItem("Window/Hot Reload Dev/List omitted projects")]
         private static void Check() {

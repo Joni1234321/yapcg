@@ -2,7 +2,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Public;
 using SingularityGroup.HotReload.DTO;
+using SingularityGroup.HotReload.MonoBehaviours;
 
 namespace SingularityGroup.HotReload {
     

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using SingularityGroup.HotReload.Editor.Cli;
+using SingularityGroup.HotReload.Editor.CLI;
 
 namespace SingularityGroup.HotReload.Editor {
     public class ServerHealthCheck : IServerHealthCheckInternal {

@@ -1,11 +1,9 @@
 #if ENABLE_MONO && (DEVELOPMENT_BUILD || UNITY_EDITOR)
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Jobs;
 using UnityEngine.UI;
 
-namespace SingularityGroup.HotReload.Demo {
+namespace SingularityGroup.HotReload.Demo.Scripts {
     public class HotReloadBurstJobsDemo : MonoBehaviour {
         public Transform[] cubes;
         public Text informationText;

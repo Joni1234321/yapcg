@@ -2,11 +2,9 @@
 using System.Globalization;
 using SingularityGroup.HotReload.DTO;
 using UnityEditor;
-using UnityEditor.VSAttribution.HotReload;
-using UnityEngine;
 using UnityEngine.Analytics;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Attribution {
     internal static class Attribution {
          internal const string LastLoginKey = "HotReload.Attribution.LastAttributionEventAt";
          

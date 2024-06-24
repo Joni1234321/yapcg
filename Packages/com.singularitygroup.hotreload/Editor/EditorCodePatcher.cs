@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using SingularityGroup.HotReload.DTO;
-using SingularityGroup.HotReload.Editor.Cli;
 using SingularityGroup.HotReload.Editor.Demo;
 using SingularityGroup.HotReload.EditorDependencies;
 using SingularityGroup.HotReload.RuntimeDependencies;
@@ -17,6 +16,13 @@ using Debug = UnityEngine.Debug;
 using Task = System.Threading.Tasks.Task;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Public;
+using SingularityGroup.HotReload.Editor.CLI;
+using SingularityGroup.HotReload.Editor.Helpers;
+using SingularityGroup.HotReload.Editor.Installation;
+using SingularityGroup.HotReload.Editor.RequiredSettings;
+using SingularityGroup.HotReload.Editor.Window;
+using SingularityGroup.HotReload.Editor.Window.GUI.Tabs;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEditor.Compilation;
 
@@ -79,7 +85,7 @@ namespace SingularityGroup.HotReload.Editor {
 
             UpdateHost();
             licenseType = UnityLicenseHelper.GetLicenseType();
-            var compileChecker = CompileChecker.Create();
+            var compileChecker = CompileChecker.CompileChecker.Create();
             compileChecker.onCompilationFinished += OnCompilationFinished;
             EditorApplication.delayCall += InstallUtility.CheckForNewInstall;
             AddEditorFocusChangedHandler(OnEditorFocusChanged);
@@ -108,7 +114,7 @@ namespace SingularityGroup.HotReload.Editor {
             };
             DetectEditorStart();
             DetectVersionUpdate();
-            SingularityGroup.HotReload.Demo.Demo.I = new EditorDemo();
+            HotReload.Demo.Scripts.Demo.I = new EditorDemo();
             RecordActiveDaysForRateApp();
             if (EditorApplication.isPlayingOrWillChangePlaymode) {
                 CodePatcher.I.InitPatchesBlocked(patchesFilePath);
@@ -811,7 +817,7 @@ namespace SingularityGroup.HotReload.Editor {
         
         [CanBeNull] internal static LoginStatusResponse Status { get; private set; }
         internal static void HandleStatus(LoginStatusResponse resp) {
-            Attribution.RegisterLogin(resp);
+            Attribution.Attribution.RegisterLogin(resp);
             
             bool consumptionsChanged = Status?.freeSessionRunning != resp.freeSessionRunning || Status?.freeSessionEndTime != resp.freeSessionEndTime;
             bool expiresAtChanged = Status?.licenseExpiresAt != resp.licenseExpiresAt;

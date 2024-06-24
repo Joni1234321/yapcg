@@ -1,4 +1,4 @@
-namespace SingularityGroup.HotReload.Editor.Cli {
+namespace SingularityGroup.HotReload.Editor.CLI {
     class StartArgs {
         public string hotreloadTempDir;
         // aka method patch temp dir

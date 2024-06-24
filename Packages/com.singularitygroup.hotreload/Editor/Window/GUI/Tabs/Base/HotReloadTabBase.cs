@@ -1,8 +1,7 @@
-﻿
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Base {
     internal abstract class HotReloadTabBase : IGUIComponent {
         protected readonly HotReloadWindow _window;
 

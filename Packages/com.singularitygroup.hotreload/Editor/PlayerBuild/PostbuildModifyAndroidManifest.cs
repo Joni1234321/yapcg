@@ -1,10 +1,11 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using Public;
 using UnityEditor.Android;
 using UnityEditor.Build;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.PlayerBuild {
 #pragma warning disable CS0618
     /// <remarks>
     /// <para>

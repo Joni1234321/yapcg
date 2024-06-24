@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Helpers {
     struct BuildInfoInput {
         public readonly string allDefineSymbols;
         public readonly BuildTarget activeBuildTarget;

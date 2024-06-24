@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-namespace TMPro.Examples
+namespace Extensions.TextMesh_Pro.Examples___Extras.Scripts
 {
     
     public class CameraController : MonoBehaviour

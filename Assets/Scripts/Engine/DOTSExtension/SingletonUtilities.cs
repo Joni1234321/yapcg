@@ -1,8 +1,8 @@
-﻿namespace YAPCG.Engine.DOTSExtension
-{
-    using Unity.Entities;
+﻿using Unity.Entities;
 
-namespace THPS.Singletons
+namespace YAPCG.Engine.DOTSExtension
+{
+    namespace THPS.Singletons
 {
     public struct DefaultSingleton : IComponentData { }
 

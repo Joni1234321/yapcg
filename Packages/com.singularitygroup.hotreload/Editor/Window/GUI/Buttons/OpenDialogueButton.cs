@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Buttons {
     internal class OpenDialogueButton : IGUIComponent {
         public readonly string text;
         public readonly string url;
@@ -32,7 +32,7 @@ namespace SingularityGroup.HotReload.Editor {
         }
         
         public static void RenderRaw(Rect rect, string text, string url, string title, string message, string ok, string cancel, GUIStyle style = null) {
-            if (GUI.Button(rect, new GUIContent(text.StartsWith(" ") ? text : " " + text), style ?? GUI.skin.button)) {
+            if (UnityEngine.GUI.Button(rect, new GUIContent(text.StartsWith(" ") ? text : " " + text), style ?? UnityEngine.GUI.skin.button)) {
                 if (EditorUtility.DisplayDialog(title, message, ok, cancel)) {
                     Application.OpenURL(url);
                 }

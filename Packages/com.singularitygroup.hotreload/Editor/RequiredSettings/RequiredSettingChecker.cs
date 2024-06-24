@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using SingularityGroup.HotReload.Editor.Helpers;
 using SingularityGroup.HotReload.HarmonyLib;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.RequiredSettings {
     using IndicationStatus = EditorIndicationState.IndicationStatus;
     
     // Before Unity 2021.3, value is 0 or 1. Only value of 1 is a problem.

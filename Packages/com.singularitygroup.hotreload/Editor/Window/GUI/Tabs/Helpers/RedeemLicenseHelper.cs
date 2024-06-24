@@ -5,12 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Public;
 using SingularityGroup.HotReload.DTO;
 using SingularityGroup.HotReload.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
-namespace SingularityGroup.HotReload.Editor {
+namespace SingularityGroup.HotReload.Editor.Window.GUI.Tabs.Helpers {
     internal enum RedeemStage {
         None,
         Registration,
@@ -91,7 +92,7 @@ namespace SingularityGroup.HotReload.Editor {
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Comany size (number of employees)");
-            GUI.SetNextControlName("company_size");
+            UnityEngine.GUI.SetNextControlName("company_size");
             _pendingCompanySize = EditorGUILayout.TextField(_pendingCompanySize)?.Trim();
             EditorGUILayout.Space();
 
@@ -129,12 +130,12 @@ namespace SingularityGroup.HotReload.Editor {
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Invoice number/Order ID");
-            GUI.SetNextControlName("invoice_number");
+            UnityEngine.GUI.SetNextControlName("invoice_number");
             _pendingInvoiceNumber = EditorGUILayout.TextField(_pendingInvoiceNumber ?? HotReloadPrefs.RedeemLicenseInvoice)?.Trim();
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Email");
-            GUI.SetNextControlName("email_redeem");
+            UnityEngine.GUI.SetNextControlName("email_redeem");
             _pendingRedeemEmail = EditorGUILayout.TextField(_pendingRedeemEmail ?? HotReloadPrefs.RedeemLicenseEmail);
             EditorGUILayout.Space();
 
@@ -291,7 +292,7 @@ namespace SingularityGroup.HotReload.Editor {
 
         void SwitchToStage(RedeemStage stage) {
             // remove focus so that the input field re-renders
-            GUI.FocusControl(null);
+            UnityEngine.GUI.FocusControl(null);
             RedeemStage = stage;
         }
 
