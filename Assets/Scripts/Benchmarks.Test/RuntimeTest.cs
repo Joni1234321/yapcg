@@ -31,7 +31,7 @@ namespace YAPCG.Benchmarks.Test
             using(Measure.Scope("LoadScene"))
             {
                 // Add scene to Build Settings before running test 
-                SceneManager.LoadScene("Scene"); 
+                SceneManager.LoadScene("SolarSystemScene"); 
             }
             yield return null;
 
