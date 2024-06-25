@@ -9,5 +9,7 @@ namespace YAPCG.Application.Input
         public bool LeftClickSelectBody, DeselectBody;
 
         public bool SpeedIncrease, SpeedDecrease, SpeedPause;
+
+        public float Zoom;
     }
 }

@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.Profiling;
 using UnityEngine;
 using YAPCG.Domain.NUTS;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.SystemGroups;
 using YAPCG.Engine.Time.Components;
@@ -13,7 +14,7 @@ using YAPCG.Simulation.OrbitalMechanics;
 namespace YAPCG.Domain.Common.Systems
 {
     [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
-    [UpdateInGroup(typeof(RenderSystemGroup))]
+    [UpdateInGroup(typeof(SystemGroup))]
     internal partial struct OrbitalMovementSystem : ISystem
     {
         [BurstCompile]

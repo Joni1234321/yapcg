@@ -4,7 +4,7 @@ using YAPCG.Engine.Common;
 namespace YAPCG.Engine.Input
 {
     [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
-    [UpdateInGroup(typeof(SystemGroup), OrderFirst = true)]
+    [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial class InputSystemGroup : ComponentSystemGroup
     {
         

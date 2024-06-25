@@ -35,6 +35,7 @@ namespace YAPCG.Application.Input
                     SpeedPause = Keyboard.current[Key.P].wasPressedThisFrame,
                     SpeedIncrease = Keyboard.current[Key.NumpadPlus].wasPressedThisFrame,
                     SpeedDecrease = Keyboard.current[Key.NumpadMinus].wasPressedThisFrame,
+                    Zoom = Mouse.current.scroll.ReadValue().y,
                 }
             );
 

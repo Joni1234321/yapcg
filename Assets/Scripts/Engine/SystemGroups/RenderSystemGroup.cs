@@ -4,9 +4,8 @@ using YAPCG.Engine.Input;
 
 namespace YAPCG.Engine.SystemGroups
 {
-    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
-    [UpdateInGroup(typeof(SystemGroup), OrderLast = true)]
-    [UpdateAfter(typeof(InputSystemGroup))]
+    [WorldSystemFilter(WorldSystemFilterFlags.Default | WorldSystemFilterFlags.Editor)]
+    [UpdateInGroup(typeof(PresentationSystemGroup))]
     public partial class RenderSystemGroup : ComponentSystemGroup
     {
     }

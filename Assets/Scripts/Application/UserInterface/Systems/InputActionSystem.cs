@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using YAPCG.Application.Input;
 using YAPCG.Application.UserInterface.Components;
 using YAPCG.Domain.NUTS;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Physics;
@@ -15,8 +16,8 @@ using YAPCG.Engine.Time.Components;
 namespace YAPCG.Application.UserInterface.Systems
 {
     [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)] 
-    [UpdateInGroup(typeof(RenderSystemGroup), OrderFirst = true)]
-    public partial struct ActionSystem : ISystem
+    [UpdateInGroup(typeof(SystemGroup), OrderFirst = true)]
+    public partial struct InputActionSystem : ISystem
     {
         private EntityQuery _levelQuery;
         public void OnCreate(ref SystemState state)
@@ -121,7 +122,6 @@ namespace YAPCG.Application.UserInterface.Systems
             SystemAPI.SetSingleton(speedLevel);
             float speed = speedLevel.Paused ? 0 : buffer[speedLevel.Level].Speed;
             SystemAPI.SetSingleton(new TickSpeed { SpeedUp = speed });
-
         }
         
         [BurstCompile]
