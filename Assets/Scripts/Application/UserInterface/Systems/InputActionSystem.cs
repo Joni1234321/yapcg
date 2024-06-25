@@ -15,7 +15,6 @@ using YAPCG.Engine.Time.Components;
 
 namespace YAPCG.Application.UserInterface.Systems
 {
-    [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)] 
     [UpdateInGroup(typeof(SystemGroup), OrderFirst = true)]
     public partial struct InputActionSystem : ISystem
     {

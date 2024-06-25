@@ -10,8 +10,8 @@ using YAPCG.Engine.Physics.Collisions;
 namespace YAPCG.Application.Input
 {
     [WorldSystemFilter(WorldSystemFilterFlags.Editor | WorldSystemFilterFlags.Default)]
-    [UpdateInGroup(typeof(InputSystemGroup))]
-    internal partial struct InputSystem : ISystem
+    [UpdateInGroup(typeof(InputSystemGroup), OrderFirst = true)]
+    internal partial struct InputReaderSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)

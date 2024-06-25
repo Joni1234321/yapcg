@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using YAPCG.Engine.Common;
 using YAPCG.Engine.Common.DOTS.Factory;
 using YAPCG.Engine.Components;
 
@@ -11,10 +12,10 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
 {
     public class SampleWorldAuthoring : MonoBehaviour
     {
-        public bool PressThisToUpdate;
+        public bool PressThisToUpdate = true;
 
         public SolarSystemFactoryParams SolarSystemFactoryParams = new() { Planets = 7 };
-        public Hub.HubFactoryParams[]HubFactoryParams;
+        public Hub.HubFactoryParams[] HubFactoryParams;
         public Deposit.DepositFactoryParams[] DepositFactoryParams;
 
         private void Awake()
@@ -22,13 +23,14 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
             PressThisToUpdate = true;
         }
 
+
         private class Baker : Baker<SampleWorldAuthoring>
         {
             public override void Bake(SampleWorldAuthoring authoring)
             {
                 EntityManager _ = World.DefaultGameObjectInjectionWorld.EntityManager;
                 #if UNITY_EDITOR
-                if (!EditorApplication.isPlaying && !authoring.PressThisToUpdate)
+                if (!EditorApplication.isPlaying && !authoring.PressThisToUpdate && !_.CreateEntityQuery(ComponentType.ReadOnly<Body.BodyTag>()).IsEmpty)
                 {
                     _.InitFactory<Factories.SolarSystemFactoryParams>();
                     _.InitFactory<Hub.HubFactoryParams>();
@@ -38,6 +40,7 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
                 #endif
                 
                 authoring.PressThisToUpdate = false;
+                CLogger.LogLoaded(authoring, "Spawning world");
                 Entity e = GetEntity(TransformUsageFlags.None);
                 _.DestroyEntity(_.CreateEntityQuery(ComponentType.ReadOnly<Body.BodyTag>()));
                 _.DestroyEntity(_.CreateEntityQuery(ComponentType.ReadOnly<Hub.HubTag>()));

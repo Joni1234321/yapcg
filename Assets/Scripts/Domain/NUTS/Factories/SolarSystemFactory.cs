@@ -39,7 +39,7 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent<Body.SunTag>(e);
 
             // Name
-            FixedString64Bytes name = "Sol " + random.NextInt(50).ToRoman();
+            FixedString64Bytes name = "Sol " + random.NextInt(1, 50).ToRoman();
             _.AddComponent(e, new Name { Value = name });
             _.SetName(e, $"SUN: {name}");
             

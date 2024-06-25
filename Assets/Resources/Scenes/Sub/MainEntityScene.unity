@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cd6ddaf760471ba26bb3d3b22cd372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Seed: 29
+  Seed: 36
 --- !u!114 &1765370264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PressThisToUpdate: 0
   SolarSystemFactoryParams:
-    Planets: 9
+    Planets: 65
   HubFactoryParams: []
   DepositFactoryParams: []
 --- !u!1660057539 &9223372036854775807
