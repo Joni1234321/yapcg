@@ -8,6 +8,13 @@ The game is a tickbased planet simulator where each planet gains point every tic
 - UI systems using Unity Toolkit
 - Calculated with Unity DOTS ECS
 - Benchmark tests, that will measure performance of methods and application.
+# Controls
+Controls can be found in `InputReaderSystem.cs` but it should be something like this:  
+**\+ \-**, change tick rate  
+**P** Pause   
+**Z, X** change focus planets  
+**F** Toggle between planet view and solar system view  
+
 
 # Architecture
 This section describes the Projects in this system and how they interact with each other.
