@@ -11,5 +11,6 @@ namespace YAPCG.Application.Input
         public bool SpeedIncrease, SpeedDecrease, SpeedPause;
 
         public float Zoom;
+        public bool ResetView;
     }
 }

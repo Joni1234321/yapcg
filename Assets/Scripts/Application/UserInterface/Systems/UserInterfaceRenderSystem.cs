@@ -21,6 +21,7 @@ namespace YAPCG.Application.UserInterface.Systems
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<ApplicationSettings>();
             state.RequireForUpdate<TickSpeed>();
             state.RequireForUpdate<TickSpeedLevel>();
             state.RequireForUpdate<FocusedBody>();

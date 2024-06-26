@@ -2,6 +2,7 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 using YAPCG.Application.Input;
 using YAPCG.Application.UserInterface.Components;
 using YAPCG.Domain.NUTS;
@@ -10,7 +11,6 @@ using YAPCG.Engine.Components;
 using YAPCG.Engine.DebugDrawer;
 using YAPCG.Engine.Physics;
 using YAPCG.Engine.Physics.Collisions;
-using YAPCG.Engine.SystemGroups;
 using YAPCG.Engine.Time.Components;
 
 namespace YAPCG.Application.UserInterface.Systems
@@ -18,19 +18,25 @@ namespace YAPCG.Application.UserInterface.Systems
     [UpdateInGroup(typeof(SystemGroup), OrderFirst = true)]
     public partial struct InputActionSystem : ISystem
     {
-        private EntityQuery _levelQuery;
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<TickSpeedLevel>();
             state.RequireForUpdate<TickSpeed>();
             state.RequireForUpdate<SharedSizes>();
             state.RequireForUpdate<SharedRays>();
-            _levelQuery = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build();
             
+            Camera camera = Camera.main;
             state.EntityManager.CreateSingleton(new FocusedBody { Selected = Entity.Null });
-
+            state.EntityManager.CreateSingleton(new CameraMovement
+            {
+                DefaultView = false,
+                DefaultCameraPosition = camera.transform.position,
+                DefaultCameraRotation = camera.transform.rotation,
+                LookAtPosition = float3.zero,
+            });
+            
             state.RequireForUpdate<ActionInput>(); 
-            state.RequireForUpdate<FocusedBody>();
+
         }
 
         private int NegativeMod(int x, int m) => (x % m + m) % m;
@@ -81,7 +87,7 @@ namespace YAPCG.Application.UserInterface.Systems
             if (actionInput.DeselectBody)
                 selected = Entity.Null;
             
-            // Hovered
+            // New Hovered animation
             if (focusedBody.ValueRO.Hovered != Entity.Null) 
                 SystemAPI.SetComponent(focusedBody.ValueRO.Hovered, AlternativeColorRatio.Nothing);
 
@@ -90,7 +96,7 @@ namespace YAPCG.Application.UserInterface.Systems
             
             focusedBody.ValueRW.Hovered = hovered;
 
-            // Selected
+            // New Selected animation
             if (focusedBody.ValueRO.Selected != Entity.Null) 
                 SystemAPI.SetComponent(focusedBody.ValueRO.Selected, AlternativeColorRatio.Nothing);
 
@@ -99,7 +105,11 @@ namespace YAPCG.Application.UserInterface.Systems
 
             focusedBody.ValueRW.Selected = selected;
 
+            if (selectedIndex != -1)
+                SystemAPI.GetSingletonRW<CameraMovement>().ValueRW.LookAtPosition = positions[selectedIndex];
+            
             TimeControls(actionInput, ref state);
+            Zoom(actionInput, ref state);
         }
 
         void TimeControls(in ActionInput actionInput, ref SystemState state)
@@ -123,6 +133,31 @@ namespace YAPCG.Application.UserInterface.Systems
             SystemAPI.SetSingleton(new TickSpeed { SpeedUp = speed });
         }
         
+        void Zoom(in ActionInput input, ref SystemState state)
+        {
+            var cameraMovement = SystemAPI.GetSingletonRW<CameraMovement>();
+            if (input.ResetView)
+                cameraMovement.ValueRW.DefaultView = !cameraMovement.ValueRO.DefaultView;
+
+            Camera camera = Camera.main;
+            if (camera == null)
+                return;
+
+            if (cameraMovement.ValueRO.DefaultView)
+            {
+                camera.transform.position = cameraMovement.ValueRO.DefaultCameraPosition;
+                camera.transform.rotation = cameraMovement.ValueRO.DefaultCameraRotation;
+                return;
+            }
+            
+            const float SCROLL_SENSITIVITY = -0.15f;
+
+            camera.transform.LookAt(cameraMovement.ValueRO.LookAtPosition);
+            camera.transform.position = math.lerp(cameraMovement.ValueRO.LookAtPosition, camera.transform.position, 1 + input.Zoom * SCROLL_SENSITIVITY);
+        }
+
+
+
         [BurstCompile]
         int GetHoverBodyIndex(Raycast.ray ray, NativeArray<float3> positions, NativeArray<float> sizes)
         {
@@ -162,7 +197,7 @@ namespace YAPCG.Application.UserInterface.Systems
         [BurstCompile]
         NativeArray<float3> GetLevelTriangles(ref SystemState state)
         {
-            NativeArray<LevelQuad> quads = _levelQuery.ToComponentDataArray<LevelQuad>(state.WorldUpdateAllocator);
+            NativeArray<LevelQuad> quads = SystemAPI.QueryBuilder().WithAll<LevelQuad>().Build().ToComponentDataArray<LevelQuad>(state.WorldUpdateAllocator);
             NativeArray<float3> positions = new NativeArray<float3>(6, state.WorldUpdateAllocator);
             for(int i = 0; i < quads.Length; i++)
             {
@@ -190,9 +225,5 @@ namespace YAPCG.Application.UserInterface.Systems
 
             return positions;
         }
-
-        
-
-
     }
 }

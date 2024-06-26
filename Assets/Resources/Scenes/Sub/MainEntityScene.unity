@@ -397,7 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PressThisToUpdate: 0
   SolarSystemFactoryParams:
-    Planets: 65
+    Planets: 10
   HubFactoryParams: []
   DepositFactoryParams: []
 --- !u!1660057539 &9223372036854775807

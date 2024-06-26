@@ -17,6 +17,7 @@ namespace YAPCG.Domain.NUTS.Factories.Samples
 
         public void Spawn(ref EntityCommandBuffer ecb, ref SystemState state, ref Random random)
         {
+            
             ecb.CallFactory(state.EntityManager, ref random, new HubFactory(), out var hubs);
             ecb.CallFactory(state.EntityManager, ref random, new DepositFactory(), out _);
             ecb.CallFactory(state.EntityManager, ref random, new SolarSystemFactory(), out _);

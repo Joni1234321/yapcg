@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Collections;
 using Unity.Entities;
+using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
 namespace YAPCG.Engine.Common.DOTS.Factory
@@ -15,9 +16,11 @@ namespace YAPCG.Engine.Common.DOTS.Factory
             if (!_.Exists(FactoryEntity))
             {
                 FactoryEntity = _.CreateEntity();
-                _.AddComponent<FactoryReadyTag>(FactoryEntity);
                 _.SetName(FactoryEntity, "Factory Entity");
             }
+            if (!_.HasComponent<FactoryReadyTag>(FactoryEntity))
+                _.AddComponent<FactoryReadyTag>(FactoryEntity);
+            
             return _.AddBuffer<T>(FactoryEntity);
         }
         public static DynamicBuffer<T> InitFactory<T>(this EntityManager _, T data)
