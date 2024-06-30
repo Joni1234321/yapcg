@@ -23,6 +23,7 @@ Resource: https://www.youtube.com/watch?v=u9DzbBHNwtc
 
 # Entities
 .ForEach is as fast as jobs, but takes longer to compile. IJobEntity is the same.   
+Code Gen: .ForEach -> IJobEntity -> IJobChunk
 
 
 # Rendering
