@@ -14,8 +14,9 @@ namespace YAPCG.Domain.NUTS.Factories
     {
         private static float3 GetPositionOnSquare(ref Random random, float radius) => random.NextFloat3(new float3(-radius, 0, -radius), new float3(radius, 0, radius));
 
-        public void Spawn(EntityCommandBuffer ecb, Hub.HubFactoryParams config, ref Random random,
-            ref NativeList<Entity> spawned)
+        public void Spawn(ref Random random,
+            ref EntityCommandBuffer ecb,
+            ref NativeList<Entity> spawned, in Hub.HubFactoryParams config)
         {
             Deposit.RGO rgo = (Deposit.RGO)random.NextInt((int)Deposit.RGO.COUNT);
             Terrain.TerrainType terrain = (Terrain.TerrainType)random.NextInt((int)Terrain.TerrainType.COUNT);

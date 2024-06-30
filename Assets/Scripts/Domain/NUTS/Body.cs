@@ -8,6 +8,7 @@ namespace YAPCG.Domain.NUTS
         public struct BodyTag : IComponentData { }
         public struct PlanetTag : IComponentData { }
         public struct SunTag : IComponentData { }
+        public struct AsteroidTag : IComponentData { }
 
         public struct Orbit : IComponentData
         {

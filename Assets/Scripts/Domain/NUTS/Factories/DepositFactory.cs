@@ -10,8 +10,9 @@ namespace YAPCG.Domain.NUTS.Factories
 {
     public struct DepositFactory : IFactory<Deposit.DepositFactoryParams>
     {
-        public void Spawn(EntityCommandBuffer ecb, Deposit.DepositFactoryParams config, ref Random random,
-            ref NativeList<Entity> spawned)
+        public void Spawn(ref Random random,
+            ref EntityCommandBuffer ecb,
+            ref NativeList<Entity> spawned, in Deposit.DepositFactoryParams config)
         {
             int j = spawned.Length;
 

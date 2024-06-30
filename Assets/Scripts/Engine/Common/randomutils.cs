@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Unity.Burst;
 using Unity.Mathematics;
 
 namespace YAPCG.Engine.Common
@@ -7,7 +8,7 @@ namespace YAPCG.Engine.Common
     {
         private const float STEEPNESS = 2f;
 
-        
+
         /// <summary>
         /// result is ]-1, 1[
         /// </summary>
@@ -17,8 +18,8 @@ namespace YAPCG.Engine.Common
         /// dx/dt tanh
         /// </summary>
         public static float sech2(float x) => 1f / math.pow(math.cosh(x), 2f);
-        
-        
+
+
         public static float logistic(float x) => 1f / (1f + math.exp(-x));
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace YAPCG.Engine.Common
         /// </summary>
         public static float tanh_diff(float x) => sech2(x * STEEPNESS);
 
-        
+
         /// <summary>
         /// box muller
         /// </summary>
@@ -41,28 +42,31 @@ namespace YAPCG.Engine.Common
         {
             // https://www.alanzucconi.com/2015/09/16/how-to-sample-from-a-gaussian-distribution/
             float v1, v2, s;
-            do {
+            do
+            {
                 v1 = 2.0f * random.NextFloat() - 1.0f;
                 v2 = 2.0f * random.NextFloat() - 1.0f;
                 s = v1 * v1 + v2 * v2;
             } while (s >= 1.0f || s == 0f);
+
             return v1 * math.sqrt(-2.0f * math.log(s) / s);
         }
-        
-        public static double sind(double d) {
+
+        public static double sind(double d)
+        {
             d += math.PI_DBL;
-            double x2 = math.floor(d*(1/math.PI2_DBL));
-            d -= x2*math.PI2_DBL;
+            double x2 = math.floor(d * (1 / math.PI2_DBL));
+            d -= x2 * math.PI2_DBL;
             d -= math.PI_DBL;
-   
+
             x2 = d * d;
-   
+
             return //accurate to 6.82e-8, 3.3x faster than Math.sin, 
                 //faster than lookup table in real-world conditions due to no cache misses
                 //all values from "Fast Polynomial Approximations to Sine and Cosine", Garret, C. K., 2012
-                (((((-2.05342856289746600727e-08*x2 + 2.70405218307799040084e-06)*x2
-                    - 1.98125763417806681909e-04)*x2 + 8.33255814755188010464e-03)*x2
-                  - 1.66665772196961623983e-01)*x2 + 9.99999707044156546685e-01)*d;
+                (((((-2.05342856289746600727e-08 * x2 + 2.70405218307799040084e-06) * x2
+                    - 1.98125763417806681909e-04) * x2 + 8.33255814755188010464e-03) * x2
+                  - 1.66665772196961623983e-01) * x2 + 9.99999707044156546685e-01) * d;
         }
 
         public static float2 rotate(float2 point, float theta)
@@ -72,28 +76,31 @@ namespace YAPCG.Engine.Common
             return new float2(x, y);
         }
 
-        public static double cosd(double d) {
+        public static double cosd(double d)
+        {
             d += math.PI_DBL;
-            double x2 = math.floor(d*(1/math.PI2_DBL));
-            d -= x2*math.PI2_DBL;
+            double x2 = math.floor(d * (1 / math.PI2_DBL));
+            d -= x2 * math.PI2_DBL;
             d -= math.PI_DBL;
-   
+
             d *= d;
-   
+
             return //max error 5.6e-7, 4x faster than Math.cos, 
                 //faster than lookup table in real-world conditions due to less cache misses
                 //all values from "Fast Polynomial Approximations to Sine and Cosine", Garret, C. K., 2012
-                ((((- 2.21941782786353727022e-07*d + 2.42532401381033027481e-05)*d
-                   - 1.38627507062573673756e-03)*d + 4.16610337354021107429e-02)*d
-                 - 4.99995582499065048420e-01)*d + 9.99999443739537210853e-01;
+                ((((-2.21941782786353727022e-07 * d + 2.42532401381033027481e-05) * d
+                   - 1.38627507062573673756e-03) * d + 4.16610337354021107429e-02) * d
+                 - 4.99995582499065048420e-01) * d + 9.99999443739537210853e-01;
         }
-
     }
 
+    [BurstCompile]
     public static class RandomExtensions
     {
+        [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float NextGauss(this ref Random random, float mu, float sigma) => mu + randomutils.gauss_distribution(ref random) * sigma;
+        public static float NextGauss(this ref Random random, float mu, float sigma) =>
+            mu + randomutils.gauss_distribution(ref random) * sigma;
 
         /// <summary>
         /// 68.0% mu +- sigma
@@ -101,12 +108,52 @@ namespace YAPCG.Engine.Common
         /// 99.7% mu +- 3sigma
         /// </summary>
         /// <returns>Gauss between [min, max]</returns>
+        [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float NextGauss(this ref Random random, float mu, float sigma, float min, float max)
         {
             float x;
-            do { x = random.NextGauss(mu, sigma); } while (x < min || x > max);
+            do
+            {
+                x = random.NextGauss(mu, sigma);
+            } while (x < min || x > max);
+
             return x;
+        }
+
+
+        /// <summary>
+        /// Generated by chatgpt
+        /// </summary>
+        /// <returns>Gauss between [min, max]</returns>
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float NextPowerLaw(this ref Random random, float min, float max, float alpha = 2f)
+        {
+            float u = random.NextFloat();
+            float slope = 1.0f - alpha;
+            float exponent = 1.0f / slope;
+            float x = math.pow((math.pow(max, slope) - math.pow(min, slope)) * u + math.pow(min, slope), exponent);
+            return x;
+        }
+
+
+        /// <summary>
+        /// Returns linear sample
+        /// https://blogs.sas.com/content/iml/2024/02/19/linear-distribution-interval.html
+        /// </summary>
+        /// <returns></returns>
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float NextLinearSampleGrowing(this ref Random random, float min = 0, float max = 1)
+        {
+            return min + math.sqrt(random.NextFloat()) * (max - min);
+        }
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float NextLinearSampleShrinking(this ref Random random, float min = 0, float max = 1)
+        {
+            return min + (1f - math.sqrt(random.NextFloat())) * (max - min);
         }
     }
 }

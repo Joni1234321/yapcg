@@ -51,14 +51,14 @@ namespace YAPCG.Engine.Common.DOTS.Factory
             data.Dispose();
         }
         
-        public static void CallFactory<T>(this EntityCommandBuffer ecb, EntityManager _, ref Random random, IFactory<T> factory, out NativeList<Entity> spawned) 
+        public static void CallFactory<T>(this ref EntityCommandBuffer ecb, EntityManager _, ref Random random, IFactory<T> factory, out NativeList<Entity> spawned) 
             where T : unmanaged, IFactoryParams
         {
             
             DynamicBuffer<T> factoryParams = _.GetBuffer<T>(FactoryEntity);
             spawned = new NativeList<Entity>(Allocator.Temp);
             foreach(T config in factoryParams)
-                factory.Spawn(ecb, config, ref random, ref spawned);
+                factory.Spawn(ref random, ref ecb, ref spawned, config);
             
             factoryParams.Clear();
         }

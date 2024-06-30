@@ -21,18 +21,24 @@ namespace YAPCG.Domain.NUTS.Factories
     
     public struct SolarSystemFactory : IFactory<SolarSystemFactoryParams>
     {
-        public void Spawn(EntityCommandBuffer ecb, SolarSystemFactoryParams config, ref Random random,
-            ref NativeList<Entity> spawned)
+        public void Spawn(ref Random random,
+            ref EntityCommandBuffer ecb,
+            ref NativeList<Entity> spawned, in SolarSystemFactoryParams config)
         {
             // create planet
             float earthMass = 330_000;
-            spawned.Add(CreateSun(ecb, earthMass, ref random));
+            CreateSun(ref random, ref ecb, ref spawned, earthMass);
             StandardGravitationalParameter mu = new StandardGravitationalParameter(new MassConverter(earthMass, MassConverter.UnitType.EarthMass).To(MassConverter.UnitType.KiloGrams));
             for (int i = 0; i < config.Planets; i++)
-                spawned.Add(CreatePlanet(ecb, spawned[0], mu, ref random));
+                spawned.Add(CreatePlanet(ref ecb, ref random, spawned[0], mu));
+
+            const float ASTEROID_AU = 4f;
+            const int ASTEROID_COUNT = 100;
+            CreateAsteroidBelt(ref random, ref ecb, ref spawned, spawned[0], mu, ASTEROID_AU, ASTEROID_COUNT);
         }
         
-        private Entity CreateSun(EntityCommandBuffer _, float earthMass, ref Random random)
+        private void CreateSun(ref Random random, ref EntityCommandBuffer _, ref NativeList<Entity> spawned,
+            float earthMass)
         {
             Entity e = _.CreateEntity();
             _.AddComponent<Body.BodyTag>(e);
@@ -56,10 +62,10 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
             _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
 
-            return e;
+            spawned.Add(e);
         }
         
-        private Entity CreatePlanet(EntityCommandBuffer _, Entity parent, StandardGravitationalParameter mu, ref Random random)
+        private Entity CreatePlanet(ref EntityCommandBuffer _, ref Random random, in Entity parent, in StandardGravitationalParameter mu)
         {
             // HINT: burstable code
             // no mananged array by using stackalloc
@@ -67,12 +73,7 @@ namespace YAPCG.Domain.NUTS.Factories
             // faster if you set thea rchetype once 
             // _.create
             /* HOTPATH EP 2
-            Entity e2 = _.CreateEntity(stackalloc ComponentType[] { ComponentType.ReadOnly<Body.BodySize>() });
-            Entity w1 = _.CreateEntity(stackalloc ComponentType[]
-                {
-                    ComponentType.ReadOnly<Body.BodySize>(),
-                    ComponentType.ReadOnly<Body.PlanetTag>()
-                });*/
+            Entity e2 = _.CreateEntity(stackalloc ComponentType[] { ComponentType.ReadOnly<Body.BodySize>() });*/
             Entity e = _.CreateEntity();
             _.AddComponent<Body.BodyTag>(e);
             _.AddComponent<Body.PlanetTag>(e);
@@ -89,10 +90,6 @@ namespace YAPCG.Domain.NUTS.Factories
             float earthMass = random.NextGauss(10f, 3f, 1f, 100f);
             float offset = random.NextFloat(1);
 
-            // float earthRadius = 1;
-            // float au = 1;
-            // float earthMass = 1;
-            // float offset = random.NextFloat(1);
             // Orbit calculation
             float distance = new Length(au, Length.UnitType.AstronomicalUnits).To(Length.UnitType.Meters);
             float radius = new Length(earthRadius, Length.UnitType.EarthRadius).To(Length.UnitType.Meters);
@@ -122,5 +119,60 @@ namespace YAPCG.Domain.NUTS.Factories
 
             return e;
         }
+
+
+        private void CreateAsteroidBelt(ref Random random, ref EntityCommandBuffer _, ref NativeList<Entity> spawned, in Entity parent, in StandardGravitationalParameter mu, float au, int count)
+        {
+            for (int i = 0; i < count; i++)
+                CreateAsteroid(ref _, parent, mu, au, ref random, ref spawned);
+        }
+        
+        private void CreateAsteroid(ref EntityCommandBuffer _, in Entity parent, in StandardGravitationalParameter mu, float au, ref Random random, ref NativeList<Entity> spawned)
+        {
+            Entity e = _.CreateEntity();
+            _.AddComponent<Body.BodyTag>(e);
+            _.AddComponent<Body.AsteroidTag>(e);
+            
+            // Name
+            FixedString64Bytes name = NamingGenerator.GetPlanetName(ref random);
+            _.AddComponent(e, new Name { Value = name });
+            _.SetName(e, $"ASTEROID: {name}");
+                
+            // Orbit
+            // https://en.wikipedia.org/wiki/Asteroid_belt#/media/File:Main_belt_asteroid_size_distribution.svg, linear distribution
+            float earthRadius = random.NextGauss(1, 1, 0.1f, 8);
+            float earthMass = random.NextGauss(1, 1, 0.1f, 8);
+            float offset = random.NextFloat(1);
+
+            // Orbit calculation
+            float distance = new Length(au, Length.UnitType.AstronomicalUnits).To(Length.UnitType.Meters);
+            float radius = new Length(earthRadius, Length.UnitType.EarthRadius).To(Length.UnitType.Meters);
+            float mass = new MassConverter(earthMass, MassConverter.UnitType.EarthMass).To(MassConverter.UnitType.KiloGrams);
+            SiTime period = OrbitalMechanics.GetOrbitalPeriod(mu, distance);
+            float offsetTicksF = offset * period.Days;
+            
+            float linearEccentricity = EllipseMechanics.GetLinearEccentricity(distance, distance); // this is the case since its a circular orbit
+            float eccentricity = distance > 0 ? linearEccentricity / distance : 0;
+            
+            // gravity
+            float ownMu = new StandardGravitationalParameter(mass).Value;
+            float gravity = ownMu / math.pow(radius, 2);
+            float ecapeVelocity = math.sqrt(2 * ownMu / radius);
+            
+            _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, AU = au, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
+            _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, EarthGravity = gravity, EscapeVelocity = ecapeVelocity, Mu = ownMu});
+            _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 1});
+            _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
+            
+            // Render
+            _.AddComponent(e, new Position { Value = new float3(au, 0, 0) });
+            _.AddComponent(e, new Body.TrueAnomaly { Value = 0 });
+            _.AddComponent(e, new ScaleComponent { Value = earthRadius / 5f });
+            _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
+            _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
+
+            spawned.Add(e);
+        }
+
     }
 }

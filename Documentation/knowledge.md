@@ -16,9 +16,14 @@ Resource: https://forum.unity.com/threads/when-where-and-why-to-put-burstcompile
 
 
 # Unity.Mathematics 
-Mathematics is slower in mono than MathF (up to 10x). With burst its faster, IL2CPP and MONO equally fast, and leagues ahead of mathf.  
+Mathematics is slower in mono than MathF (up to 10x).   
+With burst its faster, IL2CPP and MONO equally fast, and leagues ahead of mathf.  
 
 Resource: https://www.youtube.com/watch?v=u9DzbBHNwtc
+
+# Entities
+.ForEach is as fast as jobs, but takes longer to compile. IJobEntity is the same.   
+
 
 # Rendering
 Mesh       ======================  
