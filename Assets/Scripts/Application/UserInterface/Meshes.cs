@@ -12,7 +12,7 @@ namespace YAPCG.Application.UserInterface
 {
     public struct MeshesSingleton : IComponentData
     {
-        public MeshesReference Deposit, Planet, Sun, Orbit;
+        public MeshesReference Deposit, Planet, Sun, Asteroid, Orbit;
     }
     
     [System.Serializable]
@@ -41,7 +41,7 @@ namespace YAPCG.Application.UserInterface
     
     public class Meshes : MonoBehaviour
     {
-        public MeshesReference deposit, hub, body, sun, orbit;
+        public MeshesReference deposit, hub, body, sun, orbit, asteroid;
         public SharedSizes sharedSizes;
         
         // Can be null, but assume it isnt
@@ -61,7 +61,6 @@ namespace YAPCG.Application.UserInterface
 
         class Baker : Baker<Meshes>
         {
-            private static readonly int SHADER_SCALE = Shader.PropertyToID("_Scale");
             public override void Bake(Meshes authoring)
             {
                 Load(authoring);
@@ -72,6 +71,7 @@ namespace YAPCG.Application.UserInterface
                     Deposit = authoring.deposit,
                     Planet = authoring.body,
                     Sun = authoring.sun,
+                    Asteroid = authoring.asteroid,
                     Orbit = authoring.orbit,
                 };
                 

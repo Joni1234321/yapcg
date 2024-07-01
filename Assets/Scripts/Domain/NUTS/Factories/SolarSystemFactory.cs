@@ -32,7 +32,7 @@ namespace YAPCG.Domain.NUTS.Factories
             for (int i = 0; i < config.Planets; i++)
                 spawned.Add(CreatePlanet(ref ecb, ref random, spawned[0], mu));
 
-            const float ASTEROID_AU = 4f;
+            const float ASTEROID_AU = 7f;
             const int ASTEROID_COUNT = 100;
             CreateAsteroidBelt(ref random, ref ecb, ref spawned, spawned[0], mu, ASTEROID_AU, ASTEROID_COUNT);
         }
@@ -85,7 +85,7 @@ namespace YAPCG.Domain.NUTS.Factories
                 
             // Orbit
             // could have different generators depending on gas or giants
-            float earthRadius = random.NextGauss(10f, 3f, 1f, 100f);
+            float earthRadius = random.NextGauss(2f, 3f, 0.5f, 100f);
             float au = random.NextFloat(1f, 5f);
             float earthMass = random.NextGauss(10f, 3f, 1f, 100f);
             float offset = random.NextFloat(1);
@@ -113,7 +113,7 @@ namespace YAPCG.Domain.NUTS.Factories
             // Render
             _.AddComponent(e, new Position { Value = new float3(au, 0, 0) });
             _.AddComponent(e, new Body.TrueAnomaly { Value = 0 });
-            _.AddComponent(e, new ScaleComponent { Value = earthRadius / 5f });
+            _.AddComponent(e, new ScaleComponent { Value = earthRadius / 3f });
             _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
             _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
 
@@ -167,7 +167,7 @@ namespace YAPCG.Domain.NUTS.Factories
             // Render
             _.AddComponent(e, new Position { Value = new float3(au, 0, 0) });
             _.AddComponent(e, new Body.TrueAnomaly { Value = 0 });
-            _.AddComponent(e, new ScaleComponent { Value = earthRadius / 5f });
+            _.AddComponent(e, new ScaleComponent { Value = earthRadius / 2f });
             _.AddComponent(e, new FadeStartTimeComponent { FadeStartTime = float.MinValue } );
             _.AddComponent(e, new AlternativeColorRatio { AlternativeRatio = 0 } );
 

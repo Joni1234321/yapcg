@@ -35,7 +35,7 @@ namespace YAPCG.Application.UserInterface.Systems
                 HUD.Instance.WorldUserInterface.WorldPlanetControlRenderer.Draw(0); 
                 return;
             }
-            EntityQuery bodyQuery = SystemAPI.QueryBuilder().WithAll<Body.BodyTag, Position, Body.Owner, ScaleComponent, DiscoverProgress, Name>().Build();
+            EntityQuery bodyQuery = SystemAPI.QueryBuilder().WithAny<Body.SunTag, Body.PlanetTag>().WithAll<Position, Body.Owner, ScaleComponent, DiscoverProgress, Name>().Build();
 
             Entity selected = SystemAPI.GetSingleton<FocusedBody>().Selected;
            

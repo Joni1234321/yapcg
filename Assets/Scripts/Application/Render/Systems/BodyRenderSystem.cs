@@ -21,23 +21,15 @@ namespace YAPCG.Application.Render.Systems
     [BurstCompile]
     internal partial class BodyRenderSystem : SystemBase
     {
-        private EntityQuery _planetQuery, _sunQuery, _orbitQuery;
-        private RenderUtils.PositionScaleAlternativeMaterialRender _planetRenderer, _sunRenderer;
+        private RenderUtils.PositionScaleAlternativeMaterialRender _planetRenderer, _sunRenderer, _asteroidRenderer;
 
         protected override void OnCreate()
         {
-            _planetQuery = SystemAPI.QueryBuilder()
-                .WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.PlanetTag>()
-                .Build();
-            _sunQuery = SystemAPI.QueryBuilder()
-                .WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.SunTag>()
-                .Build();
-            _orbitQuery = SystemAPI.QueryBuilder().WithAll<Body.Orbit, Position, Body.TrueAnomaly>().Build();
-
             RequireForUpdate<MeshesSingleton>();
 
             _planetRenderer = new RenderUtils.PositionScaleAlternativeMaterialRender();
             _sunRenderer = new RenderUtils.PositionScaleAlternativeMaterialRender();
+            _asteroidRenderer = new RenderUtils.PositionScaleAlternativeMaterialRender();
         }
 
         protected override void OnUpdate()
@@ -48,6 +40,7 @@ namespace YAPCG.Application.Render.Systems
             RenderPlanets();
             RenderSuns();
             RenderOrbits();
+            RenderAsteroids();
         }
 
 
@@ -59,7 +52,7 @@ namespace YAPCG.Application.Render.Systems
 
         private void RenderPlanets()
         {
-            var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
+            MeshesSingleton meshes = SystemAPI.GetSingleton<MeshesSingleton>();
 
             if (!meshes.Planet.LoadStarted)
             {
@@ -71,14 +64,14 @@ namespace YAPCG.Application.Render.Systems
             if (!meshes.Planet.Loaded())
                 return;
 
-            _planetRenderer.Render(_planetQuery, meshes.Planet.Mesh.Result, meshes.Planet.Material.Result,
-                WorldUpdateAllocator);
+            EntityQuery planetQuery = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.PlanetTag>().Build();
+            _planetRenderer.Render(planetQuery, meshes.Planet.Mesh.Result, meshes.Planet.Material.Result, WorldUpdateAllocator);
         }
 
 
         private void RenderSuns()
         {
-            var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
+            MeshesSingleton meshes = SystemAPI.GetSingleton<MeshesSingleton>();
 
             if (!meshes.Sun.LoadStarted)
             {
@@ -89,15 +82,16 @@ namespace YAPCG.Application.Render.Systems
 
             if (!meshes.Sun.Loaded())
                 return;
-
-            _sunRenderer.Render(_sunQuery, meshes.Sun.Mesh.Result, meshes.Sun.Material.Result, WorldUpdateAllocator);
+            
+            EntityQuery sunQuery = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.SunTag>().Build();
+            _sunRenderer.Render(sunQuery, meshes.Sun.Mesh.Result, meshes.Sun.Material.Result, WorldUpdateAllocator);
         }
 
         private static readonly ProfilerMarker RENDER_ORBITS_MARKER = new("Render Orbits");
 
         private void RenderOrbits()
         {
-            var meshes = SystemAPI.GetSingleton<MeshesSingleton>();
+            MeshesSingleton meshes = SystemAPI.GetSingleton<MeshesSingleton>();
 
             if (!meshes.Orbit.LoadStarted)
             {
@@ -114,8 +108,9 @@ namespace YAPCG.Application.Render.Systems
             RenderParams renderParams = new RenderParams(material)
                 { worldBounds = new Bounds(float3.zero, new float3(1000)) };
 
-            NativeArray<Body.Orbit> orbits = _orbitQuery.ToComponentDataArray<Body.Orbit>(WorldUpdateAllocator);
-            NativeArray<Body.TrueAnomaly> trueAnomalies = _orbitQuery.ToComponentDataArray<Body.TrueAnomaly>(WorldUpdateAllocator);
+            EntityQuery orbitQuery = SystemAPI.QueryBuilder().WithAny<Body.SunTag, Body.PlanetTag>().WithAll<Body.Orbit, Position, Body.TrueAnomaly>().Build();
+            NativeArray<Body.Orbit> orbits = orbitQuery.ToComponentDataArray<Body.Orbit>(WorldUpdateAllocator);
+            NativeArray<Body.TrueAnomaly> trueAnomalies = orbitQuery.ToComponentDataArray<Body.TrueAnomaly>(WorldUpdateAllocator);
                 
             NativeArray<float4x4> matricies = CollectionHelper.CreateNativeArray<float4x4>(orbits.Length, WorldUpdateAllocator);
             
@@ -126,6 +121,24 @@ namespace YAPCG.Application.Render.Systems
                 return;
             
             Graphics.RenderMeshInstanced(renderParams, mesh, 0, matricies.Reinterpret<Matrix4x4>());
+        }
+        
+        public void RenderAsteroids()
+        {
+            MeshesSingleton meshes = SystemAPI.GetSingleton<MeshesSingleton>();
+
+            if (!meshes.Asteroid.LoadStarted)
+            {
+                meshes.Asteroid.LoadAsync();
+                SystemAPI.SetSingleton(meshes);
+                return;
+            }
+
+            if (!meshes.Asteroid.Loaded())
+                return;
+            
+            EntityQuery asteroidQuery = SystemAPI.QueryBuilder().WithAll<Position, ScaleComponent, FadeStartTimeComponent, AlternativeColorRatio, Body.AsteroidTag>().Build();
+            _asteroidRenderer.Render(asteroidQuery, meshes.Asteroid.Mesh.Result, meshes.Asteroid.Material.Result, WorldUpdateAllocator);
         }
 
         [BurstCompile]

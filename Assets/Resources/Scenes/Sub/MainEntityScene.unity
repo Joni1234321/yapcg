@@ -297,6 +297,33 @@ MonoBehaviour:
               w: 802803572
           IdentifierType: 3
         GenerationType: 1
+  asteroid:
+    Mesh:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 10207
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 0
+              y: 0
+              z: 14
+              w: 0
+          IdentifierType: 4
+        GenerationType: 1
+    Material:
+      Id:
+        GlobalId:
+          SceneObjectIdentifier0: 2100000
+          SceneObjectIdentifier1: 0
+          AssetGUID:
+            Value:
+              x: 3868191562
+              y: 1131346016
+              z: 119765415
+              w: 352368929
+          IdentifierType: 3
+        GenerationType: 1
   sharedSizes:
     HubRadius: 2
 --- !u!1 &1765370262
