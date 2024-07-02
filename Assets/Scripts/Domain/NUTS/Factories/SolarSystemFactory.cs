@@ -107,7 +107,7 @@ namespace YAPCG.Domain.NUTS.Factories
             
             _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, AU = au, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
             _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, EarthGravity = gravity, EscapeVelocity = ecapeVelocity, Mu = ownMu});
-            _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 1});
+            _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 0 });
             _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
             
             // Render
@@ -161,7 +161,7 @@ namespace YAPCG.Domain.NUTS.Factories
             
             _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, AU = au, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
             _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, EarthGravity = gravity, EscapeVelocity = ecapeVelocity, Mu = ownMu});
-            _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 1});
+            _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 0 });
             _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
             
             // Render

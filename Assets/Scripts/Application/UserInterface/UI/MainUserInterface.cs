@@ -102,10 +102,6 @@ namespace YAPCG.Application.UserInterface.UI
 
             NameLabel.text = bodyName.ToString();
 
-            Body.ActionClaim actionClaim = new Body.ActionClaim { Body = body, OwnerID = Body.Owner.YOU_OWNER_ID };
-           // <Body.ActionClaim>().ValueRW = actionClaim;
-
-            
             DiscoveryProgress.Max    = discovery.MaxValue;
             DiscoveryProgress.Value  = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;

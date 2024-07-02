@@ -1,5 +1,6 @@
 ﻿using Unity.Burst;
 using Unity.Entities;
+using YAPCG.Domain.Common.Components;
 using YAPCG.Domain.NUTS;
 using YAPCG.Engine.Time.Systems;
 
@@ -19,9 +20,11 @@ namespace YAPCG.Domain.Common.Systems
         {
             RefRW<Body.ActionClaim> actionClaim = SystemAPI.GetSingletonRW<Body.ActionClaim>();
 
-            if (actionClaim.ValueRW.Body != Entity.Null)
+            Entity e = actionClaim.ValueRW.Body;
+            if (e != Entity.Null)
             {
-                SystemAPI.GetComponentRW<Body.Owner>(actionClaim.ValueRW.Body).ValueRW.ID = actionClaim.ValueRW.OwnerID;
+                SystemAPI.GetComponentRW<Body.Owner>(e).ValueRW.ID = actionClaim.ValueRW.OwnerID;
+                SystemAPI.GetComponentRW<DiscoverProgress>(e).ValueRW.Progress++;
                 actionClaim.ValueRW.Body = Entity.Null;
             }
         }
