@@ -25,6 +25,11 @@ namespace YAPCG.Domain.Common.Systems
             {
                 SystemAPI.GetComponentRW<Body.Owner>(e).ValueRW.ID = actionClaim.ValueRW.OwnerID;
                 SystemAPI.GetComponentRW<DiscoverProgress>(e).ValueRW.Progress++;
+                RefRW<LandDiscovery> landDiscovery = SystemAPI.GetComponentRW<LandDiscovery>(e);
+                landDiscovery.ValueRW.OrbitThroughput  += 1;
+                landDiscovery.ValueRW.ProbesThroughput += 2;
+                landDiscovery.ValueRW.PeopleThroughput += 4;
+
                 actionClaim.ValueRW.Body = Entity.Null;
             }
         }

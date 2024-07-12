@@ -20,7 +20,7 @@ namespace YAPCG.Application.UserInterface.UI
     {
         public VisualElement Root, BodyMenu;
         
-        public SlotControl SlotControlS, SlotControlM, SlotControlL;
+        public SlotControl SlotControlLand3, SlotControlLand4, SlotControlLand5;
         public Label NameLabel;
 
         public Label SpeedLabel;
@@ -40,10 +40,10 @@ namespace YAPCG.Application.UserInterface.UI
             
             NameLabel = BodyMenu.Q<Label>("name");
 
-            SlotControlS = BodyMenu.Q<SlotControl>("slots-s");
-            SlotControlM = BodyMenu.Q<SlotControl>("slots-m");
-            SlotControlL = BodyMenu.Q<SlotControl>("slots-l");
-
+            SlotControlLand3 = BodyMenu.Q<SlotControl>("land-orbits");
+            SlotControlLand4 = BodyMenu.Q<SlotControl>("land-probes");
+            SlotControlLand5 = BodyMenu.Q<SlotControl>("land-people");
+            
             DiscoveryProgress = BodyMenu.Q<ProgressBarControl>("discovery");
 
             ClaimButton = BodyMenu.Q<Button>("claim");
@@ -94,6 +94,7 @@ namespace YAPCG.Application.UserInterface.UI
             
             FixedString64Bytes bodyName = _.GetComponentData<Name>(body).Value;
             DiscoverProgress discovery  = _.GetComponentData<DiscoverProgress>(body);
+            LandDiscovery landDiscovery = _.GetComponentData<LandDiscovery>(body);
             Body.BodyInfo info          = _.GetComponentData<Body.BodyInfo>(body);
             Body.Owner owner            = _.GetComponentData<Body.Owner>(body);
 
@@ -118,31 +119,11 @@ namespace YAPCG.Application.UserInterface.UI
                 Distance.Value = new Length(orbit.AU, Length.UnitType.AstronomicalUnits).To(Length.UnitType.LightSecond).ToString("0.## ls");
                 Sidereal.Value = (orbit.Period.Days / 29.53f).ToString("0.## month", CultureInfo.CurrentCulture);
             }
+            
+            SlotControlLand3.Value = landDiscovery.Orbit.ToString();
+            SlotControlLand4.Value = landDiscovery.Probes.ToString();
+            SlotControlLand5.Value = landDiscovery.People.ToString();
         }
 
-
-        
-        public void UpdateHubUI(EntityManager _, Entity hub)
-        {
-            Root.visible = hub != Entity.Null;
-            
-            if (hub == Entity.Null)
-                return;
-            
-            FixedString64Bytes hubName = _.GetComponentData<Name>(hub).Value;
-            BuildingSlotsLeft slotsLeft = _.GetComponentData<BuildingSlotsLeft>(hub);
-            DiscoverProgress discovery = _.GetComponentData<DiscoverProgress>(hub);
-
-
-            NameLabel.text = hubName.ToString();
-            
-            SlotControlS.Value = slotsLeft.Small.ToString();
-            SlotControlM.Value = slotsLeft.Medium.ToString();
-            SlotControlL.Value = slotsLeft.Large.ToString();
-
-            DiscoveryProgress.Max = discovery.MaxValue;
-            DiscoveryProgress.Value = discovery.Value;
-            DiscoveryProgress.Change = discovery.Progress;
-        }
     }
 }

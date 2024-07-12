@@ -53,6 +53,8 @@ namespace YAPCG.Domain.NUTS.Factories
             float earthRadius = random.NextGauss(100f, 30f, 50f, 300f);
             _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, });
             _.AddComponent(e, new DiscoverProgress { MaxValue = 100 });
+            _.AddComponent(e, new PlanetDiscovery {});
+            _.AddComponent(e, new LandDiscovery {});
             _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
             
             // Render
@@ -108,7 +110,10 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, AU = au, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
             _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, EarthGravity = gravity, EscapeVelocity = ecapeVelocity, Mu = ownMu});
             _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 0 });
+            _.AddComponent(e, new PlanetDiscovery {});
+            _.AddComponent(e, new LandDiscovery {});
             _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
+            
             
             // Render
             _.AddComponent(e, new Position { Value = new float3(au, 0, 0) });
@@ -162,6 +167,8 @@ namespace YAPCG.Domain.NUTS.Factories
             _.AddComponent(e, new Body.Orbit { Parent = parent, Period = period, AU = au, Eccentricity = eccentricity, PeriodOffsetTicksF = offsetTicksF } );
             _.AddComponent(e, new Body.BodyInfo { EarthRadius = earthRadius, EarthMass = earthMass, EarthGravity = gravity, EscapeVelocity = ecapeVelocity, Mu = ownMu});
             _.AddComponent(e, new DiscoverProgress { MaxValue = 30, Progress = 0 });
+            _.AddComponent(e, new PlanetDiscovery {});
+            _.AddComponent(e, new LandDiscovery {});
             _.AddComponent(e, new Body.Owner { ID = Body.Owner.NO_OWNER_ID });
             
             // Render

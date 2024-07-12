@@ -33,11 +33,18 @@
             <ui:VisualElement name="name">
                 <YAPCG.Resources.View.Custom.NumberLabel title="Pop" value="200k" name="hub-population" />
             </ui:VisualElement>
-            <ui:VisualElement name="slots" class="flex-gap flex-row" style="flex-grow: 1; justify-content: flex-start;">
-                <YAPCG.Resources.View.Custom.SlotControl title="L" value="1" hue="#FF0000" name="slots-l" />
-                <YAPCG.Resources.View.Custom.SlotControl title="M" value="2" hue="#00FF55" name="slots-m" />
-                <YAPCG.Resources.View.Custom.SlotControl title="S" value="10" hue="#00AAFF" name="slots-s" />
+            <ui:VisualElement name="planet" class="flex-gap flex-row" style="flex-grow: 1; justify-content: flex-start;">
+                <YAPCG.Resources.View.Custom.SlotControl title="I" value="1" hue="#FF0000" name="planet-" />
+                <YAPCG.Resources.View.Custom.SlotControl title="II" value="2" hue="#00FF55" name="planet-flyby" />
             </ui:VisualElement>
+            <ui:VisualElement name="land" class="flex-gap flex-row" style="flex-grow: 1; justify-content: flex-start;">
+                <YAPCG.Resources.View.Custom.SlotControl title="III" value="20" hue="#FF0000" name="land-orbits" />
+                <ui:Label text="10x" class="text-sm m-0"/>
+                <YAPCG.Resources.View.Custom.SlotControl title="IV" value="40" hue="#00FF55" name="land-probes" />
+                <ui:Label text="10x" class="text-sm m-0"/>
+                <YAPCG.Resources.View.Custom.SlotControl title="V" value="80" hue="#00AAFF" name="land-people" />
+            </ui:VisualElement>
+            
             <YAPCG.Resources.View.Custom.ProgressBarControl title="Discovery" name="discovery" />
         </ui:VisualElement>
     </ui:VisualElement>
