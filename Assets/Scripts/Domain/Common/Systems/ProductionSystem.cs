@@ -21,13 +21,22 @@ namespace YAPCG.Domain.Common.Systems
         {
             new ReserveClearJob().Run();
             new ProductionJob().Run();
-            
+            new PlanetLandProductionJob().Run();
         }
 
         [BurstCompile]
         partial struct ReserveClearJob : IJobEntity
         {
             void Execute(ref Deposit.Reserves reserves) => reserves.Value = 0;
+        }
+        
+        [BurstCompile]
+        partial struct PlanetLandProductionJob : IJobEntity
+        {
+            void Execute(in LandDiscovery landDiscovery, ref Points points)
+            {
+                points.Value += landDiscovery.People;
+            } 
         }
         
         [BurstCompile]

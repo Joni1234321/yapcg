@@ -9,9 +9,13 @@ namespace YAPCG.Domain.Common.Systems
     [UpdateInGroup(typeof(TickDailyGroup))]
     public partial struct ActionSystem : ISystem
     {
+
+        public bool FirstTime;
+
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            FirstTime = true;
             state.RequireForUpdate<Body.ActionClaim>();
         }
 
@@ -26,18 +30,17 @@ namespace YAPCG.Domain.Common.Systems
                 SystemAPI.GetComponentRW<Body.Owner>(e).ValueRW.ID = actionClaim.ValueRW.OwnerID;
                 SystemAPI.GetComponentRW<DiscoverProgress>(e).ValueRW.Progress++;
                 RefRW<LandDiscovery> landDiscovery = SystemAPI.GetComponentRW<LandDiscovery>(e);
-                landDiscovery.ValueRW.OrbitThroughput  += 1;
-                landDiscovery.ValueRW.ProbesThroughput += 2;
-                landDiscovery.ValueRW.PeopleThroughput += 4;
+                landDiscovery.ValueRW.OrbitThroughput += 1;
 
+                if (FirstTime)
+                {
+                    FirstTime = false;
+                    landDiscovery.ValueRW.ProbesThroughput += 1;
+                    landDiscovery.ValueRW.PeopleThroughput += 1;
+                }
+                
                 actionClaim.ValueRW.Body = Entity.Null;
             }
-        }
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-
         }
     }
 }

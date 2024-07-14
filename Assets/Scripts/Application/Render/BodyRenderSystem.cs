@@ -48,7 +48,8 @@ namespace YAPCG.Application.Render.Systems
         {
             _planetRenderer.Dispose();
             _sunRenderer.Dispose();
-        }
+            _asteroidRenderer.Dispose();
+        } 
 
         private void RenderPlanets()
         {

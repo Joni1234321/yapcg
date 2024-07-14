@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using Unity.Burst;
 using Unity.Collections;
+using Unity.Mathematics;
 
 namespace YAPCG.Engine.Common
 {
@@ -22,6 +24,9 @@ namespace YAPCG.Engine.Common
             (4, "IV"),
             (1, "I")
         };
+        
+        private static readonly char[] METRIC_SUFFIXES = { ' ', 'K', 'M', 'G', 'T', 'P', 'E' };
+
 
         public static FixedString64Bytes ToRoman(this int num)
         {
@@ -57,6 +62,17 @@ namespace YAPCG.Engine.Common
 
             return formattedString;
         }
+        
+        [BurstCompile]
+        public static string ToMetric(this float value, string postfix = "")
+        {
+            int magnitude = (int)math.floor(math.log10(math.abs(value)) / 3);
+            float scaledValue = value / math.pow(10, magnitude * 3);
 
+            if (magnitude < 0 || magnitude >= METRIC_SUFFIXES.Length)
+                return value.ToString($"0.###E0{postfix}", CultureInfo.CurrentCulture); // Fall back to scientific notation if out of range
+
+            return $"{scaledValue:0.00} {METRIC_SUFFIXES[magnitude]}{postfix}"; 
+        }
     }
 }

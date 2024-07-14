@@ -21,7 +21,7 @@ namespace YAPCG.Application.UserInterface.UI
         public VisualElement Root, BodyMenu;
         
         public SlotControl SlotControlLand3, SlotControlLand4, SlotControlLand5;
-        public Label NameLabel;
+        public Label NameLabel, PointsLabel;
 
         public Label SpeedLabel;
         public ProgressBarControl DiscoveryProgress;
@@ -39,6 +39,7 @@ namespace YAPCG.Application.UserInterface.UI
             BodyMenu = root.Q<VisualElement>("body-menu");
             
             NameLabel = BodyMenu.Q<Label>("name");
+            PointsLabel = BodyMenu.Q<Label>("points");
 
             SlotControlLand3 = BodyMenu.Q<SlotControl>("land-orbits");
             SlotControlLand4 = BodyMenu.Q<SlotControl>("land-probes");
@@ -107,6 +108,7 @@ namespace YAPCG.Application.UserInterface.UI
             DiscoveryProgress.Value  = discovery.Value;
             DiscoveryProgress.Change = discovery.Progress;
 
+            // 
             Mass.Value     =  info.EarthMass.ToString($"0.# M.{"E".ToSubscript()}", CultureInfo.CurrentCulture);
             Radius.Value   =  info.EarthRadius.ToString($"0.# R.{"E".ToSubscript()}", CultureInfo.CurrentCulture);
             Escape.Value   = (info.EscapeVelocity / 1000f).ToString("0.## km/s", CultureInfo.CurrentCulture);
@@ -119,6 +121,13 @@ namespace YAPCG.Application.UserInterface.UI
                 Distance.Value = new Length(orbit.AU, Length.UnitType.AstronomicalUnits).To(Length.UnitType.LightSecond).ToString("0.## ls");
                 Sidereal.Value = (orbit.Period.Days / 29.53f).ToString("0.## month", CultureInfo.CurrentCulture);
             }
+            
+            if (_.HasComponent<Points>(body))
+            {
+                Points points = _.GetComponentData<Points>(body);
+                PointsLabel.text = points.Value.ToMetric();
+            }
+
             
             SlotControlLand3.Value = landDiscovery.Orbit.ToString();
             SlotControlLand4.Value = landDiscovery.Probes.ToString();

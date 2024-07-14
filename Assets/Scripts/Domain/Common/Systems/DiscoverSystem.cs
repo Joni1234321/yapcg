@@ -32,8 +32,6 @@ namespace YAPCG.Domain.Common.Systems
             [ReadOnly] 
             public float Time;
             
-            const int DISCOVER_COST_INCREMENT = 10;
-            
             void Execute(ref DiscoverProgress discoverProgress, ref FadeStartTimeComponent fadeStartTimeComponent)
             {
                 discoverProgress.Value += discoverProgress.Progress;

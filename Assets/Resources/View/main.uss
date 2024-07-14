@@ -94,6 +94,8 @@ Button:active {
 .w-full { width: 100%; }
 .h-full { height: 100%; }
 
+.font-italic { -unity-font-style: italic; }
+.font-bold { -unity-font-style: bold; }
 .text-base { font-size: 14px; }
 .text-sm { font-size: 10px; }
 .text-lg { font-size: 18px; }
