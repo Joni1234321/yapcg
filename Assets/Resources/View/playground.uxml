@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/View/main.uss?fileID=7433441132597879392&amp;guid=c8c56bc5dabe31f49a1cbc1a34332ed1&amp;type=3#main" />
+    <ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;" />
+        <ui:MultiColumnListView name="playground-simulation-table" header-title="Playground Simulation">
+            <ui:Columns primary-column-name="Pops" reorderable="false" stretch-mode="GrowAndFill" resizable="true" resize-preview="true">
+                <ui:Column name="Pops" title="Pops"/>
+                <ui:Column title="Farmers" />
+                <ui:Column title="Engineer" />
+                <ui:Column title="Laborers" />
+            </ui:Columns>
+            <ui:SortColumnDescriptions>
+                <ui:SortColumnDescription column-name="weqwe" direction="Descending" />
+            </ui:SortColumnDescriptions>
+        </ui:MultiColumnListView>
+    </ui:VisualElement>
+</ui:UXML>
